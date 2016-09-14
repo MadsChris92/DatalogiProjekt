@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    static Stage theStage;
+    public static Stage theStage;
     Button b;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,22 +22,8 @@ public class Main extends Application {
         theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
         b = (Button) root.lookup("#loginBtn");
-
-        b.setOnAction(e -> {
-            try {
-                loginHandler();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
         b.setText("test");
 
-    }
-
-    private void loginHandler() throws IOException {
-        Parent root1 = FXMLLoader.load(getClass().getResource("View/editor.fxml"));
-        theStage.setScene(new Scene(root1, 700, 600));
- //       b.setText("dasda");
     }
 
 
