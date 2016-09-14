@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -17,6 +18,9 @@ public class Main extends Application {
         theStage.setTitle("Bartinator");
         theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
+        Button b = (Button) root.lookup("loginBtn");
+        b.setText("test");
+
     }
 
 
