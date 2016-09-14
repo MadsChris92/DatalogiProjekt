@@ -8,18 +8,24 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    static Stage theStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+        theStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("View/loginView.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 700, 600));
+        theStage.setTitle("Bartinator");
+        theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
-        System.out.println("Hey du");
     }
 
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static void setPrimaryStage(Scene s){
+        theStage.setScene(s);
     }
 } // test
 // test2
