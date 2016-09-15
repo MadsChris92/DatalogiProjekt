@@ -26,20 +26,22 @@ public class loginController {
         System.out.println("o/");
         if(verifyLogin(usernameField.getText(), passwordField.getText())){
             System.out.println("login good");
+
+            Parent root1 = null;
+            try {
+                root1 = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Main.theStage.setScene(new Scene(root1, 700, 600));
         } else {
             System.out.println("login bad");
+            feedackField.setText("incorrect username or password");
         }
-        Parent root1 = null;
-        try {
-            root1 = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Main.theStage.setScene(new Scene(root1, 700, 600));
     }
 
     private boolean verifyLogin(String username, String password) {
         System.out.println(username+ ", " +password);
-        return true;
+        return !username.equals("wrong");
     }
 }
