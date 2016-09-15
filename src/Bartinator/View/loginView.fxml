@@ -24,6 +24,11 @@
                         <Font name="Helvetica Neue" size="15.0" />
                     </font>
                 </Label>
+                <Label fx:id="feedackField" prefHeight="80.0" text="">
+                    <font>
+                        <Font name="Helvetica Neue" size="15.0" />
+                    </font>
+                </Label>
                 <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                     <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Username: ">
