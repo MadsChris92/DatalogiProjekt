@@ -16,13 +16,13 @@ import java.io.IOException;
 
 public class loginController {
 
-    public Button loginBtn;
+    public Button adminLoginBtn;
     public Label feedackField;
     public TextField usernameField;
     public PasswordField passwordField;
 
 
-    public void handleLogin(ActionEvent actionEvent) {
+    public void handleAdminLogin(ActionEvent actionEvent) {
         System.out.println("o/");
         if(verifyLogin(usernameField.getText(), passwordField.getText())){
             System.out.println("login good");

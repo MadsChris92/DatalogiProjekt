@@ -49,7 +49,7 @@
                         <PasswordField fx:id="passwordField" promptText="Password" />
                     </children>
                 </HBox>
-                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#handleLogin" prefHeight="35.0" prefWidth="120.0" text="Enter">
+                <Button fx:id="adminLoginBtn" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="35.0" prefWidth="120.0" text="Administrator Login">
                     <VBox.margin>
                         <Insets top="20.0" />
                     </VBox.margin>
