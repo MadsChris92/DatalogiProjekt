@@ -42,6 +42,7 @@ public class loginController {
 
     private boolean verifyLogin(String username, String password) {
         System.out.println(username+ ", " +password);
+        //TODO: Tjek databasen over brugere
         return !username.equals("wrong");
     }
 }
