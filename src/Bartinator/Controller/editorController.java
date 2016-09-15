@@ -21,14 +21,13 @@ public class editorController {
 
     public void addItemHandler(ActionEvent actionEvent) {
         Button b = new Button("hallo manner");
-        b.setOnAction(e -> itemHander());
+        b.setOnAction(e -> itemHandler());
         btnContainer.getChildren().add(b);
         btnList.add(b);
         setBtnPreference();
-        test();
     }
 
-    private void itemHander() {
+    private void itemHandler() {
         System.out.println("fads");
     }
 
@@ -38,12 +37,4 @@ public class editorController {
         }
     }
 
-    public void test(){
-        ArrayList<Integer> test = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            test.add(i);
-        }
-        test.remove(0);
-        System.out.println(""+ test.get(0));
-    }
 }
