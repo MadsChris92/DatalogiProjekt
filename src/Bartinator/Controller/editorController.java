@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * Created by Gamer on 14-09-2016.
  */
 public class editorController {
+    public TextField txtName;
     Stage popUpStage;
     public Button addItemBtn;
     public VBox btnContainer;
@@ -50,6 +52,7 @@ public class editorController {
         popUpStage.setScene(new Scene(root1, 500, 500));
         popUpStage.initModality(Modality.APPLICATION_MODAL);
         popUpStage.show();
+
     }
 
     public void setBtnPreference(){

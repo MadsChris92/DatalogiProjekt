@@ -26,7 +26,7 @@ public class ButtonCustom extends Button{
     }
 
     public void setup(){
-        this.setText(name + "/n" + price);
+        this.setText(name);
 
     }
 }
