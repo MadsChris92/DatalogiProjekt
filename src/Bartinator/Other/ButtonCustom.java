@@ -3,7 +3,7 @@ package Bartinator.Other;
 import javafx.scene.control.Button;
 
 /**
- * Created by Gamer on 19-09-2016.
+ * Created by Mads on 19-09-2016.
  */
 public class ButtonCustom extends Button{
     String name;
@@ -23,5 +23,10 @@ public class ButtonCustom extends Button{
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public void setup(){
+        this.setText(name + "/n" + price);
+
     }
 }
