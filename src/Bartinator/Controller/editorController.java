@@ -43,13 +43,13 @@ public class editorController {
     public void startPopUp(){
         try {
             root1 = FXMLLoader.load(getClass().getResource("../View/btnCreate.fxml"));
-            System.out.println("dada");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        popUpStage = new Stage();
         popUpStage.setScene(new Scene(root1, 500, 500));
-        System.out.println("d");
         popUpStage.initModality(Modality.APPLICATION_MODAL);
+        popUpStage.show();
     }
 
     public void setBtnPreference(){
