@@ -24,8 +24,6 @@ public class Main extends Application {
         b = (Button) root.lookup("#loginBtn");
 
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -33,5 +31,4 @@ public class Main extends Application {
     public static void setPrimaryStage(Scene s){
         theStage.setScene(s);
     }
-} // test
-// test2
+}

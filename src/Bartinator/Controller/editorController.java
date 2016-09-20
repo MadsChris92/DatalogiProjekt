@@ -14,22 +14,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
-/**
- * Created by Gamer on 14-09-2016.
- */
 public class editorController {
-    public TextField txtName;
+
     Stage popUpStage;
     public Button addItemBtn;
     public VBox btnContainer;
     public Button removeItemBtn;
-    public Label txtHeader;
-    int btnCount = 0;
-    Parent root1 = null;
+
     ArrayList<Button> btnList = new ArrayList<Button>();
 
-    public void addItemHandler(ActionEvent actionEvent) {
+    public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
         b.setOnAction(e -> itemHandler());
         btnContainer.getChildren().add(b);
@@ -42,23 +38,19 @@ public class editorController {
         System.out.println("fads");
     }
 
-    public void startPopUp(){
-        try {
-            root1 = FXMLLoader.load(getClass().getResource("../View/btnCreate.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void startPopUp() throws IOException {
+        Parent root1;
         popUpStage = new Stage();
+        root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
         popUpStage.setScene(new Scene(root1, 500, 500));
         popUpStage.initModality(Modality.APPLICATION_MODAL);
         popUpStage.show();
-
     }
 
-    public void setBtnPreference(){
-        for (int i = 0; i < btnList.size(); i++) {
-            btnList.get(i).setMinSize(100,100);
+
+    private void setBtnPreference(){
+        for (Button aBtnList : btnList) {
+            aBtnList.setMinSize(100, 100);
         }
     }
-
 }
