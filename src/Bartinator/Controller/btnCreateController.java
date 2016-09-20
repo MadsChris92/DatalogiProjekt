@@ -3,22 +3,17 @@ package Bartinator.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
-/**
- * Created by Gamer on 20-09-2016.
- */
+
 public class btnCreateController {
 
     public Button btn;
     public Label txt;
 
-    public btnCreateController() {
+
+    public void applyChanges(MouseEvent mouseEvent) {
         System.out.println("test");
-        txt.setText("dasas");
-
-    }
-
-    private void applyChanges() {
-        System.out.println("mdsada");
+        txt.setText("dasdas");
     }
 }
