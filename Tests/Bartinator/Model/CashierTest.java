@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class CalculatorTest {
+public class CashierTest {
 
     @Test
     public void addProduct() throws Exception {
