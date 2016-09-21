@@ -1,4 +1,4 @@
-package Bartinator.Other;
+package Bartinator.Model;
 
 /**
  * Created by Mads on 21-09-2016.
