@@ -9,7 +9,6 @@ public class Calculator {
    private Map<String, Integer> cart = new LinkedHashMap<>();
 
     public void addProduct(){
-        //hej hej
     }
 
 
