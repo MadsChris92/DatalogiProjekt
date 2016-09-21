@@ -15,6 +15,7 @@ public class Main extends Application {
 
     public static Stage theStage;
     Button b;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;

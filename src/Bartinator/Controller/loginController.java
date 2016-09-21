@@ -50,7 +50,6 @@ public class loginController {
 
     public void handleBarLogin(ActionEvent actionEvent) {
 
-
         //TODO: Åben Bartender Scenen
     }
 }
