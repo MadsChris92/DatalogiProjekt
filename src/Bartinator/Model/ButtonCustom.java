@@ -1,4 +1,4 @@
-package Bartinator.Other;
+package Bartinator.Model;
 
 import javafx.scene.control.Button;
 
