@@ -1,5 +1,6 @@
 package Bartinator;
 
+import Bartinator.Other.Database;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,9 @@ public class Main extends Application {
         theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
         b = (Button) root.lookup("#loginBtn");
+        Database database = new Database();
+        database.setup("malaue4", "Plasward");
+        database.test();
 
     }
     public static void main(String[] args) {
