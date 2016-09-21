@@ -12,6 +12,10 @@ public class Cashier {
 
         if(mCart.containsKey(product)){
 
+            for (Product p : mCart){
+
+            }
+
         } else {
             mCart.put(product, quantity);
         }
