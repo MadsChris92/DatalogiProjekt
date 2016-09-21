@@ -1,6 +1,7 @@
 package Bartinator.Controller;
 
 import Bartinator.Other.ButtonCustom;
+import Bartinator.Other.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,7 @@ public class editorController {
     public Button removeItemBtn;
 
     ArrayList<Button> btnList = new ArrayList<Button>();
+    static ArrayList<Product> products = new ArrayList<>();
 
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
