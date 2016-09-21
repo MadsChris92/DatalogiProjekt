@@ -1,6 +1,6 @@
 package Bartinator.Controller;
 
-import Bartinator.Other.Product;
+import Bartinator.Model.Product;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
