@@ -23,6 +23,7 @@ public class btnCreateController {
     ArrayList<TextField> txtNameFields = new ArrayList<>();
     ArrayList<TextField> txtPriceField = new ArrayList<>();
     ArrayList<TextField> txtCategoriesField = new ArrayList<>();
+    boolean mistake;
     int count = 0;
 
     public void addDescrip(ActionEvent actionEvent) {
@@ -49,6 +50,7 @@ public class btnCreateController {
             }catch (NumberFormatException ne){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.showAndWait();
+
             }
 
             editorController.products.get(editorController.amountOfProducts).setPrice(value);
@@ -65,6 +67,7 @@ public class btnCreateController {
                     +"Price: [" + editorController.products.get(i).getPrice() + "]");
 
         }
+
         editorController.amountOfProducts++;
     }
 

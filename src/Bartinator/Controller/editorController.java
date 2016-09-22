@@ -25,10 +25,6 @@ public class editorController {
     static ArrayList<Product> products = new ArrayList<>();
     static int amountOfProducts = 0;
 
-    public ArrayList<Button> getBtnList() {
-        return btnList;
-    }
-
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
         b.setOnAction(e -> itemHandler());
