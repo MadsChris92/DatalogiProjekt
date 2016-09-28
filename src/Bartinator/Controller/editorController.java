@@ -23,12 +23,15 @@ public class editorController {
 
     ArrayList<Button> btnList = new ArrayList<Button>();
     static ArrayList<Product> products = new ArrayList<>();
+    static int amountOfProducts = 0;
 
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
         b.setOnAction(e -> itemHandler());
         btnContainer.getChildren().add(b);
         btnList.add(b);
+        Product p = new Product();
+        products.add(p);
         setBtnPreference();
         startPopUp();
     }

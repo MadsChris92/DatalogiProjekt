@@ -1,6 +1,8 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.Product;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,16 +17,17 @@ import java.util.ArrayList;
 public class btnCreateController {
 
     public Label txt;
+    float value;
     public Button btnDescription;
     public VBox descripContainer;
     ArrayList<TextField> txtNameFields = new ArrayList<>();
     ArrayList<TextField> txtPriceField = new ArrayList<>();
+    ArrayList<TextField> txtCategoriesField = new ArrayList<>();
+    boolean mistake;
     int count = 0;
 
-    public void addDesciption(MouseEvent mouseEvent) {
+    public void addDescrip(ActionEvent actionEvent) {
         // TODO: Label tekst skal kunne defineres af brugeren + information skal sendes til database
-        Product p = new Product();
-        Label l = new Label("_________________________________");
 
         TextField t = new TextField("Name!");
         txtNameFields.add(t);
@@ -37,27 +40,36 @@ public class btnCreateController {
 
 
         HBox container = new HBox();
-        editorController.products.add(p);
-        descripContainer.getChildren().addAll(l, container, t, t1);
+        descripContainer.getChildren().addAll(t, t1,container);
         container.getChildren().addAll(b);
     }
 
     private void applyDescription() {
-        if(count >= editorController.products.size()){
-            count--;
-        }else {
-            Float value = Float.parseFloat(txtPriceField.get(count).getText());
-            editorController.products.get(count).setPrice(value);
-            editorController.products.get(count).setName(txtNameFields.get(count).getText());
+            try {
+                value = Float.parseFloat(txtPriceField.get(editorController.amountOfProducts).getText());
+            }catch (NumberFormatException ne){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.showAndWait();
+
+            }
+
+            editorController.products.get(editorController.amountOfProducts).setPrice(value);
+            editorController.products.get(editorController.amountOfProducts).setName(txtNameFields.get(editorController.amountOfProducts).getText());
             printProduct();
-        }
-        count++;
+
+
     }
 
     public void printProduct(){
         for (int i = 0; i < editorController.products.size(); i++) {
-            System.out.println(editorController.products.get(i).getName() + editorController.products.get(i).getPrice());
+            System.out.println("test");
+            System.out.println("Name: [" + editorController.products.get(i).getName()+"] "
+                    +"Price: [" + editorController.products.get(i).getPrice() + "]");
 
         }
+
+        editorController.amountOfProducts++;
     }
+
+
 }
