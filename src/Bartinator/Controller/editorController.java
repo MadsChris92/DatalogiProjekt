@@ -20,23 +20,26 @@ public class editorController {
     public Button addItemBtn;
     public VBox btnContainer;
     public Button removeItemBtn;
+    static int currentItem;
 
     ArrayList<Button> btnList = new ArrayList<Button>();
     static ArrayList<Product> products = new ArrayList<>();
-    static int amountOfProducts = 0;
 
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
-        b.setOnAction(e -> itemHandler());
+        b.setOnAction(e -> itemHandler(b));
         btnContainer.getChildren().add(b);
         btnList.add(b);
         Product p = new Product();
         products.add(p);
+        currentItem = products.size() - 1;
+        System.out.println(""+currentItem);
         setBtnPreference();
         startPopUp();
     }
 
-    private void itemHandler() {
+    private void itemHandler(Button b) {
+        b.setText("afjkælsfkslkf.");
         System.out.println("fads");
     }
 
@@ -51,8 +54,9 @@ public class editorController {
 
 
     private void setBtnPreference(){
-        for (Button aBtnList : btnList) {
-            aBtnList.setMinSize(100, 100);
+        for (int i = 0; i < products.size(); i++) {
+            products.get(i).setB(btnList.get(i));
+            products.get(i).getB().setMinSize(100,100);
         }
     }
 }

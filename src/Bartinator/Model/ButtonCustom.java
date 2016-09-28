@@ -9,6 +9,16 @@ public class ButtonCustom extends Button{
     String name;
     float price;
 
+    public Button getB() {
+        return b;
+    }
+
+    public void setB(Button b) {
+        this.b = b;
+    }
+
+    Button b;
+
     public String getName() {
         return name;
     }

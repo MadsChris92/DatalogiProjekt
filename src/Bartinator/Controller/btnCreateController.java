@@ -46,7 +46,9 @@ public class btnCreateController {
 
     private void applyDescription() {
             try {
-                value = Float.parseFloat(txtPriceField.get(editorController.amountOfProducts).getText());
+                System.out.println("test1");
+                value = Float.parseFloat(txtPriceField.get(editorController.currentItem).getText());
+                System.out.println("test");
             }catch (NumberFormatException ne){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
@@ -56,9 +58,11 @@ public class btnCreateController {
             }
 
             if(!mistake){
-                editorController.products.get(editorController.amountOfProducts).setPrice(value);
-                editorController.products.get(editorController.amountOfProducts).setName(txtNameFields.get(editorController.amountOfProducts).getText());
-                printProduct();
+                editorController.products.get(editorController.currentItem).setPrice(value);
+                editorController.products.get(editorController.currentItem).setName(txtNameFields.get(editorController.currentItem).getText());
+ //               printProduct();
+                editorController.products.get(editorController.currentItem).getB().setText("Name: [" + editorController.products.get(editorController.currentItem).getName()+"] "
+                        +"\nPrice: [" + editorController.products.get(editorController.currentItem).getPrice() + "]");
                 mistake = false;
             }
             else{
@@ -68,15 +72,13 @@ public class btnCreateController {
 
 
     }
-
+/*
     public void printProduct(){
         for (int i = 0; i < editorController.products.size(); i++) {
             System.out.println("test");
             System.out.println("Name: [" + editorController.products.get(i).getName()+"] "
                     +"Price: [" + editorController.products.get(i).getPrice() + "]");
         }
-        editorController.amountOfProducts++;
     }
-
-
+    */
 }
