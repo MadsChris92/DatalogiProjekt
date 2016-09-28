@@ -2,9 +2,7 @@ package Bartinator.Model;
 
 import javafx.scene.control.Button;
 
-/**
- * Created by Mads on 21-09-2016.
- */
+
 public class Product {
     private String name, category;
     private float price;
