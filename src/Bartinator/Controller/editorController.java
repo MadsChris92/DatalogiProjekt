@@ -30,7 +30,7 @@ public class editorController {
         b.setOnAction(e -> itemHandler(b));
         btnContainer.getChildren().add(b);
         btnList.add(b);
-        Product p = new Product("Hej", "Hej", 23);
+        Product p = new Product();
         products.add(p);
         currentItem = products.size() - 1;
         System.out.println(""+currentItem);

@@ -38,7 +38,6 @@ public class btnCreateController {
         Button b = new Button("✓");
         b.setOnAction(event -> applyDescription());
 
-
         HBox container = new HBox();
         descripContainer.getChildren().addAll(t, t1,container);
         container.getChildren().addAll(b);
@@ -47,6 +46,7 @@ public class btnCreateController {
     private void applyDescription() {
             try {
                 System.out.println("test1");
+                System.out.println(""+txtNameFields.size());
                 value = Float.parseFloat(txtPriceField.get(editorController.currentItem).getText());
                 System.out.println("test");
             }catch (NumberFormatException ne){
