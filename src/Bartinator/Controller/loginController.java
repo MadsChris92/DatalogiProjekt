@@ -2,6 +2,7 @@ package Bartinator.Controller;
 
 
 import Bartinator.Main;
+import Bartinator.Other.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,9 @@ public class loginController {
     private boolean verifyLogin(String username, String password) {
         System.out.println(username+ ", " +password);
         //TODO: Tjek databasen over brugere
-        return !username.equals("wrong");
+        Database database = new Database();
+        database.setup("malaue4", "Plasward");
+        return database.verifyLogin(username, password);
     }
 
     public void handleBarLogin(ActionEvent actionEvent) {
