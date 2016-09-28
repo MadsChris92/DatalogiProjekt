@@ -20,8 +20,8 @@ public class btnCreateController {
     float value;
     public Button btnDescription;
     public VBox descripContainer;
-    ArrayList<TextField> txtNameFields = new ArrayList<>();
-    ArrayList<TextField> txtPriceField = new ArrayList<>();
+    private ArrayList<TextField> txtNameFields = new ArrayList<>();
+    private ArrayList<TextField> txtPriceField = new ArrayList<>();
     ArrayList<TextField> txtCategoriesField = new ArrayList<>();
     boolean mistake;
     int count = 0;
@@ -49,13 +49,22 @@ public class btnCreateController {
                 value = Float.parseFloat(txtPriceField.get(editorController.amountOfProducts).getText());
             }catch (NumberFormatException ne){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Price must be a number");
                 alert.showAndWait();
-
+                mistake = true;
             }
 
-            editorController.products.get(editorController.amountOfProducts).setPrice(value);
-            editorController.products.get(editorController.amountOfProducts).setName(txtNameFields.get(editorController.amountOfProducts).getText());
-            printProduct();
+            if(!mistake){
+                editorController.products.get(editorController.amountOfProducts).setPrice(value);
+                editorController.products.get(editorController.amountOfProducts).setName(txtNameFields.get(editorController.amountOfProducts).getText());
+                printProduct();
+                mistake = false;
+            }
+            else{
+                mistake = false;
+            }
+
 
 
     }
@@ -65,9 +74,7 @@ public class btnCreateController {
             System.out.println("test");
             System.out.println("Name: [" + editorController.products.get(i).getName()+"] "
                     +"Price: [" + editorController.products.get(i).getPrice() + "]");
-
         }
-
         editorController.amountOfProducts++;
     }
 
