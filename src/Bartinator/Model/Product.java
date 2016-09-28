@@ -4,33 +4,36 @@ package Bartinator.Model;
  * Created by Mads on 21-09-2016.
  */
 public class Product {
-    public String name, category;
-    public float price;
+    public String mName, mCategory;
+    public float mPrice;
+
+    public Product(String name, String category, float price) {
+        mName = name;
+        mCategory = category;
+        mPrice = price;
+    }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public String getCategory() {
-        return category;
+        return mCategory;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        mCategory = category;
     }
 
     public float getPrice() {
-        return price;
+        return mPrice;
     }
 
     public void setPrice(float price) {
-        this.price = price;
+        mPrice = price;
     }
-
-
-
 }

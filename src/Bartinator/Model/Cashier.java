@@ -23,7 +23,7 @@ public class Cashier {
     }
 
     public boolean removeProduct(Product product, int quantity){
-
+return true;
     }
 
 
