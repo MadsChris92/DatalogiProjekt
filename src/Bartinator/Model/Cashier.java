@@ -12,6 +12,10 @@ public class Cashier {
 
         if(mCart.containsKey(product)){
 
+            for (Map.Entry<Product,Integer> p: mCart.entrySet()){
+
+            }
+
         } else {
             mCart.put(product, quantity);
         }
