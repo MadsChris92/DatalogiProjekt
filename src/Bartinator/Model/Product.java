@@ -1,11 +1,20 @@
 package Bartinator.Model;
 
-/**
- * Created by Mads on 21-09-2016.
- */
+import javafx.scene.control.Button;
+
+
 public class Product {
-    public String name, category;
-    public float price;
+    private String name, category;
+    private float price;
+    private Button b;
+
+    public Button getB() {
+        return b;
+    }
+
+    public void setB(Button b) {
+        this.b = b;
+    }
 
     public String getName() {
         return name;
