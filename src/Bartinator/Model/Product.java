@@ -6,8 +6,9 @@ import javafx.scene.control.Button;
  * Created by Mads on 21-09-2016.
  */
 public class Product {
-    public String name, category;
-    public float price;
+    private String name, category;
+    private float price;
+    private Button b;
 
     public Button getB() {
         return b;
@@ -16,8 +17,6 @@ public class Product {
     public void setB(Button b) {
         this.b = b;
     }
-
-    public Button b;
 
     public String getName() {
         return name;
