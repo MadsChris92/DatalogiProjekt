@@ -26,7 +26,7 @@ public class Main extends Application {
         b = (Button) root.lookup("#loginBtn");
         Database database = new Database();
         database.setup("malaue4", "Plasward");
-        database.test();
+//        database.test();
 
     }
     public static void main(String[] args) {

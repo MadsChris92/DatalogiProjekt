@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Cashier {
-
+/*
    private Map<Product, Integer> mCart = new LinkedHashMap<>();
 
     public void addProduct(Product product, int quantity){
@@ -25,7 +25,7 @@ public class Cashier {
     public boolean removeProduct(Product product, int quantity){
 
     }
-
+*/
 
 
 
