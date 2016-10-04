@@ -39,8 +39,8 @@ public class editorController {
     }
 
     private void itemHandler(Button b) {
-        b.setText("afjkælsfkslkf.");
         System.out.println("fads");
+        popUpStage.show();
     }
 
     public void startPopUp() throws IOException {
