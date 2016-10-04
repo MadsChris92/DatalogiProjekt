@@ -25,7 +25,7 @@ public class btnCreateController {
     private ArrayList<TextField> txtPriceField = new ArrayList<>();
     ArrayList<TextField> txtCategoriesField = new ArrayList<>();
     private boolean mistake;
-    int count = 0;
+    int currentItem = 0;
 
     public void addDescrip(ActionEvent actionEvent) {
         // TODO: Label tekst skal kunne defineres af brugeren + information skal sendes til database
@@ -44,11 +44,9 @@ public class btnCreateController {
     }
 
     private void applyDescription() {
+        currentItem = editorController.products.size() - 1;
             try {
-                System.out.println("test1");
-                System.out.println(""+txtNameFields.size());
                 value = Float.parseFloat(priceField.getText());
-                System.out.println("test");
             }catch (NumberFormatException ne){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
@@ -60,27 +58,19 @@ public class btnCreateController {
             if(!mistake){
                 editorController.currentProduct.setPrice(value);
                 editorController.currentProduct.setName(nameField.getText());
-
-//                editorController.products.get(editorController.currentItem).setPrice(value);
-//                editorController.products.get(editorController.currentItem).setName(txtNameFields.get(editorController.currentItem).getText());
                 printProduct();
-/*
-                editorController.products.get(editorController.currentItem).getB().setText("Name: [" + editorController.products.get(editorController.currentItem).getName()+"] "
-                        +"\nPrice: [" + editorController.products.get(editorController.currentItem).getPrice() + "]");
-*/
+
+                editorController.products.get(currentItem).getB().setText("Name: [" + editorController.products.get(currentItem).getName()+"] "
+                        +"\nPrice: [" + editorController.products.get(currentItem).getPrice() + "]");
                 mistake = false;
             }
             else{
                 mistake = false;
             }
-
-
-
     }
 
     public void printProduct(){
         for (int i = 0; i < editorController.products.size(); i++) {
-            System.out.println("test");
             System.out.println("Name: [" + editorController.products.get(i).getName()+"] "
                     +"Price: [" + editorController.products.get(i).getPrice() + "]");
         }
