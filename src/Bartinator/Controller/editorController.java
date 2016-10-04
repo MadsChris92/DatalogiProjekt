@@ -24,6 +24,7 @@ public class editorController {
 
     ArrayList<Button> btnList = new ArrayList<Button>();
     static ArrayList<Product> products = new ArrayList<>();
+    static Product currentProduct;
 
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
         ButtonCustom b = new ButtonCustom();
@@ -31,9 +32,8 @@ public class editorController {
         btnContainer.getChildren().add(b);
         btnList.add(b);
         Product p = new Product();
+        currentProduct = p;
         products.add(p);
-        currentItem = products.size() - 1;
-        System.out.println(""+currentItem);
         setBtnPreference();
         startPopUp();
     }
