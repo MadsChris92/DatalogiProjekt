@@ -41,7 +41,6 @@ public class btnCreateController {
             TextField extraDescription = new TextField();
             descripContainer.getChildren().add(extraDescription);
         }
-//        b.setAlignment(Pos.CENTER);
     }
 
     private void applyDescription() {
