@@ -59,9 +59,8 @@ public class loginController {
         System.out.println(username+ ", " +password);
 		if(username.length() == 0) return true; //TODO: Lav en exception når folk prøver at logge ind uden brugernavn
         //TODO: Tjek databasen over brugere
-        Database database = new Database();
-        database.setup("malaue4", "Plasward");
-        return database.verifyLogin(username, password);
+
+        return true;
     }
 
     public void handleBarLogin(ActionEvent actionEvent) {

@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+
+
     public static Stage theStage;
 
     @Override
@@ -25,10 +27,13 @@ public class Main extends Application {
 		System.out.println("friend".hashCode());
 	}
     public static void main(String[] args) {
-        launch(args);
+
+        //launch(args);
+
     }
 
     public static void setPrimaryStage(Scene s){
         theStage.setScene(s);
     }
+
 }
