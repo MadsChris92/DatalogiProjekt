@@ -24,23 +24,28 @@ public class editorController {
 
     ArrayList<Button> btnList = new ArrayList<Button>();
     static ArrayList<Product> products = new ArrayList<>();
+    static Product currentProduct;
+
+    int btnID = 0;
 
     public void addItemHandler(ActionEvent actionEvent) throws IOException {
+        btnID++;
         ButtonCustom b = new ButtonCustom();
-        b.setOnAction(e -> itemHandler(b));
+
         btnContainer.getChildren().add(b);
         btnList.add(b);
         Product p = new Product();
+        b.setOnAction(e -> p.actionHandler());
+        p.setID(btnID-1);
+        currentProduct = p;
         products.add(p);
-        currentItem = products.size() - 1;
-        System.out.println(""+currentItem);
         setBtnPreference();
         startPopUp();
     }
 
-    private void itemHandler(Button b) {
-        b.setText("afjkælsfkslkf.");
-        System.out.println("fads");
+    private void itemHandler(Button b, int ID) {
+        System.out.println(ID);
+ //       popUpStage.show();
     }
 
     public void startPopUp() throws IOException {
