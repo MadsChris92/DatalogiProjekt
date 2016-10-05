@@ -14,7 +14,6 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static Stage theStage;
-    Button b;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -23,8 +22,8 @@ public class Main extends Application {
         theStage.setTitle("Bartinator");
         theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
-        b = (Button) root.lookup("#loginBtn");
-    }
+		System.out.println("friend".hashCode());
+	}
     public static void main(String[] args) {
         launch(args);
     }
