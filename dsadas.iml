@@ -27,6 +27,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="mysql-connector-java-5.1.39-bin" level="project" />
-    <orderEntry type="library" name="Hibernate 5.2.2-5.2.2" level="project" />
+    <orderEntry type="library" name="org.hibernate:hibernate-core:5.2.2.Final" level="project" />
   </component>
 </module>
