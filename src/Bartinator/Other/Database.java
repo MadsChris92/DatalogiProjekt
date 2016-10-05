@@ -36,7 +36,7 @@ public class Database {
 
     public boolean verifyLogin(String username, String password) {
         User user = getUser(username);
-        if (user.password == password.hashCode()) {
+        if (user.password != 0 && user.password == password.hashCode()) {
             System.out.println(user.name + " has logged in");
             return true;
         } else {
