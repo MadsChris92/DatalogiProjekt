@@ -4,6 +4,16 @@ import javafx.scene.control.Button;
 
 
 public class Product {
+    public int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     private String name, category;
     private float price;
     private Button b;
@@ -40,6 +50,9 @@ public class Product {
         this.price = price;
     }
 
+    public void actionHandler(){
+        System.out.println(ID);
+    }
 
 
 }
