@@ -3,16 +3,31 @@ package Bartinator.Other;
 
 import Bartinator.Model.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 
 public class Database {
-    private String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
+    private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
     private MysqlDataSource dataSource;
+
+    // Hold a reusable reference to a SessiionFactory (since only one is needed)
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private static SessionFactory buildSessionFactory() {
+        // create a stadardSeviceRegistry
+        final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        return new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    }
+
 
     /// setupBartinator.users
     // http://stackoverflow.com/questions/2839321/connect-java-to-a-mysql-database
@@ -23,96 +38,119 @@ public class Database {
         dataSource.setServerName(endpoint);
     }
 
-    public boolean verifyLogin(int userid, String password) {
-        User user = getUser(userid);
-        if (user.password == password.hashCode()) {
-            System.out.println(user.name + " has logged in");
-            return true;
-        } else {
-            System.out.println("incorrect password");
-            return false;
-        }
+    public static void stop(){
+		sessionFactory.close();
+	}
+
+
+    @SuppressWarnings("unchecked")
+	private static User fetchUser(String username){
+		// Open a session
+		Session session = sessionFactory.openSession();
+
+		// Create criteria object
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery query = criteriaBuilder.createQuery(User.class);
+		Root<User> userRoot = query.from(User.class);
+		query.select(userRoot);
+		query.where(criteriaBuilder.equal(userRoot.get("username"), username));
+
+		// Get a list of Contact objects according to the criteria object
+		List<User> users = session.createQuery(query).list();
+		User user;
+		if(users.size() > 0) {
+			if(users.size() > 1) System.out.println("Multiple users with the same username");
+			user = users.get(0);
+		}else {
+			user = null; // user not found, or multiple users
+		}
+
+		// Close the session
+		session.close();
+
+		// Return the list of Contacts
+		return user;
+
+	}
+
+    private static List<User> fetchAllUsers(){
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Create criteria object
+        // Criteria criteria = session.createCriteria(User.class); // Apparently deprecated, probably wasn't complicated enough :/
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery query = criteriaBuilder.createQuery(User.class);
+		query.select(query.from(User.class));
+
+        // Get a list of Contact objects according to the criteria object
+        List<User> users = session.createQuery(query).list();
+
+        // Close the session
+        session.close();
+
+        // Return the list of Contacts
+        return users;
     }
 
-    public boolean verifyLogin(String username, String password) {
-        User user = getUser(username);
-        if (user.password != 0 && user.password == password.hashCode()) {
-            System.out.println(user.name + " has logged in");
-            return true;
-        } else {
-            System.out.println("incorrect password");
-            return false;
-        }
+    private static void save(User user){
+        // Open a seesion
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Use the session to save the contact
+        session.save(user);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 
-    private ResultSet queryDatabase(String query) {
-        // TODO: 9/28/16 skift til hibernate måden at gøre ting på
-        ResultSet rs = null;
-        try {
-            Connection conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            return rs;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return rs;
+	private static void remove(User user){
+		// Open a seesion
+		Session session = sessionFactory.openSession();
+
+		// Begin a transaction
+		session.beginTransaction();
+
+		// Use the session to save the contact
+		session.remove(user);
+
+		// Commit the transaction
+		session.getTransaction().commit();
+
+		// Close the session
+		session.close();
+	}
+
+    public static boolean verifyLogin(String username, String password) {
+        // TODO: make a method that fetches just one user, instead of all of them
+        User user = fetchUser(username);
+		if(user != null) {
+			if (!password.equals("") && user.getPassword() == password.hashCode()) {
+				System.out.println(user.getName() + " has logged in");
+				return true;
+			} else {
+				System.out.println("incorrect password");
+				return false;
+			}
+		} else {
+			System.out.println("user not found");
+			return false;
+		}
     }
 
-    private User getUser(String username) {
-        User user = new User();
-        try {
-            ResultSet rs = queryDatabase(String.format("SELECT * FROM Bartinator.users WHERE username='%s'", username));
-            while (rs.next()) {
-                user.username = username;
-                user.name = rs.getString("name");
-                user.userid = rs.getInt("id");
-                user.password = rs.getInt("password");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
+    public static void test(){
+        User testUser = new User();
+        testUser.setName("Hans");
+        testUser.setUsername("hans");
+        testUser.setPassword("hund".hashCode());
+        save(testUser);
+        fetchAllUsers().forEach(System.out::println);
+		remove(testUser);
     }
-
-    private User getUser(int userid) {
-        User user = new User();
-        try {
-            ResultSet rs = queryDatabase(String.format("SELECT * FROM Bartinator.users WHERE id=%d", userid));
-            while (rs.next()) {
-                user.username = rs.getString("username");
-                user.name = rs.getString("name");
-                user.userid = userid;
-                user.password = rs.getInt("password");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-    public void test() {
-        try {
-            Connection conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Bartinator.users");
-
-            while (rs.next()) {
-                System.out.println(rs.getString("name"));
-                if (rs.getInt("id") == 55069 && rs.getInt("password") == "hello world".hashCode()) {
-                    System.out.println(rs.getString("name") + " has logged in");
-                }
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

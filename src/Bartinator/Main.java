@@ -24,16 +24,14 @@ public class Main extends Application {
         theStage.setTitle("Bartinator");
         theStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
-		System.out.println("friend".hashCode());
 	}
     public static void main(String[] args) {
 
+		Database.test();
+
         launch(args);
 
-    }
-
-    public static void setPrimaryStage(Scene s){
-        theStage.setScene(s);
-    }
+		Database.stop();
+	}
 
 }

@@ -1,11 +1,64 @@
 package Bartinator.Model;
 
+import javax.persistence.*;
+
 /**
  * Created by martin on 9/28/16.
  */
+
+@Entity
 public class User {
-    public String name;
-    public String username;
-    public int userid;
-    public int password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userid;
+    @Column
+    private String name;
+    @Column
+    private String username;
+    @Column
+    private int password;
+
+    public User() {}
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getPassword() {
+        return password;
+    }
+
+    public void setPassword(int password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password=" + password +
+                '}';
+    }
 }
