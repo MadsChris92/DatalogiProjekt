@@ -35,7 +35,13 @@ public class editorController {
         btnContainer.getChildren().add(b);
         btnList.add(b);
         Product p = new Product();
-        b.setOnAction(e -> p.actionHandler());
+        b.setOnAction(e -> {
+            try {
+                p.actionHandler();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         p.setID(btnID-1);
         currentProduct = p;
         products.add(p);

@@ -25,6 +25,8 @@ public class btnCreateController {
     public VBox descripContainer;
     private TextField priceField, nameField;
     private boolean mistake, firstTimePressed = true;
+    static int cuurrentProduct;
+
 
     public void addDescrip(ActionEvent actionEvent) {
         // TODO: Label tekst skal kunne defineres af brugeren + information skal sendes til database
