@@ -19,11 +19,11 @@ public class Database {
     private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
     private MysqlDataSource dataSource;
 
-    // Hold a reusable reference to a SessiionFactory (since only one is needed)
+    // Hold a reusable reference to a SessionFactory (since only one is needed)
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        // create a stadardSeviceRegistry
+        // create a stadardServiceRegistry
         final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
