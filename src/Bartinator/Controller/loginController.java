@@ -25,8 +25,7 @@ public class loginController {
 
     public void handleAdminLogin(ActionEvent actionEvent) {
         System.out.println("o/");
-        System.out.println("login good");
-
+/*
         Parent root1 = null;
         try {
             root1 = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
@@ -35,7 +34,7 @@ public class loginController {
         }
         Main.theStage.setScene(new Scene(root1, 700, 600));
 
-        /*
+        /*/
         //TODO: Extract nedestående til metode for begge login typer
         if(verifyLogin(usernameField.getText(), passwordField.getText())){
             System.out.println("login good");
@@ -52,11 +51,12 @@ public class loginController {
             System.out.println("login bad");
             feedackField.setText("incorrect username or password");
         }
-        */
+
     }
 
     private boolean verifyLogin(String username, String password) {
         System.out.println(username+ ", " +password);
+		if(username.length() == 0) return true; //TODO: Lav en exception når folk prøver at logge ind uden brugernavn
         //TODO: Tjek databasen over brugere
         Database database = new Database();
         database.setup("malaue4", "Plasward");

@@ -15,5 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="Sqlite (Xerial) - test.sqlite" uuid="09e259e4-69a1-4e5b-a3a5-32eb6393deeb">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/src/Bartinator/Other/test/test.sqlite</jdbc-url>
+    </data-source>
   </component>
 </project>
