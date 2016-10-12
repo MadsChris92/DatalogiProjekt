@@ -2,9 +2,6 @@ package Bartinator.Model;
 
 import javax.persistence.*;
 
-/**
- * Created by martin on 9/28/16.
- */
 
 @Entity
 public class User {
@@ -17,6 +14,8 @@ public class User {
     private String username;
     @Column
     private int password;
+    @Column
+    private boolean admin;
 
     public User() {}
 
