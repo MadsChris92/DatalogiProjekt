@@ -15,7 +15,7 @@ public class User {
     @Column
     private int password;
     @Column
-    private boolean admin;
+    private boolean adminAccess;
 
     public User() {}
 
