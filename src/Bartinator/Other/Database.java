@@ -127,20 +127,20 @@ public class Database {
 		session.close();
 	}
 
-    public static boolean verifyLogin(String username, String password) {
+    public static User verifyLogin(String username, String password) {
         // TODO: make a method that fetches just one user, instead of all of them
         User user = fetchUser(username);
 		if(user != null) {
 			if (!password.equals("") && user.getPassword() == password.hashCode()) {
 				System.out.println(user.getName() + " has logged in");
-				return true;
+				return user;
 			} else {
 				System.out.println("incorrect password");
-				return false;
+				return null;
 			}
 		} else {
 			System.out.println("user not found");
-			return false;
+			return null;
 		}
     }
 
