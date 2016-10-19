@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-
+@Deprecated
 public class loginController {
 
     public Button adminLoginBtn;
