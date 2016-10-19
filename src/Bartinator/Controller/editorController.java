@@ -22,7 +22,7 @@ public class editorController {
     public Button removeItemBtn;
     static int currentItem;
 
-    ArrayList<Button> btnList = new ArrayList<Button>();
+    static ArrayList<Button> btnList = new ArrayList<Button>();
     static ArrayList<Product> products = new ArrayList<>();
     static Product currentProduct;
 
@@ -66,8 +66,9 @@ public class editorController {
 
     private void setBtnPreference(){
         for (int i = 0; i < products.size(); i++) {
-            products.get(i).setB(btnList.get(i));
-            products.get(i).getB().setMinSize(100,100);
+            btnList.get(i).setMinSize(100,100);
+            //products.get(i).setB(btnList.get(i));
+            //products.get(i).getB().setMinSize(100,100);
         }
     }
 }

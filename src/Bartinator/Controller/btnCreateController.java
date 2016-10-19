@@ -58,7 +58,7 @@ public class btnCreateController {
                 editorController.currentProduct.setName(nameField.getText());
                 printProduct();
 
-                editorController.products.get(currentItem).getB().setText("Name: [" + editorController.products.get(currentItem).getName()+"] "
+                editorController.btnList.get(currentItem).setText("Name: [" + editorController.products.get(currentItem).getName()+"] "
                         +"\nPrice: [" + editorController.products.get(currentItem).getPrice() + "]");
                 mistake = false;
             }

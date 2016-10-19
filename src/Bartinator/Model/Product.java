@@ -9,13 +9,20 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.persistence.*;
 import java.io.IOException;
 
-
+@Entity
 public class Product {
-
-    Stage stage = new Stage();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int ID;
+    @Column
+    private String name, category;
+    @Column
+    private float price;
+
+    public Product(){};
 
     public int getID() {
         return ID;
@@ -23,18 +30,6 @@ public class Product {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    private String name, category;
-    private float price;
-    private Button b;
-
-    public Button getB() {
-        return b;
-    }
-
-    public void setB(Button b) {
-        this.b = b;
     }
 
     public String getName() {
@@ -62,6 +57,7 @@ public class Product {
     }
 
     public void actionHandler() throws IOException {
+        Stage stage = new Stage();
         System.out.println(ID);
         Parent root1;
         root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
@@ -71,5 +67,13 @@ public class Product {
         stage.show();
     }
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

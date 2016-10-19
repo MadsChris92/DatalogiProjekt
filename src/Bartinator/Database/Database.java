@@ -1,9 +1,10 @@
 package Bartinator.Database;
 
 
+import Bartinator.Model.Admin;
 import Bartinator.Model.Consumer;
+import Bartinator.Model.Product;
 import Bartinator.Model.User;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -20,11 +21,8 @@ public class Database {
 
     private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
 
-	private MysqlDataSource dataSource;
-
     // Hold a reusable reference to a SessionFactory (since only one is needed)
     private static final SessionFactory sessionFactory = buildSessionFactory();
-
 
     private static SessionFactory buildSessionFactory() {
         // create a stadardServiceRegistry
@@ -32,35 +30,63 @@ public class Database {
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-
-    /// setupBartinator.users
-    // http://stackoverflow.com/questions/2839321/connect-java-to-a-mysql-database
-    public void setup(String user, String password) {
-        dataSource = new MysqlDataSource();
-        dataSource.setUser(user);
-        dataSource.setPassword(password);
-        dataSource.setServerName(endpoint);
-    }
-
     public static void stop(){
 		sessionFactory.close();
 	}
 
-
-    @SuppressWarnings("unchecked")
-	private static User fetchUser(String username){
+	private static List<?> fetch(Class<?> clazz){
 		// Open a session
 		Session session = sessionFactory.openSession();
 
 		// Create criteria object
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		CriteriaQuery query = criteriaBuilder.createQuery(User.class);
-		Root<User> userRoot = query.from(User.class);
-		query.select(userRoot);
-		query.where(criteriaBuilder.equal(userRoot.get("username"), username));
+		CriteriaQuery query = criteriaBuilder.createQuery(clazz);
+		query.select(query.from(clazz));
 
-		// Get a list of Contact objects according to the criteria object
-		List<User> users = session.createQuery(query).list();
+		// Get a list of objects according to the criteria object
+		List<Object> objects = session.createQuery(query).list();
+
+		// Close the session
+		session.close();
+
+		// Return the list of Objects
+		return objects;
+	}
+
+	private static List<?> fetch(Class<?> clazz, String attribute, Object value){
+
+		// Open a session
+		Session session = sessionFactory.openSession();
+
+		// Create criteria object
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery query = criteriaBuilder.createQuery(clazz);
+		Root<Class> userRoot = query.from(clazz);
+		query.select(userRoot);
+		query.where(criteriaBuilder.equal(userRoot.get(attribute), value));
+
+		// Get a list of objects according to the criteria object
+		List<Object> objects = session.createQuery(query).list();
+
+		// Close the session
+		session.close();
+
+		// Return the list of Objects
+		return objects;
+	}
+
+	@SuppressWarnings("unchecked")
+    private static List<User> fetchAllUsers(){
+		return (List<User>)fetch(User.class);
+    }
+
+	@SuppressWarnings("unchecked")
+	private static User fetchUser(String username){
+		// Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
+		// sql udgaven af det functionen gør er:
+		// SELECT * FROM User WHERE User."username"=username;
+		// hvis der er mere end én bruger med samme brugernavn, så vælger den det første resultat
+		List<User> users = (List<User>) fetch(User.class, "username", username);
 		User user;
 		if(users.size() > 0) {
 			if(users.size() > 1) System.out.println("Multiple users with the same username");
@@ -69,35 +95,10 @@ public class Database {
 			user = null; // user not found, or multiple users
 		}
 
-		// Close the session
-		session.close();
-
-		// Return the list of Contacts
 		return user;
-
 	}
 
-    private static List<User> fetchAllUsers(){
-        // Open a session
-        Session session = sessionFactory.openSession();
-
-        // Create criteria object
-        // Criteria criteria = session.createCriteria(User.class); // Apparently deprecated, probably wasn't complicated enough :/
-		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		CriteriaQuery query = criteriaBuilder.createQuery(User.class);
-		query.select(query.from(User.class));
-
-        // Get a list of Contact objects according to the criteria object
-        List<User> users = session.createQuery(query).list();
-
-        // Close the session
-        session.close();
-
-        // Return the list of Contacts
-        return users;
-    }
-
-    private static void save(Object user){
+    private static void save(Object object){
         // Open a seesion
         Session session = sessionFactory.openSession();
 
@@ -105,7 +106,7 @@ public class Database {
         session.beginTransaction();
 
         // Use the session to save the contact
-        session.save(user);
+        session.save(object);
 
         // Commit the transaction
         session.getTransaction().commit();
@@ -114,7 +115,7 @@ public class Database {
         session.close();
     }
 
-	private static void remove(Object user){
+	private static void remove(Object object){
 		// Open a seesion
 		Session session = sessionFactory.openSession();
 
@@ -122,7 +123,7 @@ public class Database {
 		session.beginTransaction();
 
 		// Use the session to save the contact
-		session.remove(user);
+		session.remove(object);
 
 		// Commit the transaction
 		session.getTransaction().commit();
@@ -131,8 +132,11 @@ public class Database {
 		session.close();
 	}
 
+	public static boolean userExists(String username){
+		return fetchUser(username)!=null;
+	}
+
     public static User verifyLogin(String username, String password) {
-        // TODO: make a method that fetches just one user, instead of all of them
         User user = fetchUser(username);
 		if(user != null) {
 			if (!password.equals("") && user.getPassword() == password.hashCode()) {
@@ -149,7 +153,7 @@ public class Database {
     }
 
     public static void test(){
-        User testUser = new User();
+		Admin testUser = new Admin();
         testUser.setName("Hans");
         testUser.setUsername("hans");
         testUser.setPassword("hund".hashCode());
@@ -158,12 +162,20 @@ public class Database {
 		remove(testUser);
 
 		Consumer testConsumer = new Consumer();
-		testConsumer.setName("Hans");
-		testConsumer.setUsername("hans");
-		testConsumer.setPassword("hund".hashCode());
-		testConsumer.setBalance(100.00);
+		testConsumer.setName("Heksen");
+		testConsumer.setUsername("hex69");
+		testConsumer.setPassword("slikhuset".hashCode());
+		testConsumer.setBalance(420.00);
 		save(testConsumer);
-		//fetchAllUsers().forEach(System.out::println);
-		//remove(testConsumer);
+		fetch(Consumer.class).forEach(System.out::println);
+		remove(testConsumer);
+
+		Product testProduct = new Product();
+		testProduct.setName("Hansens");
+		testProduct.setPrice(15);
+		testProduct.setCategory("Drink");
+		save(testProduct);
+		fetch(Product.class).forEach(System.out::println);
+		remove(testProduct);
 	}
 }
