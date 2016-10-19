@@ -1,8 +1,6 @@
 package Bartinator.Model;
 
 
-import Bartinator.Controller.Product;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

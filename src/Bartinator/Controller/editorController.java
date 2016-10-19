@@ -1,6 +1,7 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.ButtonCustom;
+import Bartinator.Model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
