@@ -2,9 +2,6 @@ package Bartinator.Model;
 
 import javax.persistence.*;
 
-/**
- * Created by martin on 9/28/16.
- */
 
 @Entity
 public class User {
@@ -17,6 +14,8 @@ public class User {
     private String username;
     @Column
     private int password;
+    @Column
+    private boolean adminAccess;
 
     public User() {}
 
@@ -52,6 +51,14 @@ public class User {
         this.password = password;
     }
 
+    public boolean isAdminAccess() {
+        return adminAccess;
+    }
+
+    public void setAdminAccess(boolean adminAccess) {
+        this.adminAccess = adminAccess;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -60,5 +67,31 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password=" + password +
                 '}';
+    }
+
+    public static class UserBuilder{
+        private User user;
+        public UserBuilder(){
+            user = new User();
+        }
+        public UserBuilder withName(String name){
+            user.name = name;
+            return this;
+        }
+        public UserBuilder withUsername(String username){
+            user.username = username;
+            return this;
+        }
+        public UserBuilder withPassword(int password){
+            user.password = password;
+            return this;
+        }
+        public UserBuilder withAdminAccess(boolean adminAccess){
+            user.adminAccess = adminAccess;
+            return this;
+        }
+        public User build(){
+            return user;
+        }
     }
 }

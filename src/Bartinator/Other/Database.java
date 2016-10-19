@@ -19,11 +19,11 @@ public class Database {
     private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
     private MysqlDataSource dataSource;
 
-    // Hold a reusable reference to a SessiionFactory (since only one is needed)
+    // Hold a reusable reference to a SessionFactory (since only one is needed)
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        // create a stadardSeviceRegistry
+        // create a stadardServiceRegistry
         final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
@@ -127,20 +127,20 @@ public class Database {
 		session.close();
 	}
 
-    public static boolean verifyLogin(String username, String password) {
+    public static User verifyLogin(String username, String password) {
         // TODO: make a method that fetches just one user, instead of all of them
         User user = fetchUser(username);
 		if(user != null) {
 			if (!password.equals("") && user.getPassword() == password.hashCode()) {
 				System.out.println(user.getName() + " has logged in");
-				return true;
+				return user;
 			} else {
 				System.out.println("incorrect password");
-				return false;
+				return null;
 			}
 		} else {
 			System.out.println("user not found");
-			return false;
+			return null;
 		}
     }
 

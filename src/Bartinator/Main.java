@@ -22,7 +22,7 @@ public class Main extends Application {
         theStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("View/loginView.fxml"));
         theStage.setTitle("Bartinator");
-        theStage.setScene(new Scene(root, 700, 600));
+        theStage.setScene(new Scene(root, 800, 480));
         primaryStage.show();
 	}
     public static void main(String[] args) {
