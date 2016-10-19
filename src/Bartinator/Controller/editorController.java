@@ -42,7 +42,7 @@ public class editorController {
                 e1.printStackTrace();
             }
         });
-        p.setID(btnID-1);
+        p.setId(btnID-1);
         currentProduct = p;
         products.add(p);
         setBtnPreference();

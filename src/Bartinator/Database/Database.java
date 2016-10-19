@@ -1,10 +1,7 @@
 package Bartinator.Database;
 
 
-import Bartinator.Model.Admin;
-import Bartinator.Model.Consumer;
-import Bartinator.Model.Product;
-import Bartinator.Model.User;
+import Bartinator.Model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -139,8 +136,7 @@ public class Database {
     public static User verifyLogin(String username, String password) {
         User user = fetchUser(username);
 		if(user != null) {
-			if (!password.equals("") && user.getPassword() == password.hashCode()) {
-				System.out.println(user.getName() + " has logged in");
+			if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {
 				return user;
 			} else {
 				System.out.println("incorrect password");
@@ -153,29 +149,44 @@ public class Database {
     }
 
     public static void test(){
-		Admin testUser = new Admin();
-        testUser.setName("Hans");
-        testUser.setUsername("hans");
-        testUser.setPassword("hund".hashCode());
-        save(testUser);
-        fetchAllUsers().forEach(System.out::println);
-		remove(testUser);
+		Admin admin = new Admin();
+        admin.setName("Hans");
+        admin.setUsername("hans");
+        admin.setPassword("hund".hashCode());
+        save(admin);
+        fetch(Admin.class).forEach(System.out::println);
+		remove(admin);
 
-		Consumer testConsumer = new Consumer();
-		testConsumer.setName("Heksen");
-		testConsumer.setUsername("hex69");
-		testConsumer.setPassword("slikhuset".hashCode());
-		testConsumer.setBalance(420.00);
-		save(testConsumer);
+		Consumer consumer = new Consumer();
+		consumer.setName("Heksen");
+		consumer.setUsername("hex69");
+		consumer.setPassword("slikhuset".hashCode());
+		consumer.setBalance(420.00);
+		save(consumer);
 		fetch(Consumer.class).forEach(System.out::println);
-		remove(testConsumer);
+
+		Bartender bartender = new Bartender();
+		bartender.setName("Grethe");
+		bartender.setUsername("greathe");
+		bartender.setPassword("slikhuset".hashCode());
+		save(bartender);
+		fetch(Bartender.class).forEach(System.out::println);
 
 		Product testProduct = new Product();
 		testProduct.setName("Hansens");
 		testProduct.setPrice(15);
 		testProduct.setCategory("Drink");
+		testProduct.getDescriptions().put("alco", "15%");
+		testProduct.getDescriptions().put("year", "Lav et HTML-dokument der definerer JavaScript variable og en funtion der, når den kaldes, viser title1 i dokumentets <title>-tag og som sætter overskrift1 og indhold1 ind i eksisterende <h1> og <article> elementer hvis aktiv er 1, og ellers gør det tilsvarende med title2, overskrift2, og indhold2. Funktionen skal desuden sætte aktiv 2 hvis den er 1, og ellers sætte aktiv til 1. (Dokumentets titel kan tilgås fra JavaScript med document.title.)\n" +
+				"\n" +
+				"Lav nu en knap (for eksempel med et button element) på siden der kalder funktionen når brugeren trykker på den. Resultatet skulle gerne være at brugeren kan skifte mellem to forskellige indhold i browseren ved at trykke på klappen.\n" +
+				"\n" +
+				"Jeres løsning (alle HTML filer, CSS filer, og JavaScript filer) skal uploades til kursets webserver under a4-mapperne under begge jeres mapper. I skal desuden printe alle HTML filer, CSS filer, og JavaScript filer og aflevere dem som beskrevet foroven.");
 		save(testProduct);
 		fetch(Product.class).forEach(System.out::println);
+
 		remove(testProduct);
+		remove(consumer);
+		remove(bartender);
 	}
 }

@@ -24,5 +24,7 @@
         <mapping class="Bartinator.Model.Order"/>
         <mapping class="Bartinator.Model.Consumer"/>
         <mapping class="Bartinator.Model.Admin"/>
+        <mapping class="Bartinator.Model.Bartender"/>
+
     </session-factory>
 </hibernate-configuration>

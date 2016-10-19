@@ -7,27 +7,25 @@ import javax.persistence.*;
 public abstract class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userid;
+	private int id;
 	@Column
 	private String name;
 	@Column
 	private String username;
 	@Column
 	private int password;
-	@Column
-	private boolean adminAccess;
 
 	public User(){};
 	public User(String username) {
 		this.username = username;
 	}
 
-	public int getUserid() {
-		return userid;
+	public int getId() {
+		return id;
 	}
 
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -54,22 +52,18 @@ public abstract class User {
 		this.password = password;
 	}
 
-	public boolean isAdmin() {
+	public boolean isBartender() {
 		return false;
 	}
 
-	public boolean isAdminAccess() {
-		return adminAccess;
-	}
-
-	public void setAdminAccess(boolean adminAccess) {
-		this.adminAccess = adminAccess;
+	public boolean isAdmin() {
+		return false;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
-				"userid=" + userid +
+				"userid=" + id +
 				", name='" + name + '\'' +
 				", username='" + username + '\'' +
 				", password=" + password +
