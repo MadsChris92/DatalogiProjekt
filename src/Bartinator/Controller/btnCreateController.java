@@ -1,19 +1,12 @@
 package Bartinator.Controller;
 
-import Bartinator.Model.Product;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 
 
 public class btnCreateController {
@@ -25,6 +18,7 @@ public class btnCreateController {
     public VBox descripContainer;
     private TextField priceField, nameField;
     private boolean mistake, firstTimePressed = true;
+    static int porductID;
 
     public void addDescrip(ActionEvent actionEvent) {
         // TODO: Label tekst skal kunne defineres af brugeren + information skal sendes til database
@@ -41,6 +35,10 @@ public class btnCreateController {
             TextField extraDescription = new TextField();
             descripContainer.getChildren().add(extraDescription);
         }
+    }
+
+    private void showInfo(){
+        nameField.setText(editorController.products.get());
     }
 
     private void applyDescription() {

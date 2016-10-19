@@ -1,9 +1,19 @@
-package Bartinator.Model;
+package Bartinator.Controller;
 
+import Bartinator.Controller.loginController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class Product {
+
+    Stage stage = new Stage();
     public int ID;
 
     public int getID() {
@@ -50,8 +60,14 @@ public class Product {
         this.price = price;
     }
 
-    public void actionHandler(){
+    public void actionHandler() throws IOException {
         System.out.println(ID);
+        Parent root1;
+        root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
+        stage.setScene(new Scene(root1, 500, 500));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        btnCreateController.porductID = getID();
+        stage.show();
     }
 
 
