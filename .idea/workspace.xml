@@ -78,8 +78,8 @@
       <file leaf-file-name="bartenderView.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Bartinator/View/bartenderView.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-17">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+            <state relative-caret-position="255">
+              <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -872,7 +872,7 @@
       <updated>1476262814289</updated>
       <workItem from="1476262815805" duration="3676000" />
       <workItem from="1476269110487" duration="1426000" />
-      <workItem from="1476274099268" duration="3132000" />
+      <workItem from="1476274099268" duration="5923000" />
     </task>
     <task id="LOCAL-00001" summary="With admin boolean">
       <created>1476268255392</created>
@@ -881,11 +881,18 @@
       <option name="project" value="LOCAL" />
       <updated>1476268255392</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="sdfsfsfsdf">
+      <created>1476868282755</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1476868282755</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8234000" />
+    <option name="totallyTimeSpent" value="11025000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -964,7 +971,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="With admin boolean" />
-    <option name="LAST_COMMIT_MESSAGE" value="With admin boolean" />
+    <MESSAGE value="sdfsfsfsdf" />
+    <option name="LAST_COMMIT_MESSAGE" value="sdfsfsfsdf" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1259,8 +1267,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Bartinator/View/bartenderView.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        <state relative-caret-position="255">
+          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
           <folding />
         </state>
       </provider>

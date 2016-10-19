@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.Controller.bartenderController">
    <top>
       <VBox BorderPane.alignment="CENTER">
@@ -33,6 +32,12 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <HBox>
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Create user" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </top>
@@ -52,4 +57,13 @@
         </tabs>
       </TabPane>
    </left>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField />
+            <Button mnemonicParsing="false" text="Total" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
