@@ -3,7 +3,7 @@ package Bartinator.Controller;
 
 import Bartinator.Main;
 import Bartinator.Model.User;
-import Bartinator.Other.Database;
+import Bartinator.Database.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
