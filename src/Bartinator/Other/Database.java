@@ -1,6 +1,7 @@
 package Bartinator.Other;
 
 
+import Bartinator.Model.Consumer;
 import Bartinator.Model.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.hibernate.Session;
@@ -93,7 +94,7 @@ public class Database {
         return users;
     }
 
-    private static void save(User user){
+    private static void save(Object user){
         // Open a seesion
         Session session = sessionFactory.openSession();
 
@@ -110,7 +111,7 @@ public class Database {
         session.close();
     }
 
-	private static void remove(User user){
+	private static void remove(Object user){
 		// Open a seesion
 		Session session = sessionFactory.openSession();
 
@@ -152,5 +153,14 @@ public class Database {
         save(testUser);
         fetchAllUsers().forEach(System.out::println);
 		remove(testUser);
-    }
+
+		Consumer testConsumer = new Consumer();
+		testConsumer.setName("Hans");
+		testConsumer.setUsername("hans");
+		testConsumer.setPassword("hund".hashCode());
+		testConsumer.setBalance(100.00);
+		save(testConsumer);
+		//fetchAllUsers().forEach(System.out::println);
+		//remove(testConsumer);
+	}
 }
