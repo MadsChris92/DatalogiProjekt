@@ -30,9 +30,9 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-5.1.39-bin" level="project" />
     <orderEntry type="library" name="org.hibernate:hibernate-core:5.2.2.Final" level="project" />
     <orderEntry type="library" name="com.h2database:h2:1.4.191" level="project" />
-    <orderEntry type="library" name="h2-1.4.191" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:5.1.39" level="project" />
   </component>
 </module>

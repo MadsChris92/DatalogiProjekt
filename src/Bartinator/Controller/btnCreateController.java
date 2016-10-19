@@ -18,7 +18,7 @@ public class btnCreateController {
     public VBox descripContainer;
     private TextField priceField, nameField;
     private boolean mistake, firstTimePressed = true;
-    static int porductID;
+    static int productID;
 
     public void addDescrip(ActionEvent actionEvent) {
         // TODO: Label tekst skal kunne defineres af brugeren + information skal sendes til database
@@ -38,7 +38,7 @@ public class btnCreateController {
     }
 
     private void showInfo(){
-        nameField.setText(editorController.products.get());
+        nameField.setText(editorController.products.get(productID).getName());
     }
 
     private void applyDescription() {
