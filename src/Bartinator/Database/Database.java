@@ -1,4 +1,4 @@
-package Bartinator.Other;
+package Bartinator.Database;
 
 
 import Bartinator.Model.Consumer;
@@ -164,6 +164,6 @@ public class Database {
 		testConsumer.setBalance(100.00);
 		save(testConsumer);
 		//fetchAllUsers().forEach(System.out::println);
-		remove(testConsumer);
+		//remove(testConsumer);
 	}
 }
