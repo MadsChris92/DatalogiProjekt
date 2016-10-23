@@ -1,6 +1,5 @@
 package Bartinator.Model;
 
-import Bartinator.Controller.btnCreateController;
 import Bartinator.Controller.loginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -67,7 +66,7 @@ public class Product {
         root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
         stage.setScene(new Scene(root1, 500, 500));
         stage.initModality(Modality.APPLICATION_MODAL);
-        btnCreateController.productID = getID();
+        //btnCreateController.productID = getID();
         stage.show();
     }
 
