@@ -26,15 +26,6 @@ public class editorModel {
 
     public void setProductEdit(Button productEdit) {
         this.productEdit = productEdit;
-
-        productEdit.setOnAction(event -> {
-            try {
-                editProducts();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
     }
 
     public void setCatAdd(Button catAdd) {

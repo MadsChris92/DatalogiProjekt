@@ -1,9 +1,15 @@
 package Bartinator.Controller;
 
+import Bartinator.Main;
 import Bartinator.Model.editorModel;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+
+import java.io.IOException;
 
 
 public class EditorController2 {
@@ -20,5 +26,17 @@ public class EditorController2 {
         em.setProductEdit(productEdit);
         em.setCatEdit(categoryEdit);
         em.setContainer(bottomContainer);
+        productEdit.setOnAction(event -> {
+            try {
+                editProducts();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void editProducts() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/editProducts.fxml"));
+        Main.theStage.setScene(new Scene(root, 800, 480));
     }
 }
