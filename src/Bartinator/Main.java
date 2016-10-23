@@ -23,11 +23,11 @@ public class Main extends Application {
 	}
     public static void main(String[] args) {
 
-		Database.test();
+//		Database.test();
 
         launch(args);
 
-		Database.stop();
+//		Database.stop();
 	}
 
 }
