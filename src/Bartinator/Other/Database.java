@@ -166,6 +166,4 @@ public class Database {
 		//fetchAllUsers().forEach(System.out::println);
 		remove(testConsumer);
 	}
-
-
 }
