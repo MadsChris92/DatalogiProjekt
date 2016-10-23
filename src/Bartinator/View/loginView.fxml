@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.Controller.loginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.Controller.loginControllerNew">
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
@@ -29,7 +29,7 @@
                         <Font name="Helvetica Neue" size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="feedackField" prefHeight="80.0" text="" >
+                <Label fx:id="feedackField" prefHeight="80.0">
                     <font>
                         <Font name="Helvetica Neue" size="15.0" />
                     </font>
@@ -41,7 +41,7 @@
                                 <Font size="23.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="usernameField" promptText="Username" />
+                        <TextField fx:id="mUsernameField" promptText="Username" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
@@ -51,12 +51,12 @@
                                 <Font name="Helvetica Neue" size="23.0" />
                             </font>
                         </Label>
-                        <PasswordField fx:id="passwordField" promptText="Password" />
+                        <PasswordField fx:id="mPasswordField" promptText="Password" />
                     </children>
                 </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                      <Button fx:id="adminLoginBtn" minHeight="70.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="70.0" prefWidth="150.0" text="Administrator Login" textAlignment="CENTER" wrapText="true">
+                      <Button fx:id="adminLoginBtn" minHeight="70.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="70.0" prefWidth="150.0" text="Login" textAlignment="CENTER" wrapText="true">
                           <font>
                               <Font name="Helvetica Neue" size="19.0" />
                           </font>
@@ -64,14 +64,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                       </Button>
-                  <Button fx:id="barLoginBtn" mnemonicParsing="false" onAction="#handleBarLogin" prefHeight="70.0" prefWidth="140.0" text="Bartender Login" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="Helvetica Neue" size="19.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
+                  <CheckBox fx:id="mAdminCheckBox" mnemonicParsing="false" text="As Administrator" />
                </children>
                <padding>
                   <Insets top="10.0" />

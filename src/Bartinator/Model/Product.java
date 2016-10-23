@@ -12,9 +12,8 @@ import java.io.IOException;
 
 
 public class Product {
-    Stage popUpStage;
-    static int currentID;
 
+    Stage stage = new Stage();
     public int ID;
 
     public int getID() {
@@ -63,17 +62,12 @@ public class Product {
 
     public void actionHandler() throws IOException {
         System.out.println(ID);
-
-        startPopUp();
-    }
-
-    public void startPopUp() throws IOException {
         Parent root1;
-        popUpStage = new Stage();
         root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
-        popUpStage.setScene(new Scene(root1, 500, 500));
-        popUpStage.initModality(Modality.APPLICATION_MODAL);
-        popUpStage.show();
+        stage.setScene(new Scene(root1, 500, 500));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //btnCreateController.productID = getID();
+        stage.show();
     }
 
 

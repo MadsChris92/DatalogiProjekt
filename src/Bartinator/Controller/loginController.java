@@ -2,9 +2,9 @@ package Bartinator.Controller;
 
 
 import Bartinator.Main;
-import Bartinator.Other.Database;
+import Bartinator.Model.User;
+import Bartinator.Database.Database;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-
+@Deprecated
 public class loginController {
 
     public Button adminLoginBtn;
@@ -22,45 +22,40 @@ public class loginController {
     public TextField usernameField;
     public PasswordField passwordField;
 
+    private static User currentUser;
+    final private static User debugUser = new User.UserBuilder().withAdminAccess(true).withName("addie").withUsername("addie").build();
+
+
 
     public void handleAdminLogin(ActionEvent actionEvent) {
-        System.out.println("o/");
-/*
-        Parent root1 = null;
-        try {
-            root1 = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Main.theStage.setScene(new Scene(root1, 700, 600));
-
-        /*/
         //TODO: Extract nedestående til metode for begge login typer
-        if(verifyLogin(usernameField.getText(), passwordField.getText())){
+        User user = verifyLogin(usernameField.getText(), passwordField.getText());
+        if(user != null){
             System.out.println("login good");
-
-            Parent root1 = null;
-            try {
-                root1 = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
+            currentUser = user;
+            if(user.isAdminAccess()){
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
+                    Main.theStage.setScene(new Scene(root, 800, 480));
+                } catch (IOException e) {
+                    System.err.println("Failed to load editor window!");
+                    feedackField.setText("login was successful");
+                    e.printStackTrace();
+                }
+            } else {
+                //TODO: bartender login
+                feedackField.setText("Bartender login was successful");
             }
-            Main.theStage.setScene(new Scene(root1, 700, 600));
 
         } else {
             System.out.println("login bad");
-            feedackField.setText("incorrect username or password");
+            feedackField.setText("Incorrect username or password");
         }
-
     }
 
-    private boolean verifyLogin(String username, String password) {
-        System.out.println(username+ ", " +password);
-		if(username.length() == 0) return true; //TODO: Lav en exception når folk prøver at logge ind uden brugernavn
-        //TODO: Tjek databasen over brugere
-        Database database = new Database();
-        database.setup("malaue4", "Plasward");
-        return database.verifyLogin(username, password);
+    private User verifyLogin(String username, String password) {
+		if(username.length() == 0) return debugUser; //TODO: Lav en exception når folk prøver at logge ind uden brugernavn
+        return Database.verifyLogin(username, password);
     }
 
     public void handleBarLogin(ActionEvent actionEvent) {
