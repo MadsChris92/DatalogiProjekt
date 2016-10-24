@@ -18,7 +18,7 @@ public class editorModel {
     private HBox container;
     private Label catLabel;
     private TextField catText;
-    public static ArrayList<String> categories = new ArrayList<>();
+    public static ArrayList<Category> categories = new ArrayList<>();
 
     public void setContainer(HBox container) {
         this.container = container;
@@ -53,7 +53,9 @@ public class editorModel {
         if(catText.getLength() == 0){
             catLabel.setText("Cannot be null");
         }else{
-            categories.add(catText.getText());
+            Category c = new Category();
+            categories.add(c);
+            c.setName(catText.getText());
             container.getChildren().removeAll(catAccept,catLabel,catText);
             System.out.println(catText.getText());
         }
