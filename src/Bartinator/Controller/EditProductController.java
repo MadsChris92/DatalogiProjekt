@@ -12,19 +12,25 @@ import java.util.ArrayList;
 
 
 public class EditProductController {
+    Category activeCategory;
     public TableView productTable;
     final ObservableList<Product> data = FXCollections.observableArrayList();
     ArrayList<Product> ps = new ArrayList<>();
 
     @FXML
     void initialize(){
+        Category c = new Category();
+        c.setName("Bla");
+        c.getColumns().add("name");
+        activeCategory = c;
         for (int i = 0; i < 10; i++) {
             Product p = new Product();
             p.setName("mads" + i);
+            p.setCat(c);
             ps.add(p);
         }
-
-        data.addAll(ps);
+        makeCollums();
+//        data.addAll(ps);
         productTable.setEditable(true);
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
@@ -34,6 +40,10 @@ public class EditProductController {
     }
 
     void makeCollums(){
-
+        for (int i = 0; i < ps.size(); i++) {
+            if(ps.get(i).getCat() == activeCategory){
+                data.add(ps.get(i));
+            }
+        }
     }
 }

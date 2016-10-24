@@ -12,6 +12,15 @@ import java.io.IOException;
 
 
 public class Product {
+    Category cat;
+
+    public Category getCat() {
+        return cat;
+    }
+
+    public void setCat(Category cat) {
+        this.cat = cat;
+    }
 
     Stage stage = new Stage();
     public int ID;
@@ -24,7 +33,7 @@ public class Product {
         this.ID = ID;
     }
 
-    private String name, category;
+    private String name;
     private float price;
     private Button b;
 
@@ -42,14 +51,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public float getPrice() {
