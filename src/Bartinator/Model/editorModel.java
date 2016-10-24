@@ -60,7 +60,9 @@ public class editorModel {
     }
 
     private void editProducts() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../View/editProducts.fxml"));
-        Main.theStage.setScene(new Scene(root, 800, 480));
+//        Parent root = FXMLLoader.load(getClass().getResource("../View/editProducts.fxml"));
+//        Main.theStage.setScene(new Scene(root, 800, 480));
     }
+
+
 }
