@@ -97,7 +97,7 @@ public class Database {
         return users;
     }
 
-    private static void save(Object user){
+    public static void save(Object user){
         // Open a seesion
         Session session = sessionFactory.openSession();
 
