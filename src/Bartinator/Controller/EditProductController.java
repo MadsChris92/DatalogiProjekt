@@ -102,7 +102,6 @@ public class EditProductController {
             p.setPrice(100);
             p.setCat(c);
             ps.add(p);
-
         }
     }
 }
