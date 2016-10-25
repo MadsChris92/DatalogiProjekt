@@ -29,7 +29,7 @@ public class bartenderController {
     }
 
     public void handleCreateConsumer() {
-        Consumer testConsumer = new Consumer();
+        Consumer testConsumer = new Consumer( );
         testConsumer.setName("Hans");
         testConsumer.setUsername("hans");
         testConsumer.setPassword("hund".hashCode());
