@@ -107,8 +107,9 @@ public abstract class MainDataAccessObject {
         admin.setName("Hans");
         admin.setUsername("hans");
         save(admin);
-        fetch(Admin.class).forEach(System.out::println);
+        //fetch(Admin.class).forEach(System.out::println);
 		remove(admin);
+		/*
 
 		Consumer consumer = new Consumer();
 		consumer.setName("Heksen");
@@ -133,7 +134,7 @@ public abstract class MainDataAccessObject {
 		testProduct.setDescription("year", "Lav");
 		save(testProduct);
 		fetch(Product.class).forEach(System.out::println);
-		remove(testProduct);
+		remove(testProduct);*/
 	}
 
 	public static void stop(){
