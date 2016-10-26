@@ -2,9 +2,7 @@ package Bartinator.Model;
 
 import javax.persistence.*;
 
-/**
- * Created by Casper on 19-10-2016.
- */
+
 @Entity
 public class Consumer extends User {
 	@Column

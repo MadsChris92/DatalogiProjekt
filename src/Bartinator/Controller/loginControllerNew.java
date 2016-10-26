@@ -28,7 +28,7 @@ public class loginControllerNew implements Initializable {
     @Override public void initialize(URL location, ResourceBundle resources) {
 
         mVerifier = new LoginVerifier();
-        mAdminCheckBox.setSelected(false);
+        mAdminCheckBox.setSelected(true);
     }
 
     public void handleAdminLogin(ActionEvent actionEvent) {

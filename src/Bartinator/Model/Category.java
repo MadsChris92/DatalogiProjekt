@@ -6,10 +6,6 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Martin on 19-10-2016.
- */
-
 @Entity
 public class Category {
 	@Id
