@@ -22,9 +22,23 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     private ProductDataAccessObject(){
         mProducts = new ArrayList<Product>();
         mProducts.addAll((Collection<? extends Product>) fetch(Product.class));
-
     }
 
+    public List<Product> getProducts() {
+        return mProducts;
+    }
+
+    public void saveProducts(){
+
+        List<Product> currentDBproducts = new ArrayList<Product>();
+        currentDBproducts.addAll((Collection<? extends Product>) fetch(Product.class));
+        for (Product p :mProducts) {
+            if(!currentDBproducts.contains(p)){
+                save(p);
+            }
+        }
 
 
+
+    }
 }

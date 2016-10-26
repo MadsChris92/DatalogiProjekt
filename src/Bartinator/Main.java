@@ -1,6 +1,7 @@
 package Bartinator;
 
 import Bartinator.DataAccessObjects.MainDataAccessObject;
+import Bartinator.Model.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

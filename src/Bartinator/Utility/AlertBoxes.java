@@ -1,9 +1,12 @@
 package Bartinator.Utility;
 
 
+import Bartinator.DataAccessObjects.ProductDataAccessObject;
+import Bartinator.Model.Product;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AlertBoxes {
