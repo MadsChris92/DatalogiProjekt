@@ -22,20 +22,5 @@ public class bartenderController {
             e.printStackTrace();
         }
     }
-    // navn(string), username(string), password(int pga. hash), balance(double),  studentid(int). note til casper
-/*
-    public void handlePrintTest(){
-        System.out.println(textFieldUserName.getText());
-    }
 
-    public void handleCreateConsumer() {
-        Consumer testConsumer = new Consumer( );
-        testConsumer.setName("Hans");
-        testConsumer.setUsername("hans");
-        testConsumer.setPassword("hund".hashCode());
-        testConsumer.setBalance(100.00);
-        Database.save(testConsumer);
-
-    }
-*/
 }
