@@ -31,8 +31,16 @@ public class loginControllerNew implements Initializable {
         mAdminCheckBox.setSelected(true);
     }
 
-    public void handleAdminLogin(ActionEvent actionEvent) {
-        boolean accessGranted = mVerifier.verifyLogin(mUsernameField.getText(),mPasswordField.getText(),mAdminCheckBox.isSelected());
+    public void handleLogin(ActionEvent actionEvent) {
+
+        boolean accessGranted = false;
+        String exceptionMessage = "";
+        try {
+            accessGranted = mVerifier.verifyLogin(mUsernameField.getText(),mPasswordField.getText(),mAdminCheckBox.isSelected());
+        } catch (IOException e) {
+            e.printStackTrace();
+            exceptionMessage = e.getMessage();
+        }
 
         if(accessGranted && mAdminCheckBox.isSelected()){
             try {
@@ -51,7 +59,7 @@ public class loginControllerNew implements Initializable {
                 e.printStackTrace();
             }
         } else if(!accessGranted){
-            AlertBoxes.displayErrorBox("Login failed!", "Sorry, the login information you entered, doesn't give access to the requested system");
+            AlertBoxes.displayErrorBox("Login failed!", exceptionMessage);
         }
     }
 

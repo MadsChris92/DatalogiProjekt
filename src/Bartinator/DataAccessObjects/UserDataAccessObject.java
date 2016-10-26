@@ -58,10 +58,10 @@ public class UserDataAccessObject extends MainDataAccessObject{
             if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {
                 return user;
             } else {
-                throw new IOException("incorrect password");
+                throw new IOException("The Password was incorrect");
             }
         } else {
-			throw new IOException("user not found");
+			throw new IOException("The user was not found");
         }
     }
 

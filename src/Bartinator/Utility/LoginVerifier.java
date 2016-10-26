@@ -3,9 +3,13 @@ package Bartinator.Utility;
 import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Model.User;
 
+import java.io.IOException;
+
 public class LoginVerifier {
 
-    public boolean verifyLogin(String username, String password, boolean adminSelected) {
+
+
+    public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
         boolean accessGranted;
 
@@ -18,23 +22,25 @@ public class LoginVerifier {
         return accessGranted;
     }
 
-    private boolean verifyBartenderLogin(String username, String password) {
+    private boolean verifyBartenderLogin(String username, String password) throws IOException {
 
         boolean accessGranted = false;
 
-		User user = UserDataAccessObject.verifyUser(username, password);
+        User user = UserDataAccessObject.verifyUser(username, password);
 
-		if(user != null && (user.isAdmin() || user.isBartender())){
+
+        if(user != null && (user.isAdmin() || user.isBartender())){
             accessGranted = true;
         }
         return accessGranted;
     }
 
-    private boolean verifyAdminLogin(String username, String password) {
+    private boolean verifyAdminLogin(String username, String password) throws IOException {
 
         boolean accessGranted = false;
 
         User user = UserDataAccessObject.verifyUser(username, password);
+
 
         if(user != null && user.isAdmin()){
             accessGranted = true;

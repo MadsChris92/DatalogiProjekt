@@ -52,7 +52,7 @@
                 </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                      <Button fx:id="adminLoginBtn" minHeight="70.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="70.0" prefWidth="150.0" text="Login" textAlignment="CENTER" wrapText="true">
+                      <Button fx:id="adminLoginBtn" minHeight="70.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="70.0" prefWidth="150.0" text="Login" textAlignment="CENTER" wrapText="true">
                           <font>
                               <Font name="Helvetica Neue" size="19.0" />
                           </font>
