@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 
-public class MainDataAccessObject {
+public abstract class MainDataAccessObject {
 
     private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
 

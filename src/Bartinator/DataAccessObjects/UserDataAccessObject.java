@@ -7,6 +7,10 @@ import java.util.List;
 
 public class UserDataAccessObject extends MainDataAccessObject{
 
+    public static List<User> users;
+
+
+
     @SuppressWarnings("unchecked")
     public static User fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
@@ -24,8 +28,18 @@ public class UserDataAccessObject extends MainDataAccessObject{
         return user;
     }
 
+
+    public static List<User> getUsers() {
+        if(users == null){
+
+        }
+
+        return users;
+    }
     @SuppressWarnings("unchecked")
-    public static List<User> fetchAllUsers(){
+    private static List<User> fetchAllUsers(){
+
+
         return (List<User>)fetch(User.class);
     }
 

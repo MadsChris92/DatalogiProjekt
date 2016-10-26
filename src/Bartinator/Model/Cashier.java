@@ -43,8 +43,8 @@ public class Cashier {
         }
     }
 
-    public int checkOut(){
-        int sum = 0;
+    public double checkOut(){
+        double sum = 0;
         for (Map.Entry<Product,Integer> p : mCart.entrySet()) {
             sum += (p.getValue()*p.getKey().getPrice());
         }
