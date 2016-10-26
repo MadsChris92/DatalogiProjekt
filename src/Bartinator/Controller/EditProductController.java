@@ -1,27 +1,31 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.*;
+import Bartinator.Utility.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.util.ArrayList;
 
 
 public class EditProductController {
     public ChoiceBox categoryMenu;
+    public ListView listViewCol;
     private Category activeCategory;
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
     private final ObservableList<String> catData = FXCollections.observableArrayList();
+    private final ObservableList<String> catColumns = FXCollections.observableArrayList();
     private ArrayList<TableColumn<Product, ?>> columns = new ArrayList<>();
     private ArrayList<Product> ps = new ArrayList<>();
 
@@ -33,13 +37,22 @@ public class EditProductController {
         setCategories();
         makeColumns();
         populateCells();
-
+        setListView();
 
 
         productTable.getColumns().addAll(columns);
         productTable.setItems(data);
         categoryMenu.setItems(catData);
         productTable.setEditable(true);
+    }
+
+    void setListView(){
+        listViewCol.setMaxWidth(20);
+        catColumns.clear();
+        listViewCol.getItems().clear();
+
+        catColumns.addAll(activeCategory.getColumns());
+        listViewCol.setItems(catColumns);
     }
 
     void setCategories(){
@@ -57,6 +70,7 @@ public class EditProductController {
                         populateCells();
                         productTable.getColumns().addAll(columns);
                         productTable.setItems(data);
+                        setListView();
                     }
                 }
         );
@@ -81,13 +95,36 @@ public class EditProductController {
                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                columns.add(tableColumn);
                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-                tableColumn.setEditable(true);
+                tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                tableColumn.setOnEditCommit(
+                        new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
+                            @Override
+                            public void handle(TableColumn.CellEditEvent<Product, String> t) {
+                                ((Product) t.getTableView().getItems().get(
+                                        t.getTablePosition().getRow())
+                                ).setName(t.getNewValue());
+                            }
+                        }
+                );
             }
             if(i == 2){
-                TableColumn<Product, Integer> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
+                TableColumn<Product, Double> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                 columns.add(tableColumn);
-                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("price"));
-            }
+                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+                tableColumn.setCellFactory(TextFieldTableCell.<Product, Double>forTableColumn(new DoubleStringConverter()));
+                    tableColumn.setOnEditCommit(
+                            new EventHandler<TableColumn.CellEditEvent<Product, Double>>() {
+                                @Override
+                                public void handle(TableColumn.CellEditEvent<Product, Double> t) {
+                                    ((Product) t.getTableView().getItems().get(
+                                            t.getTablePosition().getRow())
+                                    ).setPrice(t.getNewValue());
+
+                                }
+                            }
+                    );
+                }
+
             if(i > 2){
                 TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                 columns.add(tableColumn);
@@ -113,14 +150,19 @@ public class EditProductController {
         c1.setName("test1");
         c.setName("test2");
         activeCategory = c;
-
+        /*
         c1.getColumns().add("name1");
         c1.getColumns().add("price2");
         c1.getColumns().add("id");
+        c1.getColumns().add("test");
+        */
+        for (int i = 0; i < 10; i++) {
+            c1.getColumns().add(i + "");
+        }
 
         c.getColumns().add("ID");
-        c.getColumns().add("name");
-        c.getColumns().add("price");
+        c.getColumns().add("Name");
+        c.getColumns().add("Price");
 
 
         for (int i = 0; i < 10; i++) {

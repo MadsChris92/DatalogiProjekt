@@ -12,7 +12,7 @@ public class Product {
     @Column
     private String name, category;
     @Column
-    private float price;
+    private double price;
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
@@ -52,11 +52,11 @@ public class Product {
         this.category = category;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
