@@ -1,7 +1,6 @@
 package Bartinator.Utility;
 
-
-import Bartinator.Database.MainDAO;
+import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Model.User;
 
 public class LoginVerifier {
@@ -23,7 +22,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-		User user = MainDAO.verifyLogin(username, password);
+		User user = UserDataAccessObject.verifyLogin(username, password);
 
 		if(user != null && (user.isAdmin() || user.isBartender())){
             accessGranted = true;
@@ -35,7 +34,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        User user = MainDAO.verifyLogin(username, password);
+        User user = UserDataAccessObject.verifyLogin(username, password);
 
         if(user != null && user.isAdmin()){
             accessGranted = true;
