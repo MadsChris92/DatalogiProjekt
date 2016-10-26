@@ -35,10 +35,11 @@ public class EditProductController {
         populateCells();
 
 
-        productTable.setEditable(true);
+
         productTable.getColumns().addAll(columns);
         productTable.setItems(data);
         categoryMenu.setItems(catData);
+        productTable.setEditable(true);
     }
 
     void setCategories(){
@@ -80,13 +81,18 @@ public class EditProductController {
                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                columns.add(tableColumn);
                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+                tableColumn.setEditable(true);
             }
             if(i == 2){
                 TableColumn<Product, Integer> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                 columns.add(tableColumn);
                 tableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("price"));
             }
-
+            if(i > 2){
+                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
+                columns.add(tableColumn);
+//                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>());
+            }
         }
     }
 
@@ -94,7 +100,6 @@ public class EditProductController {
         for (int i = 0; i < ps.size(); i++) {
 
             if(ps.get(i).getCat() == activeCategory){
-
                 data.add(ps.get(i));
             }
         }
