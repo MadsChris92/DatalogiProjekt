@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 
-
 public class ProductDataAccessObject extends MainDataAccessObject {
 
     private static final ProductDataAccessObject instance = new ProductDataAccessObject();
@@ -29,7 +28,6 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     }
 
     public void saveProducts(){
-
         List<Product> currentDBproducts = new ArrayList<Product>();
         currentDBproducts.addAll((Collection<? extends Product>) fetch(Product.class));
         for (Product p :mProducts) {
@@ -37,8 +35,5 @@ public class ProductDataAccessObject extends MainDataAccessObject {
                 save(p);
             }
         }
-
-
-
     }
 }

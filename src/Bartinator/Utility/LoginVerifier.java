@@ -22,7 +22,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-		User user = UserDataAccessObject.verifyLogin(username, password);
+		User user = UserDataAccessObject.verifyUser(username, password);
 
 		if(user != null && (user.isAdmin() || user.isBartender())){
             accessGranted = true;
@@ -34,7 +34,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        User user = UserDataAccessObject.verifyLogin(username, password);
+        User user = UserDataAccessObject.verifyUser(username, password);
 
         if(user != null && user.isAdmin()){
             accessGranted = true;

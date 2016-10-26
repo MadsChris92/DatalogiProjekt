@@ -3,12 +3,18 @@ package Bartinator.DataAccessObjects;
 
 import Bartinator.Model.User;
 
+import java.io.IOException;
 import java.util.List;
 
 public class UserDataAccessObject extends MainDataAccessObject{
 
-    public static List<User> users;
+	private static final UserDataAccessObject instance = new UserDataAccessObject();
 
+	public static UserDataAccessObject getInstance(){
+		return instance;
+	}
+
+    public static List<User> users;
 
 
     @SuppressWarnings("unchecked")
@@ -31,9 +37,8 @@ public class UserDataAccessObject extends MainDataAccessObject{
 
     public static List<User> getUsers() {
         if(users == null){
-
+			fetchAllUsers();
         }
-
         return users;
     }
     @SuppressWarnings("unchecked")
@@ -47,18 +52,16 @@ public class UserDataAccessObject extends MainDataAccessObject{
         return fetchUserFromUsername(username)!=null;
     }
 
-    public static User verifyLogin(String username, String password) {
+    public static User verifyUser(String username, String password) throws IOException {
         User user = fetchUserFromUsername(username);
         if(user != null) {
             if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {
                 return user;
             } else {
-                System.out.println("incorrect password");
-                return null;
+                throw new IOException("incorrect password");
             }
         } else {
-            System.out.println("user not found");
-            return null;
+			throw new IOException("user not found");
         }
     }
 
