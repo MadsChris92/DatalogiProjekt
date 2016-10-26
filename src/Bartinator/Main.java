@@ -1,6 +1,7 @@
 package Bartinator;
 
-import Bartinator.Database.MainDAO;
+import Bartinator.DataAccessObjects.MainDataAccessObject;
+import Bartinator.Model.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,11 +24,11 @@ public class Main extends Application {
 	}
     public static void main(String[] args) {
 
-		MainDAO.test();
+//		MainDataAccessObject.test();
 
         launch(args);
 
-		MainDAO.stop();
+		MainDataAccessObject.stop();
 	}
 
 }

@@ -12,7 +12,7 @@ public class Product {
     @Column
     private String name, category;
     @Column
-    private float price;
+    private double price;
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
@@ -52,11 +52,11 @@ public class Product {
         this.category = category;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -67,6 +67,21 @@ public class Product {
             descriptions.put(key, value);
         }
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Float.compare(product.price, price) != 0) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (category != null ? !category.equals(product.category) : product.category != null) return false;
+        if (descriptions != null ? !descriptions.equals(product.descriptions) : product.descriptions != null)
+            return false;
+        return cat != null ? cat.equals(product.cat) : product.cat == null;
+    }
+
 
     public Map<String, String> getDescriptions() {
         return descriptions;

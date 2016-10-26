@@ -1,6 +1,6 @@
 package Bartinator.Controller;
 
-import Bartinator.Database.MainDAO;
+import Bartinator.DataAccessObjects.MainDataAccessObject;
 import Bartinator.Model.Consumer;
 import javafx.scene.control.TextField;
 
@@ -27,7 +27,7 @@ public class CreateConsumerController {
             testConsumer.setPassword(textFieldPassword.getText().hashCode());
             testConsumer.setBalance(Double.parseDouble(textFieldBalance.getText()));
             testConsumer.setStudentID(Integer.parseInt(textFieldStudentID.getText()));
-            MainDAO.save(testConsumer);
+            MainDataAccessObject.save(testConsumer);
         }catch (Exception e) {
             System.err.println("Failed to load create consumer!");
             e.printStackTrace();

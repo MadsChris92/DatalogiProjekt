@@ -1,7 +1,7 @@
 
 <hibernate-configuration>
     <session-factory>
-        <!-- MainDAO connection setting -->
+        <!-- MainDataAccessObject connection setting -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">
             jdbc:mysql://datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com:3306/Bartinator
