@@ -23,6 +23,10 @@
         <mapping class="Bartinator.Model.Product"/>
         <mapping class="Bartinator.Model.Order"/>
         <mapping class="Bartinator.Model.Consumer"/>
+        <mapping class="Bartinator.Model.Admin"/>
+        <mapping class="Bartinator.Model.Bartender"/>
+
+        <mapping class="Bartinator.Model.Consumer"/>
         <mapping class="Bartinator.Model.Category"/>
     </session-factory>
 </hibernate-configuration>

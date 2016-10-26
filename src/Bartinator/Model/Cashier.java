@@ -14,7 +14,7 @@ public class Cashier {
 
             //TODO: Kan gøres mere simpelt -> Tjek dokumentationen Map
             for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
-                if (p.getKey().getID() == product.getID()) {
+                if (p.getKey().getId() == product.getId()) {
                     int currValue = mCart.get(product);
                     mCart.replace(product, currValue + quantity);
                 }

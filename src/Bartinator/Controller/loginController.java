@@ -2,6 +2,7 @@ package Bartinator.Controller;
 
 
 import Bartinator.Main;
+import Bartinator.Model.Admin;
 import Bartinator.Model.User;
 import Bartinator.Database.Database;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ public class loginController {
     public PasswordField passwordField;
 
     private static User currentUser;
-    final private static User debugUser = new User.UserBuilder().withAdminAccess(true).withName("addie").withUsername("addie").build();
+    final private static User debugUser = new Admin("addie");
 
 
 
@@ -33,7 +34,7 @@ public class loginController {
         if(user != null){
             System.out.println("login good");
             currentUser = user;
-            if(user.isAdminAccess()){
+            if(user.isAdmin()){
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("../View/editor.fxml"));
                     Main.theStage.setScene(new Scene(root, 800, 480));
