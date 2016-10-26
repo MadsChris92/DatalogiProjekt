@@ -61,6 +61,18 @@ public class Product {
         this.price = price;
     }
 
+    public void setDescription(String key, String value){
+        if(descriptions.containsKey(key)){
+            descriptions.replace(key, value);
+        } else {
+            descriptions.put(key, value);
+        }
+    }
+
+    public Map<String, String> getDescriptions() {
+        return descriptions;
+    }
+
     public void actionHandler() throws IOException {
         Stage stage = new Stage();
         System.out.println(id);
@@ -81,9 +93,5 @@ public class Product {
                 ", price=" + price +
                 ", descriptions=" + descriptions +
                 '}';
-    }
-
-    public Map<String, String> getDescriptions() {
-        return descriptions;
     }
 }
