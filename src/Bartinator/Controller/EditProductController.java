@@ -152,7 +152,6 @@ public class EditProductController {
 
     private void populateCells(){
         for (int i = 0; i < ps.size(); i++) {
-
             if(ps.get(i).getCat() == activeCategory){
                 data.add(ps.get(i));
             }
