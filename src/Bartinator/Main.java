@@ -23,7 +23,7 @@ public class Main extends Application {
 	}
     public static void main(String[] args) {
 
-//		MainDAO.test();
+		MainDAO.test();
 
         launch(args);
 
