@@ -40,7 +40,7 @@
                             <Font size="23.0"/>
                         </font>
                     </Label>
-                    <TextField fx:id="mUsernameField" promptText="Username"/>
+                    <TextField fx:id="mUsernameField" promptText="Username" onAction="#handleLogin"/>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                     <Label alignment="CENTER" contentDisplay="CENTER" text="Password: ">
@@ -48,7 +48,7 @@
                             <Font name="Helvetica Neue" size="23.0"/>
                         </font>
                     </Label>
-                    <PasswordField fx:id="mPasswordField" promptText="Password"/>
+                    <PasswordField fx:id="mPasswordField" promptText="Password" onAction="#handleLogin"/>
                 </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
