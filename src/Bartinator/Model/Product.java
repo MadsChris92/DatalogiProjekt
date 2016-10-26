@@ -1,7 +1,6 @@
 package Bartinator.Model;
 
 import Bartinator.Controller.btnCreateController;
-import Bartinator.Controller.loginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

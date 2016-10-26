@@ -11,8 +11,6 @@ public class Cashier {
     public void addProduct(Product product, int quantity) {
 
         if (mCart.containsKey(product)) {
-
-            //TODO: Kan gøres mere simpelt -> Tjek dokumentationen Map
             for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
                 if (p.getKey().getID() == product.getID()) {
                     int currValue = mCart.get(product);
@@ -43,8 +41,8 @@ public class Cashier {
         }
     }
 
-    public int checkOut(){
-        int sum = 0;
+    public double checkOut(){
+        double sum = 0;
         for (Map.Entry<Product,Integer> p : mCart.entrySet()) {
             sum += (p.getValue()*p.getKey().getPrice());
         }
