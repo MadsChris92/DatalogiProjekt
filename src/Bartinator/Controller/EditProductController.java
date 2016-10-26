@@ -10,7 +10,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 public class EditProductController {
     public ChoiceBox categoryMenu;
     public ListView listViewCol;
+    public TextField txtFieldRename;
+    public Button btnApplyDescripRename;
     private Category activeCategory;
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
@@ -47,13 +51,28 @@ public class EditProductController {
     }
 
     void setListView(){
-        listViewCol.setMaxWidth(20);
+        listViewCol.setMaxWidth(150);
         catColumns.clear();
         listViewCol.getItems().clear();
-
         catColumns.addAll(activeCategory.getColumns());
         listViewCol.setItems(catColumns);
+        listViewCol.setEditable(true);
+        listViewCol.setCellFactory(TextFieldListCell.forListView());
+        listViewCol.setOnEditCommit(new EventHandler<ListView.EditEvent>() {
+            @Override
+            public void handle(ListView.EditEvent event) {
+                activeCategory.getColumns().set(event.getIndex(), event.getNewValue().toString());
+                resetTable();
+                makeColumns();
+                populateCells();
+                productTable.getColumns().addAll(columns);
+                productTable.setItems(data);
+                setListView();
+            }
+        });
     }
+
+
 
     void setCategories(){
         for (int i = 0; i < editorModel.categories.size(); i++) {
@@ -168,7 +187,7 @@ public class EditProductController {
         for (int i = 0; i < 10; i++) {
             Product p = new Product();
             p.setName("mads" + i);
-            p.setPrice(100);
+            p.setPrice(150);
             p.setCat(c);
             p.setId(i);
             ps.add(p);
