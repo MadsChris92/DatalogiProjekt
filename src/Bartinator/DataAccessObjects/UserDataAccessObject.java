@@ -16,8 +16,6 @@ public class UserDataAccessObject extends MainDataAccessObject{
 
     public static List<User> users;
 
-
-    @SuppressWarnings("unchecked")
     public static User fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
         // sql udgaven af det functionen gør er:
@@ -35,24 +33,28 @@ public class UserDataAccessObject extends MainDataAccessObject{
     }
 
 
-    public static List<User> getUsers() {
+    @Deprecated
+    public  List<User> getUsers() throws IOException {
         if(users == null){
 			fetchAllUsers();
         }
         return users;
     }
+
     @SuppressWarnings("unchecked")
-    private static List<User> fetchAllUsers(){
-
-
-        return (List<User>)fetch(User.class);
+	public  List<User> fetchAllUsers() throws IOException {
+		List<User> users = (List<User>)fetch(User.class);
+		if(users != null){
+			return users;
+		}
+		throw new IOException("Fetching users failed");
     }
 
-    public static boolean userExists(String username){
+    public boolean userExists(String username){
         return fetchUserFromUsername(username)!=null;
     }
 
-    public static User verifyUser(String username, String password) throws IOException {
+    public User verifyUser(String username, String password) throws IOException {
         User user = fetchUserFromUsername(username);
         if(user != null) {
             if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {

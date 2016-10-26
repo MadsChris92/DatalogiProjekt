@@ -74,7 +74,7 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (Float.compare(product.price, price) != 0) return false;
+        if (Double.compare(product.price, price) != 0) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (category != null ? !category.equals(product.category) : product.category != null) return false;
         if (descriptions != null ? !descriptions.equals(product.descriptions) : product.descriptions != null)

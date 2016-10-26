@@ -15,8 +15,9 @@ public abstract class User {
 	@Column
 	private int password;
 
-	public User(){};
-	public User(String username) {
+	protected User(){};
+
+	public User(String name, String username, String password) {
 		this.username = username;
 	}
 

@@ -102,7 +102,7 @@ public abstract class MainDataAccessObject {
 		session.close();
 	}
 
-    public static void test(){
+   /* public static void test(){
 		Admin admin = new Admin();
         admin.setName("Hans");
         admin.setUsername("hans");
@@ -134,7 +134,7 @@ public abstract class MainDataAccessObject {
 		save(testProduct);
 		fetch(Product.class).forEach(System.out::println);
 		remove(testProduct);
-	}
+	}*/
 
 	public static void stop(){
 		sessionFactory.close();
