@@ -63,11 +63,7 @@ public class EditProductController {
             public void handle(ListView.EditEvent event) {
                 activeCategory.getColumns().set(event.getIndex(), event.getNewValue().toString());
                 resetTable();
-                makeColumns();
-                populateCells();
-                productTable.getColumns().addAll(columns);
-                productTable.setItems(data);
-                setListView();
+
             }
         });
     }
@@ -85,11 +81,7 @@ public class EditProductController {
                         activeCategory = editorModel.categories.get(newValue.intValue());
                         System.out.println(activeCategory.getName());
                         resetTable();
-                        makeColumns();
-                        populateCells();
-                        productTable.getColumns().addAll(columns);
-                        productTable.setItems(data);
-                        setListView();
+
                     }
                 }
         );
@@ -100,6 +92,12 @@ public class EditProductController {
         productTable.getItems().clear();
         columns.clear();
         data.clear();
+
+        makeColumns();
+        populateCells();
+        productTable.getColumns().addAll(columns);
+        productTable.setItems(data);
+        setListView();
     }
 
     private void makeColumns(){
