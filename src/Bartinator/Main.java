@@ -27,7 +27,7 @@ public class Main extends Application {
 
         launch(args);
 
-//		Database.stop();
+		Database.stop();
 	}
 
 }

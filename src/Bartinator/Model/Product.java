@@ -25,7 +25,7 @@ public class Product {
     private float price;
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String, String> descriptions = new HashMap<>();
-    @Column
+    @ManyToOne
     private Category cat;
 
     public Category getCat() {

@@ -123,7 +123,7 @@ public class EditProductController {
             p.setName("mads" + i);
             p.setPrice(100);
             p.setCat(c);
-            p.setID(i);
+            p.setId(i);
             ps.add(p);
         }
     }
