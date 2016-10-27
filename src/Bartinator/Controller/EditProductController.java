@@ -1,7 +1,6 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.*;
-import Bartinator.Utility.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,10 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.util.ArrayList;
 
@@ -25,6 +21,7 @@ public class EditProductController {
     public ListView listViewCol;
     public TextField txtFieldRename;
     public Button btnApplyDescripRename;
+    public Button btnRemoveColumn;
     private Category activeCategory;
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
@@ -32,6 +29,7 @@ public class EditProductController {
     private final ObservableList<String> catColumns = FXCollections.observableArrayList();
     private ArrayList<TableColumn<Product, ?>> columns = new ArrayList<>();
     private ArrayList<Product> ps = new ArrayList<>();
+    int activecolumn;
 
     @FXML
     void initialize(){
@@ -48,10 +46,13 @@ public class EditProductController {
         productTable.setItems(data);
         categoryMenu.setItems(catData);
         productTable.setEditable(true);
+
     }
 
     void setListView(){
-        listViewCol.setMaxWidth(150);
+        listViewCol.setMinWidth(120);
+        listViewCol.setMinHeight(300);
+
         catColumns.clear();
         listViewCol.getItems().clear();
         catColumns.addAll(activeCategory.getColumns());
@@ -62,13 +63,28 @@ public class EditProductController {
             @Override
             public void handle(ListView.EditEvent event) {
                 activeCategory.getColumns().set(event.getIndex(), event.getNewValue().toString());
-                resetTable();
-
+                updateTable();
             }
+        });
+        listViewCol.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                activecolumn = newValue.intValue();
+                btnRemoveColumn.setOnAction(event -> removeColumn());
+            }
+
+
         });
     }
 
+    private void removeColumn() {
+        if(activecolumn > 2) {
+            activeCategory.getColumns().remove(activecolumn);
+            updateTable();
+        }else{
 
+        }
+    }
 
     void setCategories(){
         for (int i = 0; i < editorModel.categories.size(); i++) {
@@ -80,14 +96,13 @@ public class EditProductController {
                     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                         activeCategory = editorModel.categories.get(newValue.intValue());
                         System.out.println(activeCategory.getName());
-                        resetTable();
-
+                        updateTable();
                     }
                 }
         );
     }
 
-    private void resetTable(){
+    private void updateTable(){
         productTable.getColumns().removeAll(columns);
         productTable.getItems().clear();
         columns.clear();
@@ -173,7 +188,7 @@ public class EditProductController {
         c1.getColumns().add("test");
         */
         for (int i = 0; i < 10; i++) {
-            c1.getColumns().add(i + "");
+            c1.getColumns().add(i + ". test");
         }
 
         c.getColumns().add("ID");

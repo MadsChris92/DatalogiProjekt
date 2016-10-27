@@ -20,7 +20,7 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 
     private ProductDataAccessObject(){
         mProducts = new ArrayList<Product>();
-        mProducts.addAll((Collection<? extends Product>) fetch(Product.class));
+        mProducts.addAll((List<Product>) fetch(Product.class));
     }
 
     public List<Product> getProducts() {
