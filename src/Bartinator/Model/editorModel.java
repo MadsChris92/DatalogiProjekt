@@ -62,7 +62,7 @@ public class editorModel {
     }
 
     private void editProducts() throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("../View/editProducts.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("../Bartinator.View/editProducts.fxml"));
 //        Main.theStage.setScene(new Scene(root, 800, 480));
     }
 

@@ -91,7 +91,7 @@ public class Product {
         Stage stage = new Stage();
         System.out.println(id);
         Parent root1;
-        root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
+        root1 = FXMLLoader.load(loginController.class.getResource("../Bartinator.View/btnCreateMenu.fxml"));
         stage.setScene(new Scene(root1, 500, 500));
         stage.initModality(Modality.APPLICATION_MODAL);
         btnCreateController.productID = getId();

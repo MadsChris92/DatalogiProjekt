@@ -44,7 +44,7 @@ public class loginControllerNew implements Initializable {
 
         if(accessGranted && mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("../View/adminMainMenu.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/adminMainMenu.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load adminMainMenu window!");
@@ -52,7 +52,7 @@ public class loginControllerNew implements Initializable {
             }
         } else if(accessGranted && !mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("../View/bartenderView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/bartenderView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load bartenderView window!");
