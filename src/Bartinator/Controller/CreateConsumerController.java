@@ -25,8 +25,8 @@ public class CreateConsumerController {
             testConsumer.setName(textFieldName.getText());
             testConsumer.setUsername(textFieldUserName.getText());
             testConsumer.setPassword(textFieldPassword.getText().hashCode());
-            testConsumer.setBalance(Double.parseDouble(textFieldBalance.getText()));
-            testConsumer.setStudentID(Integer.parseInt(textFieldStudentID.getText()));
+            testConsumer.setMBalance(Double.parseDouble(textFieldBalance.getText()));
+            testConsumer.setMStudentID(Integer.parseInt(textFieldStudentID.getText()));
             MainDataAccessObject.save(testConsumer);
         }catch (Exception e) {
             System.err.println("Failed to load create consumer!");

@@ -36,6 +36,7 @@ public class employeeManageMenuController implements Initializable {
 
         mUserDAO = UserDataAccessObject.getInstance();
         try {
+            //TODO: Fetcher metode returnere null???
             data = FXCollections.observableList(mUserDAO.fetchAllUsers());
         } catch (IOException e) {
             e.printStackTrace();
