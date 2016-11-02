@@ -35,15 +35,19 @@ public class bartenderController implements Initializable{
     @Override public void initialize(URL location, ResourceBundle resources) {
         mProductDAO = ProductDataAccessObject.getInstance();
         mCashier = new Cashier();
+        btnGrid.setGridLinesVisible(true);
 
         displaySelectedCat();
 
     }
     private void displaySelectedCat() {
+        System.out.println("Displaying: " + selectedCat);
+
         List<Button> buttons = createBtnList();
         int rowCount = 0;
         int colomnCount = 0;
         for (Button btn: buttons) {
+            System.out.println("Adding Button to C: " + colomnCount + " Row: " + rowCount);
             btnGrid.add(btn,colomnCount,rowCount);
             colomnCount++;
             if (colomnCount >= 4){
@@ -53,20 +57,24 @@ public class bartenderController implements Initializable{
         }
 
 
+
     }
     private List<Button> createBtnList() {
+        System.out.println("Button create called!!!");
         List<Button> buttons = new ArrayList<>();
         if(selectedCat != null) {
             List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
             buttons.add(new Button("<-"));
             for (Product p : products) {
+                System.out.println("Fetched product: " + p.toString());
                 Button btn = new Button(p.getName() + "-" + p.getId());
                 btn.setOnAction(handleProductBtn);
                 buttons.add(btn);
             }
-        } else {
+        } else if(selectedCat == null) {
             List<Category> categorys = mProductDAO.getCategories();
             for (Category c : categorys) {
+                System.out.println("Fetched product: " + c.toString());
                 Button btn = new Button(c.getName());
                 btn.setOnAction(handleCatBtn);
                 buttons.add(btn);
