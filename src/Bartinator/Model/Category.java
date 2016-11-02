@@ -39,4 +39,8 @@ public class Category {
 	public void removeColumn(String name){
 		columns.remove(name);
 	}
+
+	public boolean contains(Product product){
+		return product.getCat().getName().equals(this.name);
+	}
 }

@@ -1,5 +1,7 @@
 package Bartinator.Model;
 
+import javafx.collections.ObservableList;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     @Column
-    private String name, category;
+    private String name;
     @Column
     private double price;
     @ElementCollection(fetch = FetchType.EAGER)
@@ -44,14 +46,6 @@ public class Product {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -68,20 +62,23 @@ public class Product {
         }
     }
 
-    @Override public boolean equals(Object o) {
+
+
+    @Override
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Product product = (Product) o;
 
+        if (id != product.id) return false;
         if (Double.compare(product.price, price) != 0) return false;
-        if (name != null ? !name.equals(product.name) : product.name != null) return false;
-        if (category != null ? !category.equals(product.category) : product.category != null) return false;
+        if (!name.equals(product.name)) return false;
         if (descriptions != null ? !descriptions.equals(product.descriptions) : product.descriptions != null)
             return false;
         return cat != null ? cat.equals(product.cat) : product.cat == null;
-    }
 
+    }
 
     public Map<String, String> getDescriptions() {
         return descriptions;
@@ -103,7 +100,7 @@ public class Product {
         return "Product{" +
                 "ID=" + id +
                 ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
+                ", category='" + cat + '\'' +
                 ", price=" + price +
                 ", descriptions=" + descriptions +
                 '}';

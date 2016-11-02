@@ -233,6 +233,7 @@ public class EditProductController {
 
     public void btnAddProduct(ActionEvent actionEvent) {
 
+
         String name = txtProductName.getText();
         if(name.isEmpty()==false){
             Product p = new Product();
