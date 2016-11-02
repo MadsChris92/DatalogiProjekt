@@ -43,6 +43,7 @@ public class bartenderController implements Initializable{
     private void displaySelectedCat() {
         System.out.println("Displaying: " + selectedCat);
 
+        btnGrid.getChildren().clear();
         List<Button> buttons = createBtnList();
         int rowCount = 0;
         int colomnCount = 0;
@@ -64,14 +65,17 @@ public class bartenderController implements Initializable{
         List<Button> buttons = new ArrayList<>();
         if(selectedCat != null) {
             List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
-            buttons.add(new Button("<-"));
+            Button backBtn = new Button("<-");
+            backBtn.setOnAction(handleProductBtn);
+            buttons.add(backBtn);
+            System.out.println(products);
             for (Product p : products) {
                 System.out.println("Fetched product: " + p.toString());
                 Button btn = new Button(p.getName() + "-" + p.getId());
                 btn.setOnAction(handleProductBtn);
                 buttons.add(btn);
             }
-        } else if(selectedCat == null) {
+        } else {
             List<Category> categorys = mProductDAO.getCategories();
             for (Category c : categorys) {
                 System.out.println("Fetched product: " + c.toString());
@@ -86,7 +90,7 @@ public class bartenderController implements Initializable{
     EventHandler<ActionEvent> handleProductBtn = new EventHandler<ActionEvent>() {
         @Override public void handle(ActionEvent event) {
             Button btn = (Button) event.getSource();
-            if (btn.getText() == "<-") {
+            if (btn.getText().equals("<-")) {
                 selectedCat = null;
                 displaySelectedCat();
             } else {

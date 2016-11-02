@@ -36,7 +36,7 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public List<Product> getProductsByCategory(String category){
         List<Product> result = new ArrayList<>();
         for (Product p : mProducts) {
-            if (p.getCat().getName() == category){
+            if (p.getCat().getName().equals(category)){
                 result.add(p);
             }
         }
@@ -84,4 +84,8 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public void updateCategory(Category activeCategory) {
         update(activeCategory);
     }
+
+    public void saveProduct(Product product){
+		save(product);
+	}
 }
