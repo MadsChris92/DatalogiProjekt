@@ -4,9 +4,7 @@ import Bartinator.DataAccessObjects.MainDataAccessObject;
 import Bartinator.Model.Consumer;
 import javafx.scene.control.TextField;
 
-/**
- * Created by Casper on 26-10-2016.
- */
+
 public class CreateConsumerController {
     public TextField textFieldName;
     public TextField textFieldUserName;
@@ -21,13 +19,11 @@ public class CreateConsumerController {
 
     public void handleCreateConsumer() {
         try {
-            Consumer testConsumer = new Consumer();
-            testConsumer.setName(textFieldName.getText());
-            testConsumer.setUsername(textFieldUserName.getText());
-            testConsumer.setPassword(textFieldPassword.getText().hashCode());
-            testConsumer.setBalance(Double.parseDouble(textFieldBalance.getText()));
-            testConsumer.setStudentID(Integer.parseInt(textFieldStudentID.getText()));
-            MainDataAccessObject.save(testConsumer);
+
+
+
+            Consumer testConsumer = new Consumer(Integer.parseInt(textFieldStudentID.getText()),textFieldName.getText());
+
         }catch (Exception e) {
             System.err.println("Failed to load create consumer!");
             e.printStackTrace();

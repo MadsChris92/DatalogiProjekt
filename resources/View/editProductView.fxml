@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -25,7 +26,13 @@
                               <HBox prefHeight="136.0" prefWidth="600.0">
                                  <children>
                                     <ListView fx:id="listViewCol" prefHeight="136.0" prefWidth="160.0" />
-                                    <Button fx:id="btnRemoveColumn" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="btnRemoveColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="114.0" text="Remove" />
+                                    <VBox prefHeight="136.0" prefWidth="127.0">
+                                       <children>
+                                          <TextField fx:id="txtFieldColumn" prefHeight="39.0" prefWidth="137.0" promptText="Add Column" />
+                                          <Button fx:id="btnAddColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" text="Apply" />
+                                       </children>
+                                    </VBox>
                                  </children>
                               </HBox>
                            </children>

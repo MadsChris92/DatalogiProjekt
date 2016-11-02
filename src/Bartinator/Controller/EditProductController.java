@@ -12,16 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
-
+import Bartinator.DataAccessObjects.*;
 import java.util.ArrayList;
 
 
 public class EditProductController {
     public ChoiceBox categoryMenu;
     public ListView listViewCol;
-    public TextField txtFieldRename;
-    public Button btnApplyDescripRename;
     public Button btnRemoveColumn;
+    public TextField txtFieldColumn;
+    public Button btnAddColumn;
     private Category activeCategory;
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
@@ -29,7 +29,8 @@ public class EditProductController {
     private final ObservableList<String> catColumns = FXCollections.observableArrayList();
     private ArrayList<TableColumn<Product, ?>> columns = new ArrayList<>();
     private ArrayList<Product> ps = new ArrayList<>();
-    int activecolumn;
+    private int activecolumn;
+    ProductDataAccessObject pdao = new ProductDataAccessObject();
 
     @FXML
     void initialize(){
@@ -41,15 +42,19 @@ public class EditProductController {
         populateCells();
         setListView();
 
-
         productTable.getColumns().addAll(columns);
         productTable.setItems(data);
         categoryMenu.setItems(catData);
         productTable.setEditable(true);
 
+        btnAddColumn.setOnAction(event -> addColumn());
     }
 
-    void setListView(){
+    private void addColumn() {
+
+    }
+
+    private void setListView(){
         listViewCol.setMinWidth(120);
         listViewCol.setMinHeight(300);
 
@@ -81,8 +86,6 @@ public class EditProductController {
         if(activecolumn > 2) {
             activeCategory.getColumns().remove(activecolumn);
             updateTable();
-        }else{
-
         }
     }
 
@@ -181,12 +184,7 @@ public class EditProductController {
         c1.setName("test1");
         c.setName("test2");
         activeCategory = c;
-        /*
-        c1.getColumns().add("name1");
-        c1.getColumns().add("price2");
-        c1.getColumns().add("id");
-        c1.getColumns().add("test");
-        */
+
         for (int i = 0; i < 10; i++) {
             c1.getColumns().add(i + ". test");
         }
