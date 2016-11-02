@@ -44,6 +44,24 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
+                  <Tab text="Add Product">
+                      <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                  <HBox prefHeight="136.0" prefWidth="600.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="256.0" text="Button" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="400.0" />
+                                 </children>
+                                  </HBox>
+                              </children>
+                          </AnchorPane>
+                      </content>
+                  </Tab>
               </tabs>
             </TabPane>
          </children>

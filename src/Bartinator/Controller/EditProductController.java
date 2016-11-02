@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,6 +24,7 @@ public class EditProductController {
     public Button btnRemoveColumn;
     public TextField txtFieldColumn;
     public Button btnAddColumn;
+    public TextField txtProductName;
     private Category activeCategory;
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
@@ -227,5 +229,20 @@ public class EditProductController {
             p.setId(i);
             products.add(p);
         }
+    }
+
+    public void btnAddProduct(ActionEvent actionEvent) {
+
+        String name = txtProductName.getText();
+        if(name.isEmpty()==false){
+            Product p = new Product();
+            p.setName(name);
+            products.add(p);
+            p.setCat(activeCategory);
+            updateTable();
+        }else{
+            AlertBoxes.displayInformationBox("ERROR", "Must not not be null");
+        }
+
     }
 }
