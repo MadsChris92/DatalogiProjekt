@@ -105,7 +105,7 @@ public abstract class MainDataAccessObject {
 
 
 	static void update(Object object){
-		// Open a seesion
+		// Open a session
 		Session session = sessionFactory.openSession();
 
 		// Begin a transaction
