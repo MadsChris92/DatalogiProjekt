@@ -33,6 +33,7 @@ public class EditProductController {
     private int activecolumn;
     ProductDataAccessObject pdao = new ProductDataAccessObject();
 
+
     @FXML
     void initialize(){
 
@@ -91,10 +92,9 @@ public class EditProductController {
     }
 
     private void removeColumn() {
-        if(activecolumn > 2) {
-            activeCategory.getColumns().remove(activecolumn);
-            updateTable();
-        }
+        activeCategory.getColumns().remove(activecolumn);
+        updateTable();
+
     }
 
     void setCategories(){
