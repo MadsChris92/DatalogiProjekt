@@ -1,6 +1,5 @@
 package Bartinator.Model;
 
-import com.sun.javafx.property.PropertyReference;
 import com.sun.javafx.scene.control.Logging;
 import javafx.beans.NamedArg;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -9,7 +8,6 @@ import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import sun.util.logging.PlatformLogger;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +18,7 @@ public class OurPropertyValueFactory implements Callback<TableColumn.CellDataFea
 
 	private Class<?> columnClass;
 	private String previousProperty;
-	Map<String, String> descriptions;
+	private Map<String, String> descriptions;
 
 	/**
 	 * Creates a default PropertyValueFactory to extract the value from a given
@@ -35,7 +33,7 @@ public class OurPropertyValueFactory implements Callback<TableColumn.CellDataFea
 
 	/** {@inheritDoc} */
 	@Override public ObservableValue<String> call(TableColumn.CellDataFeatures<Product,String> param) {
-		return getCellDataReflectively(param.getValue());
+		return getCellData(param.getValue());
 	}
 
 	/**
@@ -43,7 +41,7 @@ public class OurPropertyValueFactory implements Callback<TableColumn.CellDataFea
 	 */
 	public final String getKey() { return key; }
 
-	private ObservableValue<String> getCellDataReflectively(Product rowData) {
+	private ObservableValue<String> getCellData(Product rowData) {
 		if (getKey() == null || getKey().isEmpty() || rowData == null) return null;
 
 		try {
@@ -57,10 +55,10 @@ public class OurPropertyValueFactory implements Callback<TableColumn.CellDataFea
 				// create a new PropertyReference
 				this.columnClass = rowData.getClass();
 				this.previousProperty = getKey();
-				descriptions = rowData.getDescriptions();//new PropertyReference<T>(rowData.getClass(), getKey());
 			}
 
-			String value = descriptions.get(rowData);
+			this.descriptions = rowData.getDescriptions();
+			String value = descriptions.get(getKey());
 			return new ReadOnlyObjectWrapper<String>(value);
 		} catch (IllegalStateException e) {
 			// log the warning and move on

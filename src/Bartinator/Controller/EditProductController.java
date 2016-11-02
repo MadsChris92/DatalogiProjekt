@@ -44,6 +44,9 @@ public class EditProductController {
 		products.addAll(pdao.getProducts());
 
         System.out.println(products.size());
+        for(Product product : products){
+            System.out.println(product.toString());
+        }
 
         activeCategory = editorModel.categories.get(0);
 
@@ -171,6 +174,7 @@ public class EditProductController {
         );
         for (int i = 0; i < activeCategory.getColumns().size(); i++) {
                 String category = activeCategory.getColumns().get(i);
+                System.out.println(category);
                 TableColumn<Product, String> tableColumn = new TableColumn<>(category);
                 columns.add(tableColumn);
 
@@ -181,7 +185,7 @@ public class EditProductController {
                             @Override
                             public void handle(TableColumn.CellEditEvent<Product, String> t) {
                                 Product product = t.getRowValue();
-                                product.getDescriptions().replace(t.getOldValue(), t.getNewValue());
+                                product.setDescription(t.getTableColumn().getText(), t.getNewValue());
                                 pdao.updateProduct(product);
                             }
                         }
