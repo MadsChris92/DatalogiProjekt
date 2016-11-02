@@ -38,11 +38,20 @@ public class bartenderController implements Initializable{
 
         displaySelectedCat();
 
-
-
-
     }
     private void displaySelectedCat() {
+        List<Button> buttons = createBtnList();
+        int rowCount = 0;
+        int colomnCount = 0;
+        for (Button btn: buttons) {
+            btnGrid.add(btn,colomnCount,rowCount);
+            colomnCount++;
+            if (colomnCount >= 4){
+                colomnCount = 0;
+                rowCount++;
+            }
+        }
+
 
     }
     private List<Button> createBtnList() {
@@ -74,7 +83,8 @@ public class bartenderController implements Initializable{
                 displaySelectedCat();
             } else {
                 String[] strings = btn.getText().split("-");
-
+                Product p = mProductDAO.getProductById(Integer.parseInt(strings[1]));
+                mCashier.addProduct(p, 1);
             }
         }
     };
