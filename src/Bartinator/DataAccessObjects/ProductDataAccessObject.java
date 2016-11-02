@@ -18,26 +18,19 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     }
 
     private List<Product> mProducts;
-    private List<Category> mCategorys;
+    private List<Category> mCategories;
 
     public ProductDataAccessObject(){
-        mProducts = new ArrayList<Product>();
-        mProducts.addAll((List<Product>) fetch(Product.class));
-        mCategorys = new ArrayList<Category>();
-        mCategorys.addAll((List<? extends Category>) fetch(Category.class));
+        mProducts = (List<Product>) fetch(Product.class);
+        mCategories = (List<Category>) fetch(Category.class);
+    }
+
+    public List<Category> getCategories() {
+        return mCategories;
     }
 
     public List<Product> getProducts() {
         return mProducts;
-    }
-
-    public List<Product> getProductsByCategory(Category category){
-        List<Product> result = new ArrayList<>();
-        for (Product p: mProducts) {
-            if(p.getCat().equals(category))
-                result.add(p);
-        }
-        return result;
     }
 
     public void saveProducts(){
@@ -50,7 +43,22 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         }
     }
 
-    public List<Category> getCategorys() {
-        return mCategorys;
+    public void saveCategories(){
+        List<Category> currentDBcategories = new ArrayList<Category>();
+        currentDBcategories.addAll((List<Category>) fetch(Category.class));
+        for (Category p :mCategories) {
+            if(!currentDBcategories.contains(p)){
+                save(p);
+            }
+        }
     }
+
+	public void refresh() {
+		mProducts = (List<Product>) fetch(Product.class);
+		mCategories = (List<Category>) fetch(Category.class);
+	}
+
+	public void updateProduct(Product product) {
+		save(product);
+	}
 }

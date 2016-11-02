@@ -1,6 +1,7 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.*;
+import Bartinator.Utility.AlertBoxes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,15 +29,25 @@ public class EditProductController {
     private final ObservableList<String> catData = FXCollections.observableArrayList();
     private final ObservableList<String> catColumns = FXCollections.observableArrayList();
     private ArrayList<TableColumn<Product, ?>> columns = new ArrayList<>();
-    private ArrayList<Product> ps = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
     private int activecolumn;
-    ProductDataAccessObject pdao = new ProductDataAccessObject();
+    ProductDataAccessObject pdao = ProductDataAccessObject.getInstance();
 
     @FXML
     void initialize(){
+        pdao.refresh();
 
+		editorModel.categories.clear();
+		editorModel.categories.addAll(pdao.getCategories());
 
-        createTestProducts();
+		products.clear();
+		products.addAll(pdao.getProducts());
+
+        System.out.println(products.size());
+
+        activeCategory = editorModel.categories.get(0);
+
+        //createTestProducts();
         setCategories();
         makeColumns();
         populateCells();
@@ -51,6 +62,13 @@ public class EditProductController {
     }
 
     private void addColumn() {
+        if(txtFieldColumn.getText().isEmpty() == false){
+            activeCategory.addColumn(txtFieldColumn.getText());
+            updateTable();
+        }else{
+            AlertBoxes alertBoxes = new AlertBoxes();
+            alertBoxes.displayInformationBox("ERROR", "Must not be empty");
+        }
 
     }
 
@@ -119,59 +137,62 @@ public class EditProductController {
     }
 
     private void makeColumns(){
-        for (int i = 0; i < activeCategory.getColumns().size(); i++) {
-            if(i == 0){
-                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
-                columns.add(tableColumn);
-                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("id"));
-            }
+        TableColumn<Product, String> idColumn = new TableColumn<>("ID");
+        columns.add(idColumn);
+        idColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("id"));
 
-            if(i == 1){
-               TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
-               columns.add(tableColumn);
-               tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
+        columns.add(nameColumn);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Product, String> t) {
+                        Product product = t.getRowValue();
+                        product.setName(t.getNewValue());
+                        pdao.updateProduct(product);
+                    }
+                }
+        );
+        TableColumn<Product, Double> priceColumn = new TableColumn<>("Price");
+        columns.add(priceColumn);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+        priceColumn.setCellFactory(TextFieldTableCell.<Product, Double>forTableColumn(new DoubleStringConverter()));
+        priceColumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Product, Double>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Product, Double> t) {
+                        Product product = t.getRowValue();
+                        product.setPrice(t.getNewValue());
+                        pdao.updateProduct(product);
+                    }
+                }
+        );
+        for (int i = 0; i < activeCategory.getColumns().size(); i++) {
+                String category = activeCategory.getColumns().get(i);
+                TableColumn<Product, String> tableColumn = new TableColumn<>(category);
+                columns.add(tableColumn);
+
+                tableColumn.setCellValueFactory(new OurPropertyValueFactory(category));
                 tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                 tableColumn.setOnEditCommit(
                         new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
                             @Override
                             public void handle(TableColumn.CellEditEvent<Product, String> t) {
-                                ((Product) t.getTableView().getItems().get(
-                                        t.getTablePosition().getRow())
-                                ).setName(t.getNewValue());
+                                Product product = t.getRowValue();
+                                product.getDescriptions().replace(t.getOldValue(), t.getNewValue());
+                                pdao.updateProduct(product);
                             }
                         }
                 );
-            }
-            if(i == 2){
-                TableColumn<Product, Double> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
-                columns.add(tableColumn);
-                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-                tableColumn.setCellFactory(TextFieldTableCell.<Product, Double>forTableColumn(new DoubleStringConverter()));
-                    tableColumn.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Product, Double>>() {
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Product, Double> t) {
-                                    ((Product) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setPrice(t.getNewValue());
-
-                                }
-                            }
-                    );
-                }
-
-            if(i > 2){
-                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
-                columns.add(tableColumn);
-//                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>());
-            }
         }
     }
 
     private void populateCells(){
-        for (int i = 0; i < ps.size(); i++) {
-            if(ps.get(i).getCat() == activeCategory){
-                data.add(ps.get(i));
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getCat().getName().equals(activeCategory.getName())){
+                data.add(products.get(i));
             }
         }
     }
@@ -200,7 +221,7 @@ public class EditProductController {
             p.setPrice(150);
             p.setCat(c);
             p.setId(i);
-            ps.add(p);
+            products.add(p);
         }
     }
 }

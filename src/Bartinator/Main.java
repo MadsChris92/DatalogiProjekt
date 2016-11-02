@@ -1,7 +1,6 @@
 package Bartinator;
 
 import Bartinator.DataAccessObjects.MainDataAccessObject;
-import Bartinator.Model.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("View/loginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
         theStage.setTitle("Bartinator");
         theStage.setScene(new Scene(root, 800, 480));
         primaryStage.show();

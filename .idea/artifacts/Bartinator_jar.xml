@@ -6,7 +6,6 @@
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="Bartinator" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.39/mysql-connector-java-5.1.39-bin.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/hibernate-core-5.2.2.Final.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jboss-logging-3.3.0.Final.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar" path-in-jar="/" />
@@ -23,7 +22,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsr250-api-1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/javax.inject-1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/h2-1.4.191.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.39.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
