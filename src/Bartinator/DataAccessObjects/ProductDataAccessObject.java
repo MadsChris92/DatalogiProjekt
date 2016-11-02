@@ -59,7 +59,6 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 	}
 
 	public void updateProduct(Product product) {
-		remove(product);
-		save(product);
+		update(product);
 	}
 }

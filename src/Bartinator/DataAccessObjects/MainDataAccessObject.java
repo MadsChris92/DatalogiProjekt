@@ -102,6 +102,25 @@ public abstract class MainDataAccessObject {
 		session.close();
 	}
 
+
+
+	static void update(Object object){
+		// Open a seesion
+		Session session = sessionFactory.openSession();
+
+		// Begin a transaction
+		session.beginTransaction();
+
+		// Use the session to update the object
+		session.update(object);
+
+		// Commit the transaction
+		session.getTransaction().commit();
+
+		// Close the session
+		session.close();
+	}
+
    /* public static void test(){
 		Admin admin = new Admin();
         admin.setName("Hans");
