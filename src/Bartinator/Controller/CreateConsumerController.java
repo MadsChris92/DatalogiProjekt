@@ -19,11 +19,7 @@ public class CreateConsumerController {
 
     public void handleCreateConsumer() {
         try {
-
-
-
             Consumer testConsumer = new Consumer(Integer.parseInt(textFieldStudentID.getText()),textFieldName.getText());
-
         }catch (Exception e) {
             System.err.println("Failed to load create consumer!");
             e.printStackTrace();
