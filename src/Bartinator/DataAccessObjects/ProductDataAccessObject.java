@@ -80,4 +80,9 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 	public void updateProduct(Product product) {
 		update(product);
 	}
+
+
+    public void updateCategory(Category activeCategory) {
+        save(activeCategory);
+    }
 }

@@ -158,5 +158,4 @@ public abstract class MainDataAccessObject {
 	public static void stop(){
 		sessionFactory.close();
 	}
-
 }
