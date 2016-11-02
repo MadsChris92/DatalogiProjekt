@@ -85,7 +85,7 @@ public abstract class MainDataAccessObject {
         session.close();
     }
 
-	private static void remove(Object object){
+	static void remove(Object object){
 		// Open a seesion
 		Session session = sessionFactory.openSession();
 
