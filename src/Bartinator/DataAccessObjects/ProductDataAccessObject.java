@@ -81,8 +81,7 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 		update(product);
 	}
 
-
     public void updateCategory(Category activeCategory) {
-        save(activeCategory);
+        update(activeCategory);
     }
 }
