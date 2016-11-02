@@ -147,6 +147,16 @@ public class bartenderController implements Initializable{
         }
     }
     public void handleCheckOut(ActionEvent actionEvent) {
+        boolean succes = mCashier.checkOut();
+        if(!succes){
+            AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't effort cart content");
+        } else {
+            AlertBoxes.displayInformationBox("Succes!","The sale have been proceeded with succes!");
+            mCashier.clearCart();
+            updateCartView();
+            selectedCat = null;
+            displaySelectedCat();
+        }
 
     }
     public void handleDelete(ActionEvent actionEvent) {

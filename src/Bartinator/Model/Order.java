@@ -20,15 +20,30 @@ public class Order {
     private String mBartenderName;
 
     @Column
-    private String mBartenderId;
+    private int mBartenderId;
+
+    @Column
+    private String mConsumerName;
+
+    @Column
+    private Integer mConsumerId;
 
     protected Order() {}
 
-    public Order(double totalPrice, List<String> receipt, String bartenderName, String bartenderId) {
+    public Order(double totalPrice, List<String> receipt, String bartenderName, int bartenderId) {
         mTotalPrice = totalPrice;
         mReceipt = receipt;
         mBartenderName = bartenderName;
         mBartenderId = bartenderId;
+    }
+
+    public Order(double totalPrice, List<String> receipt, String bartenderName, int bartenderId, String consumerName, Integer consumerId) {
+        mTotalPrice = totalPrice;
+        mReceipt = receipt;
+        mBartenderName = bartenderName;
+        mBartenderId = bartenderId;
+        mConsumerName = consumerName;
+        mConsumerId = consumerId;
     }
 
     public double getTotalPrice() {
@@ -40,7 +55,13 @@ public class Order {
     public String getBartenderName() {
         return mBartenderName;
     }
-    public String getBartenderId() {
+    public int getBartenderId() {
         return mBartenderId;
+    }
+    public String getConsumerName() {
+        return mConsumerName;
+    }
+    public Integer getConsumerId() {
+        return mConsumerId;
     }
 }

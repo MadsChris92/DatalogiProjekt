@@ -1,9 +1,10 @@
 package Bartinator.Model;
 
 
+import Bartinator.DataAccessObjects.OrderDataAccessObject;
+import Bartinator.DataAccessObjects.UserDataAccessObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 
 import java.util.ArrayList;
@@ -74,6 +75,32 @@ public class Cashier {
         ObservableList<String> result = FXCollections.observableList(resultAsList);
 
         return result;
+    }
+    public boolean checkOut() {
+        //TODO: Prompt for Consumer info
+
+        //Test
+        Consumer consumer = new Consumer(37382, "Daniel", 12500);
+
+        //charge Consumer
+        boolean succes = consumer.pay(getTotal());
+        if(!succes){
+            return false;
+        } // TODO: Save consumer ?????
+
+        //create receipt
+        List<String> receipt = new ArrayList<>();
+        for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
+            receipt.add(p.getKey().getPrice() + "DKK   x " + p.getValue() + "  " + p.getKey().getName() + " - Product Id" + p.getKey().getId());
+        }
+
+        //Create order
+        User bartender = UserDataAccessObject.getInstance().getActiveUser();
+        Order order = new Order(getTotal(), receipt, bartender.getName(), bartender.getId());
+
+        //Save and return
+        OrderDataAccessObject.getInstance().saveOrder(order);
+        return true;
     }
 
 //    public void getObservableCart(){

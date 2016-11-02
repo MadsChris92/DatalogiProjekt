@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class LoginVerifier {
 
-
+    private User latestCheckedUser;
 
     public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
@@ -18,7 +18,9 @@ public class LoginVerifier {
         } else {
 			accessGranted = verifyBartenderLogin(username, password);
         }
-
+        if(accessGranted) {
+            UserDataAccessObject.getInstance().setActiveUser(latestCheckedUser);
+        }
         return accessGranted;
     }
 
@@ -31,6 +33,7 @@ public class LoginVerifier {
 
         if(user != null && (user.isAdmin() || user.isBartender())){
             accessGranted = true;
+            latestCheckedUser = user;
         }
         return accessGranted;
     }
@@ -44,6 +47,7 @@ public class LoginVerifier {
 
         if(user != null && user.isAdmin()){
             accessGranted = true;
+            latestCheckedUser = user;
         }
         return accessGranted;
     }
