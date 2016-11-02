@@ -2,7 +2,9 @@ package Bartinator.Controller;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
 import Bartinator.Main;
+import Bartinator.Model.Cashier;
 import Bartinator.Model.Category;
+import Bartinator.Model.Product;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,15 +27,17 @@ public class bartenderController implements Initializable{
     @FXML public ListView cartView;
     @FXML public GridPane btnGrid;
 
+    Cashier mCashier;
     ProductDataAccessObject mProductDAO;
     String selectedCat = null;
 
 
-
     @Override public void initialize(URL location, ResourceBundle resources) {
         mProductDAO = ProductDataAccessObject.getInstance();
+        mCashier = new Cashier();
 
         displaySelectedCat();
+
 
 
 
@@ -41,14 +45,18 @@ public class bartenderController implements Initializable{
     private void displaySelectedCat() {
 
     }
-    private List<Button> createBtnList(String selectedCat) {
+    private List<Button> createBtnList() {
         List<Button> buttons = new ArrayList<>();
         if(selectedCat != null) {
-            //TODO: Vis produkter i bestemt category
-
+            List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
+            buttons.add(new Button("<-"));
+            for (Product p : products) {
+                Button btn = new Button(p.getName() + "-" + p.getId());
+                btn.setOnAction(handleProductBtn);
+                buttons.add(btn);
+            }
         } else {
-            List<Category> categorys = mProductDAO.getCategorys();
-
+            List<Category> categorys = mProductDAO.getCategories();
             for (Category c : categorys) {
                 Button btn = new Button(c.getName());
                 btn.setOnAction(handleCatBtn);
@@ -58,12 +66,26 @@ public class bartenderController implements Initializable{
         return buttons;
     }
 
-    EventHandler<ActionEvent> handleCatBtn = new EventHandler<ActionEvent>() {
+    EventHandler<ActionEvent> handleProductBtn = new EventHandler<ActionEvent>() {
         @Override public void handle(ActionEvent event) {
             Button btn = (Button) event.getSource();
-            selectedCat = btn.getText();
+            if (btn.getText() == "<-") {
+                selectedCat = null;
+                displaySelectedCat();
+            } else {
+                String[] strings = btn.getText().split("-");
+
+            }
         }
     };
+
+        EventHandler<ActionEvent> handleCatBtn = new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent event) {
+                Button btn = (Button) event.getSource();
+                selectedCat = btn.getText();
+                displaySelectedCat();
+            }
+        };
 
 
 

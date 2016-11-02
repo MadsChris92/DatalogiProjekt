@@ -33,6 +33,25 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         return mProducts;
     }
 
+    public List<Product> getProductsByCategory(String category){
+        List<Product> result = new ArrayList<>();
+        for (Product p : mProducts) {
+            if (p.getCat().getName() == category){
+                result.add(p);
+            }
+        }
+        return result;
+    }
+
+    public Product getProductById (int id){
+        for (Product p : mProducts) {
+            if(p.getId() == id){
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void saveProducts(){
         List<Product> currentDBproducts = new ArrayList<Product>();
         currentDBproducts.addAll((Collection<? extends Product>) fetch(Product.class));
