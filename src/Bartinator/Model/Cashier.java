@@ -99,6 +99,8 @@ public class Cashier {
         Order order = new Order(getTotal(), receipt, bartender.getName(), bartender.getId());
 
         //Save and return
+        System.out.printf("%s", order.toString());
+
         OrderDataAccessObject.getInstance().saveOrder(order);
         return true;
     }

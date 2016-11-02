@@ -64,4 +64,16 @@ public class Order {
     public Integer getConsumerId() {
         return mConsumerId;
     }
+
+    @Override public String toString() {
+        String result = String.format("Order:%n");
+        for (String s : mReceipt) {
+            result += s;
+            result += String.format("%n");
+        }
+        result += String.format("Total price: " + mTotalPrice + " DKK%n"
+                + "Salesman: " + mBartenderName + "-" + mBartenderId + "%n"
+                + "Consumer: " + mConsumerName + "-" + mConsumerId + "%n");
+        return result;
+    }
 }
