@@ -68,12 +68,12 @@ public class EditProductController {
     private void addColumn() {
         if(txtFieldColumn.getText().isEmpty() == false){
             activeCategory.addColumn(txtFieldColumn.getText());
+            pdao.updateCategory(activeCategory);
             updateTable();
         }else{
             AlertBoxes alertBoxes = new AlertBoxes();
             alertBoxes.displayInformationBox("ERROR", "Must not be empty");
         }
-
     }
 
     private void setListView(){
