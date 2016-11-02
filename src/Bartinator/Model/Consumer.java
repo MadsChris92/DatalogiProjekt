@@ -15,7 +15,7 @@ public class Consumer {
 	@Column
 	private double mBalance;
 
-	protected Consumer() {}
+	public Consumer() {}
 
 	public Consumer(int studentID, String name) {
 		mStudentID = studentID;

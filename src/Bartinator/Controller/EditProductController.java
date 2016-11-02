@@ -1,6 +1,7 @@
 package Bartinator.Controller;
 
 import Bartinator.Model.*;
+import Bartinator.Utility.AlertBoxes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,7 +36,6 @@ public class EditProductController {
     @FXML
     void initialize(){
 
-
         createTestProducts();
         setCategories();
         makeColumns();
@@ -51,6 +51,13 @@ public class EditProductController {
     }
 
     private void addColumn() {
+        if(txtFieldColumn.getText().isEmpty() == false){
+            activeCategory.addColumn(txtFieldColumn.getText());
+            updateTable();
+        }else{
+            AlertBoxes alertBoxes = new AlertBoxes();
+            alertBoxes.displayInformationBox("ERROR", "Must not be empty");
+        }
 
     }
 
@@ -163,6 +170,8 @@ public class EditProductController {
             if(i > 2){
                 TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
                 columns.add(tableColumn);
+
+
 //                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>());
             }
         }
