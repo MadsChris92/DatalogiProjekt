@@ -4,7 +4,6 @@ package Bartinator.Controller;
 import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.LoginVerifier;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class loginControllerNew implements Initializable {
 
-    LoginVerifier mVerifier;
+    private LoginVerifier mVerifier;
 
     @FXML TextField mUsernameField;
     @FXML TextField mPasswordField;
@@ -31,7 +30,7 @@ public class loginControllerNew implements Initializable {
         mAdminCheckBox.setSelected(true);
     }
 
-    public void handleLogin(ActionEvent actionEvent) {
+    public void handleLogin() {
 
         boolean accessGranted = false;
         String exceptionMessage = "";
@@ -44,7 +43,7 @@ public class loginControllerNew implements Initializable {
 
         if(accessGranted && mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/adminMainMenu.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/View/adminMainMenu.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load adminMainMenu window!");
@@ -52,7 +51,7 @@ public class loginControllerNew implements Initializable {
             }
         } else if(accessGranted && !mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/bartenderView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/View/bartenderView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load bartenderView window!");

@@ -36,6 +36,7 @@ public class EditProductController {
     @FXML
     void initialize(){
 
+
         createTestProducts();
         setCategories();
         makeColumns();
@@ -158,21 +159,30 @@ public class EditProductController {
                             new EventHandler<TableColumn.CellEditEvent<Product, Double>>() {
                                 @Override
                                 public void handle(TableColumn.CellEditEvent<Product, Double> t) {
-                                    ((Product) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setPrice(t.getNewValue());
+                                    t.getRowValue().setPrice(t.getNewValue());
 
                                 }
                             }
                     );
-                }
+            }
 
             if(i > 2){
-                TableColumn<Product, String> tableColumn = new TableColumn<>(activeCategory.getColumns().get(i));
+                String category = activeCategory.getColumns().get(i);
+                TableColumn<Product, String> tableColumn = new TableColumn<>(category);
                 columns.add(tableColumn);
 
+                tableColumn.setCellValueFactory(new OurPropertyValueFactory(category));
+                tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                tableColumn.setOnEditCommit(
+                        new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
+                            @Override
+                            public void handle(TableColumn.CellEditEvent<Product, String> t) {
+                                Product product = t.getRowValue();
+                                product.getDescriptions().replace(t.getOldValue(), t.getNewValue());
+                            }
+                        }
+                );
 
-//                tableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>());
             }
         }
     }
