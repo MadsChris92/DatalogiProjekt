@@ -2,6 +2,7 @@ package Bartinator.Model;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Category {
 	@Id
 	private	String name;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> columns = new ArrayList<>();
 
 	public Category(){}
