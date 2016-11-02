@@ -50,12 +50,14 @@
                               <children>
                                   <HBox prefHeight="136.0" prefWidth="600.0">
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <ListView fx:id="listViewProd" prefHeight="200.0" prefWidth="200.0" />
+                                    <VBox prefHeight="136.0" prefWidth="197.0">
                                        <children>
-                                          <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="256.0" text="Button" HBox.hgrow="ALWAYS" />
+                                          <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="256.0" text="Add Product" />
+                                          <Button mnemonicParsing="false" onAction="#handleRemoveProd" prefHeight="39.0" prefWidth="225.0" text="Remove Product" />
                                        </children>
-                                    </HBox>
-                                    <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="400.0" />
+                                    </VBox>
+                                    <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="291.0" />
                                  </children>
                                   </HBox>
                               </children>

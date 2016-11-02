@@ -25,7 +25,9 @@ public class EditProductController {
     public TextField txtFieldColumn;
     public Button btnAddColumn;
     public TextField txtProductName;
+    public ListView listViewProd;
     private Category activeCategory;
+    private ArrayList<Product> activeProducts = new ArrayList<>();
     public TableView<Product> productTable;
     private final ObservableList<Product> data = FXCollections.observableArrayList();
     private final ObservableList<String> catData = FXCollections.observableArrayList();
@@ -58,6 +60,7 @@ public class EditProductController {
         makeColumns();
         populateCells();
         setListView();
+        setListViewProd();
 
         productTable.getColumns().addAll(columns);
         productTable.setItems(data);
@@ -110,6 +113,13 @@ public class EditProductController {
         activeCategory.getColumns().remove(activecolumn);
         updateTable();
 
+    }
+
+    private void setListViewProd(){
+        for(Product p: products){
+
+        }
+        javafx.collections.FXCollections.observableList(products);
     }
 
     void setCategories(){
@@ -240,9 +250,13 @@ public class EditProductController {
             products.add(p);
             p.setCat(activeCategory);
             updateTable();
+            pdao.saveProduct(p);
         }else{
             AlertBoxes.displayInformationBox("ERROR", "Must not not be null");
         }
 
+    }
+
+    public void handleRemoveProd(ActionEvent actionEvent) {
     }
 }
