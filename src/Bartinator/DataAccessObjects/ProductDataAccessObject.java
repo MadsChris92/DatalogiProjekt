@@ -1,6 +1,7 @@
 package Bartinator.DataAccessObjects;
 
 
+import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 
 import java.util.ArrayList;
@@ -17,10 +18,15 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     }
 
     private List<Product> mProducts;
+    private List<Category> mCategories;
 
     public ProductDataAccessObject(){
-        mProducts = new ArrayList<Product>();
-        mProducts.addAll((List<Product>) fetch(Product.class));
+        mProducts = (List<Product>) fetch(Product.class);
+        mCategories = (List<Category>) fetch(Category.class);
+    }
+
+    public List<Category> getCategories() {
+        return mCategories;
     }
 
     public List<Product> getProducts() {
@@ -36,4 +42,23 @@ public class ProductDataAccessObject extends MainDataAccessObject {
             }
         }
     }
+
+    public void saveCategories(){
+        List<Category> currentDBcategories = new ArrayList<Category>();
+        currentDBcategories.addAll((List<Category>) fetch(Category.class));
+        for (Category p :mCategories) {
+            if(!currentDBcategories.contains(p)){
+                save(p);
+            }
+        }
+    }
+
+	public void refresh() {
+		mProducts = (List<Product>) fetch(Product.class);
+		mCategories = (List<Category>) fetch(Category.class);
+	}
+
+	public void updateProduct(Product product) {
+		save(product);
+	}
 }
