@@ -14,7 +14,8 @@ public class UserDataAccessObject extends MainDataAccessObject{
 		return instance;
 	}
 
-    public static List<User> users;
+    private List<User> mUsers;
+    private User mActiveUser;
 
     public static User fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
@@ -24,21 +25,26 @@ public class UserDataAccessObject extends MainDataAccessObject{
         List<User> users = (List<User>) fetch(User.class, "username", username);
         User user;
         if(users.size() > 0) {
-            if(users.size() > 1) System.out.println("Multiple users with the same username");
+            if(users.size() > 1) System.out.println("Multiple mUsers with the same username");
             user = users.get(0);
         }else {
-            user = null; // user not found, or multiple users
+            user = null; // user not found, or multiple mUsers
         }
         return user;
     }
 
-
+    public User getActiveUser() {
+        return mActiveUser;
+    }
+    public void setActiveUser(User activeUser) {
+        mActiveUser = activeUser;
+    }
     @Deprecated
     public  List<User> getUsers() throws IOException {
-        if(users == null){
+        if(mUsers == null){
 			fetchAllUsers();
         }
-        return users;
+        return mUsers;
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +53,7 @@ public class UserDataAccessObject extends MainDataAccessObject{
 		if(users != null){
 			return users;
 		}
-		throw new IOException("Fetching users failed");
+		throw new IOException("Fetching mUsers failed");
     }
 
     public boolean userExists(String username){

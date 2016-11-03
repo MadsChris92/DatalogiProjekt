@@ -15,7 +15,7 @@ public class Consumer {
 	@Column
 	private double mBalance;
 
-	public Consumer() {}
+	protected Consumer() {}
 
 	public Consumer(int studentID, String name) {
 		mStudentID = studentID;
@@ -59,5 +59,12 @@ public class Consumer {
 				", mName='" + mName + '\'' +
 				", mBalance=" + mBalance +
 				'}';
+	}
+	public boolean pay(double total) {
+		if((getBalance()-total) >= 0){
+			mBalance -= total;
+			return true;
+		}
+		return false;
 	}
 }
