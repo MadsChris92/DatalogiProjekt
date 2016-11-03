@@ -56,6 +56,7 @@ public class EditProductController {
         activeCategory = editorModel.categories.get(0);
 
         //createTestProducts();
+        setListViewProd();
         setCategories();
         makeColumns();
         populateCells();
@@ -116,10 +117,15 @@ public class EditProductController {
     }
 
     private void setListViewProd(){
-        for(Product p: products){
+        activeProducts.clear();
 
+        for(Product p: products){
+            if(activeCategory.contains(p)){
+                activeProducts.add(p);
+            }
         }
-        javafx.collections.FXCollections.observableList(products);
+        ObservableList<Product> ps = javafx.collections.FXCollections.observableList(activeProducts);
+        listViewProd.setItems(ps);
     }
 
     void setCategories(){
@@ -252,6 +258,7 @@ public class EditProductController {
             p.setCat(activeCategory);
             updateTable();
             pdao.saveProduct(p);
+            setListViewProd();
         }else{
             AlertBoxes.displayInformationBox("ERROR", "Must not not be null");
         }
@@ -259,5 +266,15 @@ public class EditProductController {
     }
 
     public void handleRemoveProd(ActionEvent actionEvent) {
+        int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
+
+        if(selectedItem >= 0){
+            products.remove(selectedItem);
+            updateTable();
+            setListViewProd();
+        }else{
+            AlertBoxes.displayInformationBox("ERROR", "No product selected");
+        }
+
     }
 }
