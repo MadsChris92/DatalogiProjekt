@@ -1,12 +1,15 @@
 package Bartinator.Utility;
 
-
-import Bartinator.Database.Database;
+import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Model.User;
+
+import java.io.IOException;
 
 public class LoginVerifier {
 
-    public boolean verifyLogin(String username, String password, boolean adminSelected) {
+    private User latestCheckedUser;
+
+    public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
         boolean accessGranted;
 
@@ -15,30 +18,36 @@ public class LoginVerifier {
         } else {
 			accessGranted = verifyBartenderLogin(username, password);
         }
-
-        return accessGranted;
-    }
-
-    private boolean verifyBartenderLogin(String username, String password) {
-
-        boolean accessGranted = false;
-
-		User user = Database.verifyLogin(username, password);
-
-		if(user != null && (user.isAdmin() || user.isBartender())){
-            accessGranted = true;
+        if(accessGranted) {
+            UserDataAccessObject.getInstance().setActiveUser(latestCheckedUser);
         }
         return accessGranted;
     }
 
-    private boolean verifyAdminLogin(String username, String password) {
+    private boolean verifyBartenderLogin(String username, String password) throws IOException {
 
         boolean accessGranted = false;
 
-        User user = Database.verifyLogin(username, password);
+        User user = UserDataAccessObject.getInstance().verifyUser(username, password);
+
+
+        if(user != null && (user.isAdmin() || user.isBartender())){
+            accessGranted = true;
+            latestCheckedUser = user;
+        }
+        return accessGranted;
+    }
+
+    private boolean verifyAdminLogin(String username, String password) throws IOException {
+
+        boolean accessGranted = false;
+
+        User user = UserDataAccessObject.getInstance().verifyUser(username, password);
+
 
         if(user != null && user.isAdmin()){
             accessGranted = true;
+            latestCheckedUser = user;
         }
         return accessGranted;
     }

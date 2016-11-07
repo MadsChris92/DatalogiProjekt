@@ -2,22 +2,34 @@ package Bartinator.Model;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.util.ArrayList;
-
-/**
- * Created by Martin on 19-10-2016.
- */
+import java.util.List;
 
 @Entity
 public class Category {
 	@Id
 	private	String name;
-	@ElementCollection
-	private	ArrayList<String> columns = new ArrayList<>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> columns = new ArrayList<>();
 
-	public Category(String name){
+	public Category(){}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<String> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(ArrayList<String> columns) {
+		this.columns = columns;
 	}
 
 	public void addColumn(String name){
@@ -26,5 +38,9 @@ public class Category {
 
 	public void removeColumn(String name){
 		columns.remove(name);
+	}
+
+	public boolean contains(Product product){
+		return product.getCat().getName().equals(this.name);
 	}
 }

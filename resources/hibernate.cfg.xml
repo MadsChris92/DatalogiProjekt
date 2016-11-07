@@ -1,7 +1,7 @@
 
 <hibernate-configuration>
     <session-factory>
-        <!-- Database connection setting -->
+        <!-- MainDataAccessObject connection setting -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">
             jdbc:mysql://datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com:3306/Bartinator
@@ -15,9 +15,6 @@
         <!-- Update the database schema on application startup -->
         <property name="hbm2ddl.auto">update</property>
 
-        <!-- Show not the queries prepared by hibernate -->
-        <property name="show_sql">false</property>
-
         <!-- Names the annotated entity classes -->
         <mapping class="Bartinator.Model.User"/>
         <mapping class="Bartinator.Model.Product"/>
@@ -26,5 +23,7 @@
         <mapping class="Bartinator.Model.Admin"/>
         <mapping class="Bartinator.Model.Bartender"/>
 
+        <mapping class="Bartinator.Model.Consumer"/>
+        <mapping class="Bartinator.Model.Category"/>
     </session-factory>
 </hibernate-configuration>

@@ -2,37 +2,69 @@ package Bartinator.Model;
 
 import javax.persistence.*;
 
-/**
- * Created by Casper on 19-10-2016.
- */
-@Entity
-public class Consumer extends User {
-	@Column
-	private double balance;
-	@Column
-	private int studentID;
 
-	public double getBalance() {
-		return balance;
+@Entity
+public class Consumer {
+
+	@Id
+	private int mStudentID;
+
+	@Column
+	private String mName;
+
+	@Column
+	private double mBalance;
+
+	protected Consumer() {}
+
+	public Consumer(int studentID, String name) {
+		mStudentID = studentID;
+		mName = name;
+		mBalance = 0.0;
 	}
 
-	public void setBalance(double balance) {
-		this.balance = balance;
+	public Consumer(int studentID, String name, double balance) {
+		mStudentID = studentID;
+		mName = name;
+		mBalance = balance;
 	}
 
 	public int getStudentID() {
-		return studentID;
+		return mStudentID;
 	}
 
 	public void setStudentID(int studentID) {
-		this.studentID = studentID;
+		mStudentID = studentID;
 	}
 
-	@Override
-	public String toString() {
+	public double getBalance() {
+		return mBalance;
+	}
+
+	public void setBalance(double balance) {
+		mBalance = balance;
+	}
+
+	public String getName() {
+		return mName;
+	}
+	public void setName(String name) {
+		mName = name;
+	}
+
+
+	@Override public String toString() {
 		return "Consumer{" +
-				"balance=" + balance +
-				", studentID=" + studentID +
-				"} " + super.toString();
+				"mStudentID=" + mStudentID +
+				", mName='" + mName + '\'' +
+				", mBalance=" + mBalance +
+				'}';
+	}
+	public boolean pay(double total) {
+		if((getBalance()-total) >= 0){
+			mBalance -= total;
+			return true;
+		}
+		return false;
 	}
 }

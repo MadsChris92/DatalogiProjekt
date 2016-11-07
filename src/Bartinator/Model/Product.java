@@ -1,18 +1,9 @@
 package Bartinator.Model;
 
-import Bartinator.Controller.btnCreateController;
-import Bartinator.Controller.loginController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.collections.ObservableList;
 
 import javax.persistence.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -21,11 +12,21 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     @Column
-    private String name, category;
+    private String name;
     @Column
-    private float price;
+    private double price;
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String, String> descriptions = new HashMap<>();
+    @ManyToOne
+    private Category cat;
+
+    public Category getCat() {
+        return cat;
+    }
+
+    public void setCat(Category cat) {
+        this.cat = cat;
+    }
 
     public Product(){};
 
@@ -45,19 +46,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -69,27 +62,45 @@ public class Product {
         }
     }
 
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+        if (Double.compare(product.price, price) != 0) return false;
+        if (!name.equals(product.name)) return false;
+        if (descriptions != null ? !descriptions.equals(product.descriptions) : product.descriptions != null)
+            return false;
+        return cat != null ? cat.equals(product.cat) : product.cat == null;
+
+    }
+
     public Map<String, String> getDescriptions() {
         return descriptions;
     }
-
+/*
     public void actionHandler() throws IOException {
         Stage stage = new Stage();
         System.out.println(id);
         Parent root1;
-        root1 = FXMLLoader.load(loginController.class.getResource("../View/btnCreateMenu.fxml"));
+        root1 = FXMLLoader.load(loginController.class.getResource("../Bartinator.View/btnCreateMenu.fxml"));
         stage.setScene(new Scene(root1, 500, 500));
         stage.initModality(Modality.APPLICATION_MODAL);
         btnCreateController.productID = getId();
         stage.show();
-    }
+    }*/
 
     @Override
     public String toString() {
         return "Product{" +
                 "ID=" + id +
                 ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
+                ", category='" + cat + '\'' +
                 ", price=" + price +
                 ", descriptions=" + descriptions +
                 '}';

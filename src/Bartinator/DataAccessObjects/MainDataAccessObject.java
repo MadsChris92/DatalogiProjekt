@@ -1,4 +1,4 @@
-package Bartinator.Database;
+package Bartinator.DataAccessObjects;
 
 
 import Bartinator.Model.*;
@@ -12,9 +12,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.logging.LogManager;
 
 
-public class Database {
+public abstract class MainDataAccessObject {
 
     private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
 
@@ -27,11 +28,7 @@ public class Database {
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    public static void stop(){
-		sessionFactory.close();
-	}
-
-	private static List<?> fetch(Class<?> clazz){
+	public static List<?> fetch(Class<?> clazz){
 		// Open a session
 		Session session = sessionFactory.openSession();
 
@@ -50,7 +47,7 @@ public class Database {
 		return objects;
 	}
 
-	private static List<?> fetch(Class<?> clazz, String attribute, Object value){
+	public static List<?> fetch(Class<?> clazz, String attribute, Object value){
 
 		// Open a session
 		Session session = sessionFactory.openSession();
@@ -72,30 +69,7 @@ public class Database {
 		return objects;
 	}
 
-	@SuppressWarnings("unchecked")
-    private static List<User> fetchAllUsers(){
-		return (List<User>)fetch(User.class);
-    }
-
-	@SuppressWarnings("unchecked")
-	private static User fetchUser(String username){
-		// Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
-		// sql udgaven af det functionen gør er:
-		// SELECT * FROM User WHERE User."username"=username;
-		// hvis der er mere end én bruger med samme brugernavn, så vælger den det første resultat
-		List<User> users = (List<User>) fetch(User.class, "username", username);
-		User user;
-		if(users.size() > 0) {
-			if(users.size() > 1) System.out.println("Multiple users with the same username");
-			user = users.get(0);
-		}else {
-			user = null; // user not found, or multiple users
-		}
-
-		return user;
-	}
-
-    private static void save(Object object){
+    public static void save(Object object){
         // Open a seesion
         Session session = sessionFactory.openSession();
 
@@ -112,7 +86,7 @@ public class Database {
         session.close();
     }
 
-	private static void remove(Object object){
+	static void remove(Object object){
 		// Open a seesion
 		Session session = sessionFactory.openSession();
 
@@ -129,26 +103,26 @@ public class Database {
 		session.close();
 	}
 
-	public static boolean userExists(String username){
-		return fetchUser(username)!=null;
+
+
+	static void update(Object object){
+		// Open a session
+		Session session = sessionFactory.openSession();
+
+		// Begin a transaction
+		session.beginTransaction();
+
+		// Use the session to update the object
+		session.update(object);
+
+		// Commit the transaction
+		session.getTransaction().commit();
+
+		// Close the session
+		session.close();
 	}
 
-    public static User verifyLogin(String username, String password) {
-        User user = fetchUser(username);
-		if(user != null) {
-			if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {
-				return user;
-			} else {
-				System.out.println("incorrect password");
-				return null;
-			}
-		} else {
-			System.out.println("user not found");
-			return null;
-		}
-    }
-
-    public static void test(){
+   /* public static void test(){
 		Admin admin = new Admin();
         admin.setName("Hans");
         admin.setUsername("hans");
@@ -180,5 +154,9 @@ public class Database {
 		save(testProduct);
 		fetch(Product.class).forEach(System.out::println);
 		remove(testProduct);
+	}*/
+
+	public static void stop(){
+		sessionFactory.close();
 	}
 }
