@@ -73,8 +73,10 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     }
 
 	public void refresh() {
-		mProducts = (List<Product>) fetch(Product.class);
-		mCategories = (List<Category>) fetch(Category.class);
+		mProducts.clear();
+        mProducts.addAll((List<Product>) fetch(Product.class));
+        mCategories.clear();
+		mCategories.addAll((List<Category>) fetch(Category.class));
 	}
 
 	public void updateProduct(Product product) {
