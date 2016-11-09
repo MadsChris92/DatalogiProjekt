@@ -26,6 +26,7 @@ public class EditProductController {
     public Button btnAddColumn;
     public TextField txtProductName;
     public ListView listViewProd;
+    public TextField txtCategoryName;
     private Category activeCategory;
     private ArrayList<Product> activeProducts = new ArrayList<>();
     public TableView<Product> productTable;
@@ -42,8 +43,7 @@ public class EditProductController {
     void initialize(){
         pdao.refresh();
 
-		editorModel.categories.clear();
-		editorModel.categories.addAll(pdao.getCategories());
+		editorModel.categories = (ArrayList<Category>) pdao.getCategories();
 
 		products.clear();
 		products.addAll(pdao.getProducts());
@@ -291,6 +291,18 @@ public class EditProductController {
     }
 
     public void addCategoryHandler(ActionEvent actionEvent) {
+        Category c = new Category();
+        c.setName(txtCategoryName.getText());
+
+
+
+        if(editorModel.categories.contains(c)){
+
+        }else{
+            editorModel.categories.add(c);
+           pdao.saveCategories();
+        }
+
 
     }
 
@@ -301,7 +313,7 @@ public class EditProductController {
             }
         }
         editorModel.categories.remove(activeCategory);
-        pdao.removeCategory();
+        pdao.removeCategory(activeCategory);
         updateTable();
     }
 }

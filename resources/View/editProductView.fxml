@@ -49,7 +49,7 @@
                                  <children>
                                     <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="136.0" prefWidth="280.0">
                                        <children>
-                                          <TextField prefHeight="39.0" prefWidth="327.0" />
+                                          <TextField fx:id="txtCategoryName" prefHeight="39.0" prefWidth="327.0" />
                                           <Button fx:id="btnAddCat" mnemonicParsing="false" onAction="#addCategoryHandler" prefHeight="39.0" prefWidth="130.0" text="Add Category" />
                                        </children>
                                     </VBox>
