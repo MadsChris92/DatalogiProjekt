@@ -111,7 +111,19 @@ public class EditProductController {
     }
 
     private void removeColumn() {
+        String col = catColumns.get(activecolumn);
+
+        for (Product product : products) {
+            if (activeCategory.contains(product)) {
+                product.getDescriptions().remove(col);
+            }
+        }
+        for (Product p : products){
+            pdao.updateProduct(p);
+        }
+
         activeCategory.getColumns().remove(activecolumn);
+        pdao.updateCategory(activeCategory);
         updateTable();
 
     }
@@ -276,5 +288,20 @@ public class EditProductController {
             AlertBoxes.displayInformationBox("ERROR", "No product selected");
         }
 
+    }
+
+    public void addCategoryHandler(ActionEvent actionEvent) {
+
+    }
+
+    public void removeCategoryHandler(ActionEvent actionEvent) {
+        for(Product p : products){
+            if(activeCategory.contains(p)){
+                products.remove(p);
+            }
+        }
+        editorModel.categories.remove(activeCategory);
+        pdao.removeCategory();
+        updateTable();
     }
 }
