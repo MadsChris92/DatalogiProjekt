@@ -87,6 +87,13 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         update(activeCategory);
     }
 
+    public void removeCategory(Category category) {
+		for(Product product : getProductsByCategory(category.getName())){
+			remove(product);
+		}
+		remove(category);
+	}
+
     public void saveProduct(Product product){
 		save(product);
 	}
