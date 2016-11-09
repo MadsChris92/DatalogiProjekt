@@ -45,8 +45,6 @@ public class bartenderController implements Initializable{
         mProductDAO = ProductDataAccessObject.getInstance();
         mCashier = new Cashier();
 
-
-
         displaySelectedCat();
         updateCartView();
     }
@@ -76,7 +74,6 @@ public class bartenderController implements Initializable{
             cc.setMaxWidth(mBtnRadius);
             cc.setHalignment(HPos.CENTER);
         }
-        mBtnGrid.setGridLinesVisible(true);
     }
     private List<Button> createBtnList() {
         List<Button> buttons = new ArrayList<>();
@@ -188,7 +185,7 @@ public class bartenderController implements Initializable{
                 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
-                System.err.println("Failed to load loginView window!");
+                System.err.println("Failed to load loginView window");
                 e.printStackTrace();
             }
         }
