@@ -49,6 +49,9 @@
                         <TextField id="textFieldBalance" fx:id="textFieldBalance" promptText="Balance" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField id="textFieldStudentID" fx:id="textFieldStudentID" promptText="StundentID" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
             </GridPane>
          </children>
       </VBox>
