@@ -65,9 +65,11 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public void saveCategories(){
         List<Category> currentDBcategories = new ArrayList<Category>();
         currentDBcategories.addAll((List<Category>) fetch(Category.class));
-        for (Category p :mCategories) {
-            if(!currentDBcategories.contains(p)){
-                save(p);
+        for (Category category :mCategories) {
+            if(currentDBcategories.contains(category)){
+                update(category);
+            } else {
+                save(category);
             }
         }
     }
