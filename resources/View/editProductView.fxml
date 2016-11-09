@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -40,9 +42,27 @@
                   </content>
                 </Tab>
                 <Tab text="Edit Category">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="136.0" prefWidth="280.0">
+                                       <children>
+                                          <TextField fx:id="txtCategoryName" prefHeight="39.0" prefWidth="327.0" />
+                                          <Button fx:id="btnAddCat" mnemonicParsing="false" onAction="#addCategoryHandler" prefHeight="39.0" prefWidth="130.0" text="Add Category" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="136.0" prefWidth="324.0">
+                                       <children>
+                                          <Label fx:id="catLabel" alignment="CENTER" prefHeight="39.0" prefWidth="322.0" text="Label" />
+                                          <Button fx:id="btnRemoveCat" mnemonicParsing="false" onAction="#removeCategoryHandler" prefHeight="39.0" prefWidth="130.0" text="Remove Category" />
+                                       </children>
+                                    </VBox>
+                                 </children></HBox>
+                           </center>
+                        </BorderPane>
+                     </content>
                 </Tab>
                   <Tab text="Add Product">
                       <content>
@@ -50,12 +70,18 @@
                               <children>
                                   <HBox prefHeight="136.0" prefWidth="600.0">
                                  <children>
-                                    <ListView fx:id="listViewProd" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="listViewProd" prefHeight="200.0" prefWidth="200.0">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin></ListView>
                                     <VBox prefHeight="136.0" prefWidth="197.0">
                                        <children>
                                           <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="256.0" text="Add Product" />
                                           <Button mnemonicParsing="false" onAction="#handleRemoveProd" prefHeight="39.0" prefWidth="225.0" text="Remove Product" />
                                        </children>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
                                     </VBox>
                                     <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="291.0" />
                                  </children>

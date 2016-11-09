@@ -26,6 +26,7 @@ public class EditProductController {
     public Button btnAddColumn;
     public TextField txtProductName;
     public ListView listViewProd;
+    public TextField txtCategoryName;
     private Category activeCategory;
     private ArrayList<Product> activeProducts = new ArrayList<>();
     public TableView<Product> productTable;
@@ -42,8 +43,7 @@ public class EditProductController {
     void initialize(){
         pdao.refresh();
 
-		editorModel.categories.clear();
-		editorModel.categories.addAll(pdao.getCategories());
+		editorModel.categories = (ArrayList<Category>) pdao.getCategories();
 
 		products.clear();
 		products.addAll(pdao.getProducts());
@@ -56,6 +56,7 @@ public class EditProductController {
         activeCategory = editorModel.categories.get(0);
 
         //createTestProducts();
+        setListViewProd();
         setCategories();
         makeColumns();
         populateCells();
@@ -110,16 +111,33 @@ public class EditProductController {
     }
 
     private void removeColumn() {
+        String col = catColumns.get(activecolumn);
+
+        for (Product product : products) {
+            if (activeCategory.contains(product)) {
+                product.getDescriptions().remove(col);
+            }
+        }
+        for (Product p : products){
+            pdao.updateProduct(p);
+        }
+
         activeCategory.getColumns().remove(activecolumn);
+        pdao.updateCategory(activeCategory);
         updateTable();
 
     }
 
     private void setListViewProd(){
-        for(Product p: products){
+        activeProducts.clear();
 
+        for(Product p: products){
+            if(activeCategory.contains(p)){
+                activeProducts.add(p);
+            }
         }
-        javafx.collections.FXCollections.observableList(products);
+        ObservableList<Product> ps = javafx.collections.FXCollections.observableList(activeProducts);
+        listViewProd.setItems(ps);
     }
 
     void setCategories(){
@@ -252,6 +270,7 @@ public class EditProductController {
             p.setCat(activeCategory);
             updateTable();
             pdao.saveProduct(p);
+            setListViewProd();
         }else{
             AlertBoxes.displayInformationBox("ERROR", "Must not not be null");
         }
@@ -259,5 +278,42 @@ public class EditProductController {
     }
 
     public void handleRemoveProd(ActionEvent actionEvent) {
+        int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
+
+        if(selectedItem >= 0){
+            products.remove(selectedItem);
+            updateTable();
+            setListViewProd();
+        }else{
+            AlertBoxes.displayInformationBox("ERROR", "No product selected");
+        }
+
+    }
+
+    public void addCategoryHandler(ActionEvent actionEvent) {
+        Category c = new Category();
+        c.setName(txtCategoryName.getText());
+
+
+
+        if(editorModel.categories.contains(c)){
+
+        }else{
+            editorModel.categories.add(c);
+           pdao.saveCategories();
+        }
+
+
+    }
+
+    public void removeCategoryHandler(ActionEvent actionEvent) {
+        for(Product p : products){
+            if(activeCategory.contains(p)){
+                products.remove(p);
+            }
+        }
+        editorModel.categories.remove(activeCategory);
+        pdao.removeCategory(activeCategory);
+        updateTable();
     }
 }

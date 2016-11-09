@@ -65,16 +65,20 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public void saveCategories(){
         List<Category> currentDBcategories = new ArrayList<Category>();
         currentDBcategories.addAll((List<Category>) fetch(Category.class));
-        for (Category p :mCategories) {
-            if(!currentDBcategories.contains(p)){
-                save(p);
+        for (Category category :mCategories) {
+            if(currentDBcategories.contains(category)){
+                update(category);
+            } else {
+                save(category);
             }
         }
     }
 
 	public void refresh() {
-		mProducts = (List<Product>) fetch(Product.class);
-		mCategories = (List<Category>) fetch(Category.class);
+		mProducts.clear();
+        mProducts.addAll((List<Product>) fetch(Product.class));
+        mCategories.clear();
+		mCategories.addAll((List<Category>) fetch(Category.class));
 	}
 
 	public void updateProduct(Product product) {
@@ -84,6 +88,13 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public void updateCategory(Category activeCategory) {
         update(activeCategory);
     }
+
+    public void removeCategory(Category category) {
+		for(Product product : getProductsByCategory(category.getName())){
+			remove(product);
+		}
+		remove(category);
+	}
 
     public void saveProduct(Product product){
 		save(product);
