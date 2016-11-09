@@ -124,14 +124,14 @@ public abstract class MainDataAccessObject {
 
    /* public static void test(){
 		Admin admin = new Admin();
-        admin.setName("Hans");
+        admin.setLastName("Hans");
         admin.setUsername("hans");
         save(admin);
         fetch(Admin.class).forEach(System.out::println);
 		remove(admin);
 
 		Consumer consumer = new Consumer();
-		consumer.setName("Heksen");
+		consumer.setLastName("Heksen");
 		consumer.setUsername("hex69");
 		consumer.setBalance(420.00);
 		save(consumer);
@@ -139,14 +139,14 @@ public abstract class MainDataAccessObject {
 		remove(consumer);
 
 		Bartender bartender = new Bartender();
-		bartender.setName("Grethe");
+		bartender.setLastName("Grethe");
 		bartender.setUsername("greathe");
 		save(bartender);
 		fetch(Bartender.class).forEach(System.out::println);
 		remove(bartender);
 
 		Product testProduct = new Product();
-		testProduct.setName("Hansens");
+		testProduct.setLastName("Hansens");
 		testProduct.setPrice(15);
 		testProduct.setCategory("Drink");
 		testProduct.setDescription("alco", "15%");
