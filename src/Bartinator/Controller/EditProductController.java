@@ -300,7 +300,7 @@ public class EditProductController {
 
         }else{
             editorModel.categories.add(c);
-           pdao.saveCategories();
+            pdao.saveCategories();
         }
 
 
