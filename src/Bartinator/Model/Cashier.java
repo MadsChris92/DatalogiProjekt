@@ -80,7 +80,7 @@ public class Cashier {
         //TODO: Prompt for Consumer info
 
         //Test
-        Consumer consumer = new Consumer(37382, "Daniel", 12500);
+        Consumer consumer = new Consumer(37382, "Daniel", "Bjørkholm", 12500);
 
         //charge Consumer
         boolean succes = consumer.pay(getTotal());

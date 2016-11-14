@@ -10,22 +10,27 @@ public class Consumer {
 	private int mStudentID;
 
 	@Column
-	private String mName;
+	private String mFirstName;
+
+	@Column
+	private String mLastName;
 
 	@Column
 	private double mBalance;
 
 	protected Consumer() {}
 
-	public Consumer(int studentID, String name) {
+	public Consumer(int studentID, String firstName, String lastName) {
 		mStudentID = studentID;
-		mName = name;
+		mFirstName = firstName;
+		mLastName = lastName;
 		mBalance = 0.0;
 	}
 
-	public Consumer(int studentID, String name, double balance) {
+	public Consumer(int studentID, String firstName, String lastName, double balance) {
 		mStudentID = studentID;
-		mName = name;
+		mFirstName = firstName;
+		mLastName = lastName;
 		mBalance = balance;
 	}
 
@@ -45,18 +50,24 @@ public class Consumer {
 		mBalance = balance;
 	}
 
-	public String getName() {
-		return mName;
+	public String getFirstName() {
+		return mFirstName;
 	}
-	public void setName(String name) {
-		mName = name;
+	public void setFirstName(String firstName) {
+		mFirstName = firstName;
 	}
-
+	public String getLastName() {
+		return mLastName;
+	}
+	public void setLastName(String lastName) {
+		mLastName = lastName;
+	}
 
 	@Override public String toString() {
 		return "Consumer{" +
 				"mStudentID=" + mStudentID +
-				", mName='" + mName + '\'' +
+				", mFirstName='" + mFirstName + '\'' +
+				", mLastName='" + mLastName + '\'' +
 				", mBalance=" + mBalance +
 				'}';
 	}
