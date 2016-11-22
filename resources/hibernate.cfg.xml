@@ -2,18 +2,18 @@
 <hibernate-configuration>
     <session-factory>
         <!-- MainDataAccessObject connection setting -->
-        <property lastName="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property lastName="connection.url">
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">
             jdbc:mysql://datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com:3306/Bartinator
         </property>
-        <property lastName="connection.username">malaue4</property>
-        <property lastName="connection.password">Plasward</property>
+        <property name="connection.username">malaue4</property>
+        <property name="connection.password">Plasward</property>
 
         <!-- SQL Dialect -->
-        <property lastName="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Update the database schema on application startup -->
-        <property lastName="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">update</property>
 
         <!-- Names the annotated entity classes -->
         <mapping class="Bartinator.Model.User"/>
