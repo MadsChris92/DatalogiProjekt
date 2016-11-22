@@ -4,70 +4,72 @@ import javax.persistence.*;
 
 
 @Entity
-public abstract class User {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int mId;
 	@Column
-	private String name;
+	private String mName;
 	@Column
-	private String username;
+	private String mUsername;
 	@Column
-	private int password;
+	private int mPassword;
+
+	@Column
+	private boolean mAdminAccess;
 
 	protected User(){};
 
-	public User(String name, String username, String password) {
-		this.username = username;
+	public User(String name, String username, int password, boolean adminAccess) {
+		mName = name;
+		mUsername = username;
+		mPassword = password;
+		mAdminAccess = adminAccess;
 	}
 
 	public int getId() {
-		return id;
+		return mId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		mId = id;
 	}
 
 	public String getName() {
-		return name;
+		return mName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		mName = name;
 	}
 
 	public String getUsername() {
-		return username;
+		return mUsername;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		mUsername = username;
 	}
 
 	public int getPassword() {
-		return password;
+		return mPassword;
 	}
 
 	public void setPassword(int password) {
-		this.password = password;
-	}
-
-	public boolean isBartender() {
-		return false;
+		mPassword = password;
 	}
 
 	public boolean isAdmin() {
-		return false;
+		return mAdminAccess;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
-				"userid=" + id +
-				", name='" + name + '\'' +
-				", username='" + username + '\'' +
-				", password=" + password +
+				"userid=" + mId +
+				", name='" + mName + '\'' +
+				", username='" + mUsername + '\'' +
+				", password=" + mPassword +
 				'}';
 	}
 }

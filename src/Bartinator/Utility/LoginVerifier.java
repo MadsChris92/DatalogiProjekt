@@ -30,8 +30,7 @@ public class LoginVerifier {
 
         User user = UserDataAccessObject.getInstance().verifyUser(username, password);
 
-
-        if(user != null && (user.isAdmin() || user.isBartender())){
+        if(user != null){
             accessGranted = true;
             latestCheckedUser = user;
         }

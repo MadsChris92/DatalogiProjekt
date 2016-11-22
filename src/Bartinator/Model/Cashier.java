@@ -95,8 +95,8 @@ public class Cashier {
         }
 
         //Create order
-        User bartender = UserDataAccessObject.getInstance().getActiveUser();
-        Order order = new Order(getTotal(), receipt, bartender.getName(), bartender.getId());
+        User user = UserDataAccessObject.getInstance().getActiveUser();
+        Order order = new Order(getTotal(), receipt, user.getName(), user.getId());
 
         //Save and return
         System.out.printf("%s", order.toString());

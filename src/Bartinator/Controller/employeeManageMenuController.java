@@ -22,46 +22,58 @@ public class employeeManageMenuController implements Initializable {
     public CheckBox adminCheckBox;
 
     public TableView employeeTable;
-    public TableColumn nameCol;
+	public TableColumn IdCol;
+	public TableColumn nameCol;
     public TableColumn usernameCol;
+	public TableColumn passwordCol;
+	public TableColumn adminCol;
 
-
-
-
-    UserDataAccessObject mUserDAO;
+	UserDataAccessObject mUserDAO;
     ObservableList<User> data;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
 
         mUserDAO = UserDataAccessObject.getInstance();
-        try {
-            //TODO: Fetcher metode returnere null???
-            data = FXCollections.observableList(mUserDAO.fetchAllUsers());
-        } catch (IOException e) {
-            e.printStackTrace();
-            AlertBoxes.displayErrorBox("Fetching Users", e.getMessage());
-        }
+		updateUserTableView();
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-        usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-       // nameCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>(User.isA));
-
-        employeeTable.setItems(data);
     }
-
 
     public void handleSaveUser(ActionEvent actionEvent) {
-        if (adminCheckBox.isSelected()){
-            //TODO Lav ADMIN OG GEM
-        } else if(!adminCheckBox.isSelected()){
-            //TODO Lav Bartender og Gem
-        }
-
-
+		User user = new User(nameField.getText(),
+							 usernameField.getText(),
+							 passwordField.getText().hashCode(),
+							 adminCheckBox.isSelected());
+		mUserDAO.saveUser(user);
+		updateUserTableView();
     }
-    public void handleDelete(ActionEvent actionEvent) {
+	private void updateUserTableView() {
+		try {
+			//TODO: Fetcher metode returnere null???
+			data = FXCollections.observableList(mUserDAO.fetchAllUsers());
+		} catch (IOException e) {
+			e.printStackTrace();
+			AlertBoxes.displayErrorBox("Fetching Users", e.getMessage());
+		}
 
+		IdCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("mId"));
+		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("mName"));
+		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("mUsername"));
+		passwordCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("mPassword"));
+		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("mAdminAccess"));
+
+
+		// nameCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>(User.isA));
+
+		employeeTable.setItems(data);
+	}
+
+	public void handleDelete(ActionEvent actionEvent) {
+		if(mUserDAO.userExists(usernameField.getText())){
+			mUserDAO.deleteUser(usernameField.getText());
+		} else {
+			AlertBoxes.displayErrorBox("User doesn't exist", "The username entered doesn't match any user in the database!");
+		}
     }
 
 }

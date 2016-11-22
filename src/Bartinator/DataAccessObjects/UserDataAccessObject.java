@@ -33,6 +33,10 @@ public class UserDataAccessObject extends MainDataAccessObject{
         return user;
     }
 
+	public void saveUser(User user){
+		save(user);
+	}
+
     public User getActiveUser() {
         return mActiveUser;
     }
@@ -73,4 +77,8 @@ public class UserDataAccessObject extends MainDataAccessObject{
         }
     }
 
+	public void deleteUser(String username) {
+		User user = fetchUserFromUsername(username);
+		remove(user);
+	}
 }
