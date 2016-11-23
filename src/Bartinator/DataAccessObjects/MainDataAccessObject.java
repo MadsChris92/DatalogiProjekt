@@ -156,6 +156,11 @@ public abstract class MainDataAccessObject {
 		remove(testProduct);
 	}*/
 
+   public static void test(){
+	   User user = new User("Daniel", "daniel", "".hashCode(), true);
+	   save(user);
+   }
+
 	public static void stop(){
 		sessionFactory.close();
 	}

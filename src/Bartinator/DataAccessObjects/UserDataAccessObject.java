@@ -22,7 +22,7 @@ public class UserDataAccessObject extends MainDataAccessObject{
         // sql udgaven af det functionen gør er:
         // SELECT * FROM User WHERE User."username"=username;
         // hvis der er mere end én bruger med samme brugernavn, så vælger den det første resultat
-        List<User> users = (List<User>) fetch(User.class, "username", username);
+        List<User> users = (List<User>) fetch(User.class, "mUsername", username);
         User user;
         if(users.size() > 0) {
             if(users.size() > 1) System.out.println("Multiple mUsers with the same username");
