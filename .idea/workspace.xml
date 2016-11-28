@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca76c41f-82af-4bfb-8e10-2bdc865ce373" name="Default" comment="Package design">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Bartinator/Model/Admin.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Bartinator/Model/Bartender.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Bartinator/Controller/EditProductController.java" afterPath="$PROJECT_DIR$/src/Bartinator/ProductModule/EditProductController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Bartinator/Controller/EditorController2.java" afterPath="$PROJECT_DIR$/src/Bartinator/ProductModule/EditorController2.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Bartinator/Model/Cashier.java" afterPath="$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Bartinator/Model/OurPropertyValueFactory.java" afterPath="$PROJECT_DIR$/src/Bartinator/ProductModule/OurPropertyValueFactory.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Bartinator/Model/editorModel.java" afterPath="$PROJECT_DIR$/src/Bartinator/ProductModule/editorModel.java" />
+    <list default="true" id="ca76c41f-82af-4bfb-8e10-2bdc865ce373" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/View/editProductView.fxml" afterPath="$PROJECT_DIR$/resources/View/editProductView.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/View/editorView.fxml" afterPath="$PROJECT_DIR$/resources/View/editorView.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Bartinator/SalesModule/bartenderController.java" afterPath="$PROJECT_DIR$/src/Bartinator/SalesModule/bartenderController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java" afterPath="$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -42,11 +33,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.7373868">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="bartenderController.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="bartenderController.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/bartenderController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="476">
-                  <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+                <state relative-caret-position="255">
+                  <caret line="48" column="25" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
                   <folding />
                 </state>
               </provider>
@@ -74,23 +65,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="userManageMenu.fxml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/resources/View/userManageMenu.fxml">
+          <file leaf-file-name="Cashier.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="330">
-                  <caret line="35" column="102" selection-start-line="35" selection-start-column="102" selection-end-line="35" selection-end-column="102" />
-                  <folding />
+                <state relative-caret-position="1326">
+                  <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="method#removeProduct#0;class#Cashier#0" expanded="false" />
+                  </folding>
                 </state>
-              </provider>
-              <provider editor-type-id="JavaFX-Scene-Builder">
-                <state />
               </provider>
             </entry>
           </file>
           <file leaf-file-name="Consumer.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Bartinator/Model/Consumer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="775">
+                <state relative-caret-position="1173">
                   <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
                   <folding>
                     <element signature="e#734#735#0" expanded="true" />
@@ -126,21 +117,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="EditorController2.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Bartinator/ProductModule/EditorController2.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="85">
-                  <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="EditProductController.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Bartinator/ProductModule/EditProductController.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="-272">
-                  <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+                  <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -200,6 +181,7 @@
         <option value="$PROJECT_DIR$/src/Bartinator/Controller/consumerManagementController.java" />
         <option value="$PROJECT_DIR$/src/Bartinator/Controller/CreateConsumerController.java" />
         <option value="$PROJECT_DIR$/src/Bartinator/SalesModule/bartenderController.java" />
+        <option value="$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java" />
       </list>
     </option>
   </component>
@@ -496,28 +478,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="NavigationModule" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DatalogiProjekt02" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DatalogiProjekt02" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bartinator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -615,10 +575,10 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Bartinator.EmployeeModule" />
       <recent name="Bartinator.SalesModule" />
       <recent name="Bartinator.ProductModule" />
       <recent name="Bartinator.NavigationModule" />
-      <recent name="Bartinator.EmployeeModule" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Lord Daniel\IdeaProjects\DatalogiProjekt02\resources\View" />
@@ -1191,7 +1151,7 @@
       <option name="presentableId" value="Default" />
       <updated>1478104599974</updated>
       <workItem from="1478104601092" duration="13588000" />
-      <workItem from="1480325018555" duration="10771000" />
+      <workItem from="1480325018555" duration="11257000" />
     </task>
     <task id="LOCAL-00002" summary="buying stuff nearly done !!!">
       <created>1478114001361</created>
@@ -1235,15 +1195,36 @@
       <option name="project" value="LOCAL" />
       <updated>1480335431124</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Package design">
+      <created>1480335821515</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1480335821515</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Package design">
+      <created>1480335943966</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1480335943966</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Package design">
+      <created>1480336244990</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1480336244990</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24359000" />
+    <option name="totallyTimeSpent" value="24845000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1262,7 +1243,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17590618" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15938166" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1449,7 +1430,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bartinator/NavigationModule/adminMainMenuController.java">
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/EmployeeModule/adminMainMenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="44" selection-end-column="9" />
@@ -1497,17 +1478,6 @@
             <element signature="e#1412#1413#0" expanded="false" />
             <element signature="e#1446#1447#0" expanded="false" />
             <element signature="e#1481#1482#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1470">
-          <caret line="101" column="48" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#removeProduct#0;class#Cashier#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1608,7 +1578,7 @@
     <entry file="file://$PROJECT_DIR$/src/Bartinator/ProductModule/EditProductController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-272">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1647,21 +1617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bartinator/Model/Consumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
-          <folding>
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#756#757#0" expanded="true" />
-            <element signature="e#796#797#0" expanded="true" />
-            <element signature="e#821#822#0" expanded="true" />
-            <element signature="e#1471#1472#0" expanded="true" />
-            <element signature="e#1495#1496#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Bartinator/EmployeeModule/employeeManageMenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1688,16 +1643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/consumerManagementController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Bartinator/ProductModule/editorModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1708,9 +1653,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/bartenderController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="48" column="25" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/consumerManagementController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/Model/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
+          <folding>
+            <element signature="e#734#735#0" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+            <element signature="e#821#822#0" expanded="true" />
+            <element signature="e#1471#1472#0" expanded="true" />
+            <element signature="e#1495#1496#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/Model/Container.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/Model/ButtonCustom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bartinator/SalesModule/Cashier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1326">
+          <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#removeProduct#0;class#Cashier#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
