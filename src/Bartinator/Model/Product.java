@@ -20,6 +20,9 @@ public class Product {
     @ManyToOne
     private Category cat;
 
+	@Column
+	private boolean favorite;
+
     public Category getCat() {
         return cat;
     }
@@ -62,9 +65,15 @@ public class Product {
         }
     }
 
+	public boolean isFavorite() {
+		return favorite;
+	}
 
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
+	}
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -83,17 +92,6 @@ public class Product {
     public Map<String, String> getDescriptions() {
         return descriptions;
     }
-/*
-    public void actionHandler() throws IOException {
-        Stage stage = new Stage();
-        System.out.println(id);
-        Parent root1;
-        root1 = FXMLLoader.load(loginController.class.getResource("../Bartinator.View/btnCreateMenu.fxml"));
-        stage.setScene(new Scene(root1, 500, 500));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        btnCreateController.productID = getId();
-        stage.show();
-    }*/
 
     @Override
     public String toString() {

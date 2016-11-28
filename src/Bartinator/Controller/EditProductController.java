@@ -287,8 +287,8 @@ public class EditProductController {
         int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
 
         if(selectedItem >= 0){
-            System.out.println(products.get(selectedItem).getName());
-            products.remove(selectedItem +2);
+            Product product = products.remove(selectedItem);
+            pdao.removeProduct(product);
             updateTable();
             setListViewProd();
         }else{
