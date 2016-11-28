@@ -1,5 +1,8 @@
 package Bartinator.Model;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+
 import javax.persistence.*;
 
 
@@ -74,7 +77,7 @@ public class User {
 				", name='" + mName + '\'' +
 				", username='" + mUsername + '\'' +
 				", password=" + mPassword +
-				", isAdmin" + mAdminAccess +
-				'}';
+				", isAdmin='" + mAdminAccess +
+				"'}";
 	}
 }

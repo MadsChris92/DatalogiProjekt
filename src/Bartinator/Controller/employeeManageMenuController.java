@@ -4,6 +4,7 @@ import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.User;
 import Bartinator.Utility.AlertBoxes;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -106,12 +109,20 @@ public class employeeManageMenuController implements Initializable {
 		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
 		passwordCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("password"));
+
 		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("adminAccess"));
 
+		adminCol.setCellFactory(new Callback<TableColumn<User, Boolean>, TableCell<User, Boolean>>() {
 
+			public TableCell<User, Boolean> call(TableColumn<User, Boolean> p) {
+
+				return new CheckBoxTableCell<User, Boolean>();
+
+			}
+		});
+
+		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("adminAccess"));
 		System.out.println(data.toString());
 		employeeTable.setItems(data);
 	}
-
-
 }
