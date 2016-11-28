@@ -5,7 +5,6 @@ import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 import Bartinator.Utility.AlertBoxes;
-import Bartinator.Whew.ButtonProduct;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -98,37 +97,21 @@ public class bartenderController implements Initializable{
 			for (Category c : categorys) {
 				System.out.println("Fetched category: " + c.toString());
 				Button btn = styleBtn(new Button(c.getName()));
+                btn.setStyle("-fx-base: red;");
 				btn.setOnAction(handleCatBtn);
 				buttons.add(btn);
+			}
+
+			for (Product product : mProductDAO.getProductsByFavorite()) {
+				System.out.println("Fetched product: " + product.toString());
+				ButtonProduct buttonProduct = new ButtonProduct(product);
+				Button button = styleBtn(buttonProduct.getButton());
+				button.setOnAction(handleProductBtn);
+				buttons.add(buttonProduct);
 			}
 		}
 		return buttons;
 	}
-    private List<Button> createBtnList() {
-        List<Button> buttons = new ArrayList<>();
-        if(selectedCat != null) {
-            List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
-            Button backBtn = styleBtn(new Button("<-"));
-            backBtn.setOnAction(handleProductBtn);
-            buttons.add(backBtn);
-            System.out.println(products);
-            for (Product p : products) {
-                System.out.println("Fetched product: " + p.toString());
-                Button btn = styleBtn(new Button(p.getName() + "-" + p.getId()));
-                btn.setOnAction(handleProductBtn);
-                buttons.add(btn);
-            }
-        } else {
-            List<Category> categorys = mProductDAO.getCategories();
-            for (Category c : categorys) {
-                System.out.println("Fetched category: " + c.toString());
-                Button btn = styleBtn(new Button(c.getName()));
-                btn.setOnAction(handleCatBtn);
-                buttons.add(btn);
-            }
-        }
-        return buttons;
-    }
     private Button styleBtn(Button button) {
         button.setMinHeight(mBtnRadius);
         button.setMinWidth(mBtnRadius);
@@ -144,9 +127,8 @@ public class bartenderController implements Initializable{
                 selectedCat = null;
                 displaySelectedCat();
             } else {
-                String[] strings = btn.getText().split("-");
-                Product p = mProductDAO.getProductById(Integer.parseInt(strings[1]));
-                mCashier.addProduct(p, 1);
+                Product product = ((ButtonProduct)btn.getParent()).getProduct();
+                mCashier.addProduct(product, 1);
                 updateCartView();
             }
         }
@@ -165,7 +147,7 @@ public class bartenderController implements Initializable{
 
     public void handleCreateConsumer (ActionEvent actionEvent){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/consumerManageMenu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/consumerManageMenu.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load createConsumer window!");
@@ -211,7 +193,7 @@ public class bartenderController implements Initializable{
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/loginView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load loginView window");
