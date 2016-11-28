@@ -87,9 +87,6 @@ public class EditProductController {
     }
 
     private void setListView(){
-        listViewCol.setMinWidth(120);
-        listViewCol.setMinHeight(300);
-
         catColumns.clear();
         listViewCol.getItems().clear();
         catColumns.addAll(activeCategory.getColumns());
@@ -109,8 +106,6 @@ public class EditProductController {
                 activecolumn = newValue.intValue();
                 btnRemoveColumn.setOnAction(event -> removeColumn());
             }
-
-
         });
     }
 
@@ -285,10 +280,16 @@ public class EditProductController {
 
     public void handleRemoveProd(ActionEvent actionEvent) {
         int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
-
+        ArrayList<Product> ps = new ArrayList<>();
         if(selectedItem >= 0){
+            for (int i = 0; i < products.size(); i++) {
+                if(products.get(i).getCat().getName().equals(activeCategory.getName())){
+                    ps.add(products.get(i));
+                }
+            }
+            Product p = ps.get(selectedItem);
             Product product = products.remove(selectedItem);
-            pdao.removeProduct(product);
+            pdao.removeProduct(p);
             updateTable();
             setListViewProd();
         }else{
@@ -300,17 +301,11 @@ public class EditProductController {
     public void addCategoryHandler(ActionEvent actionEvent) {
         Category c = new Category();
         c.setName(txtCategoryName.getText());
-
-
-
         if(editorModel.categories.contains(c)){
-
         }else{
             editorModel.categories.add(c);
             pdao.saveCategories();
         }
-
-
     }
 
     public void removeCategoryHandler(ActionEvent actionEvent) {
