@@ -52,6 +52,16 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         return null;
     }
 
+	public List<Product> getProductsByFavorite(){
+		List<Product> products = new ArrayList<>();
+		for (Product product : mProducts) {
+			if(product.isFavorite()){
+				products.add(product);
+			}
+		}
+		return products;
+	}
+
     public void saveProducts(){
         List<Product> currentDBproducts = new ArrayList<Product>();
         currentDBproducts.addAll((Collection<? extends Product>) fetch(Product.class));

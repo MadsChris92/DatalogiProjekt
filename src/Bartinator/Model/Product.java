@@ -19,7 +19,6 @@ public class Product {
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
     private Category cat;
-
 	@Column
 	private boolean favorite;
 
