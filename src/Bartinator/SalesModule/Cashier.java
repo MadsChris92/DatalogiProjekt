@@ -1,11 +1,13 @@
-package Bartinator.Model;
-
+package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.OrderDataAccessObject;
 import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.Model.Consumer;
+import Bartinator.Model.Order;
+import Bartinator.Model.Product;
+import Bartinator.Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,10 +82,10 @@ public class Cashier {
         //TODO: Prompt for Consumer info
 
         //Test
-        Consumer consumer = new Consumer(37382, "Daniel", "Bjørkholm", 12500);
+        Consumer consumer = new Consumer("Daniel", "Bjørkholm", 12500);
 
         //charge Consumer
-        boolean succes = consumer.pay(getTotal());
+        boolean succes = consumer.pay((int)(getTotal()*100));
         if(!succes){
             return false;
         } // TODO: Save consumer ?????

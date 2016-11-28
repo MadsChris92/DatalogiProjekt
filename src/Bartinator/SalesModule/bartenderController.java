@@ -2,7 +2,6 @@ package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
 import Bartinator.Main;
-import Bartinator.Model.Cashier;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 import Bartinator.Utility.AlertBoxes;

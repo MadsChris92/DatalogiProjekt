@@ -1,4 +1,4 @@
-package Bartinator.NavigationModule;
+package Bartinator.EmployeeModule;
 
 import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
