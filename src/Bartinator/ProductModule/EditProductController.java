@@ -282,13 +282,18 @@ public class EditProductController {
         int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
         ArrayList<Product> ps = new ArrayList<>();
         if(selectedItem >= 0){
+            /*
             for (int i = 0; i < products.size(); i++) {
                 if(products.get(i).getCat().getName().equals(activeCategory.getName())){
                     ps.add(products.get(i));
                 }
             }
-            Product p = ps.get(selectedItem);
-            Product product = products.remove(selectedItem);
+            */
+            Product p = activeProducts.get(selectedItem);
+
+//            Product p = ps.get(selectedItem);
+            System.out.println(p.getName());
+            products.remove(p);
             pdao.removeProduct(p);
             updateTable();
             setListViewProd();
