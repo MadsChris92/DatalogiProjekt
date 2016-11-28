@@ -63,6 +63,10 @@ public class User {
 		return mAdminAccess;
 	}
 
+	public void giveAdminAccess(boolean adminAccess){
+		mAdminAccess = adminAccess;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +

@@ -30,9 +30,14 @@
                       <Insets top="10.0" />
                   </padding>
                  <children>
-                     <Button onAction="#handleSaveUser" text="Save" textAlignment="CENTER" />
-                     <Button onAction="#handleDelete" text="Delete" textAlignment="CENTER" />
+                     <Button minHeight="100.0" minWidth="100.0" onAction="#handleSaveUser" text="Save" textAlignment="CENTER" />
+                  <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleUpdateUser" text="Update" />
+                     <Button minHeight="100.0" minWidth="100.0" onAction="#handleDelete" text="Delete" textAlignment="CENTER" />
+                  <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                  </children>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
               </HBox>
          </children>
          <BorderPane.margin>

@@ -17,7 +17,7 @@ public class UserDataAccessObject extends MainDataAccessObject{
     private List<User> mUsers;
     private User mActiveUser;
 
-    public static User fetchUserFromUsername(String username){
+    public User fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
         // sql udgaven af det functionen gør er:
         // SELECT * FROM User WHERE User."username"=username;
@@ -81,4 +81,8 @@ public class UserDataAccessObject extends MainDataAccessObject{
 		User user = fetchUserFromUsername(username);
 		remove(user);
 	}
+
+	public void updateUser(User user){
+        update(user);
+    }
 }

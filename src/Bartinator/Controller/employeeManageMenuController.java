@@ -1,12 +1,16 @@
 package Bartinator.Controller;
 
 import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.Main;
 import Bartinator.Model.User;
 import Bartinator.Utility.AlertBoxes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -40,13 +44,55 @@ public class employeeManageMenuController implements Initializable {
     }
 
     public void handleSaveUser(ActionEvent actionEvent) {
-		User user = new User(nameField.getText(),
-							 usernameField.getText(),
-							 passwordField.getText().hashCode(),
-							 adminCheckBox.isSelected());
-		mUserDAO.saveUser(user);
-		updateUserTableView();
+		if (mUserDAO.userExists(usernameField.getText())) {
+			AlertBoxes.displayErrorBox("User Allready exists", "The user, you are trying to create, already exists in the database. " +
+															  "You can choose to update the existing user instead.");
+		} else {
+			User user = new User(nameField.getText(),
+					usernameField.getText(),
+					passwordField.getText().hashCode(),
+					adminCheckBox.isSelected());
+			mUserDAO.saveUser(user);
+			updateUserTableView();
+		}
     }
+
+	public void handleUpdateUser(ActionEvent actionEvent) {
+		if (mUserDAO.userExists(usernameField.getText())) {
+			User user = mUserDAO.fetchUserFromUsername(usernameField.getText());
+			if(!(passwordField.getText() == "")){
+				user.setPassword(passwordField.getText().hashCode());
+			}
+			if(!(nameField.getText() == "")){
+				user.setName(nameField.getText());
+			}
+			user.giveAdminAccess(adminCheckBox.isSelected());
+			mUserDAO.updateUser(user);
+		} else {
+			AlertBoxes.displayErrorBox("User doesn't exist", "The user, you are trying to update, doesn't exist in the database. " +
+															 "You can choose to create the new user by pressing the save button.");
+		}
+	}
+
+	public void handleDelete(ActionEvent actionEvent) {
+		if(mUserDAO.userExists(usernameField.getText())){
+			mUserDAO.deleteUser(usernameField.getText());
+		} else {
+			AlertBoxes.displayErrorBox("User doesn't exist", "The username entered doesn't match any user in the database!");
+		}
+	}
+
+
+	public void handleExit(ActionEvent actionEvent) {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/View/bartenderView2.fxml"));
+			Main.theStage.setScene(new Scene(root, 800, 480));
+		} catch (IOException e) {
+			System.err.println("Failed to load bartenderView window!");
+			e.printStackTrace();
+		}
+	}
+
 	private void updateUserTableView() {
 		try {
 			//TODO: Fetcher metode returnere null???
@@ -67,12 +113,5 @@ public class employeeManageMenuController implements Initializable {
 		employeeTable.setItems(data);
 	}
 
-	public void handleDelete(ActionEvent actionEvent) {
-		if(mUserDAO.userExists(usernameField.getText())){
-			mUserDAO.deleteUser(usernameField.getText());
-		} else {
-			AlertBoxes.displayErrorBox("User doesn't exist", "The username entered doesn't match any user in the database!");
-		}
-    }
 
 }
