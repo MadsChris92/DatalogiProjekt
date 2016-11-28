@@ -36,7 +36,7 @@ public class EditorController2 {
 
     private void editProducts() throws IOException {
         System.out.println("test");
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/editProductView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/editProductView.fxml"));
         Main.theStage.setScene(new Scene(root, 800, 480));
     }
 }
