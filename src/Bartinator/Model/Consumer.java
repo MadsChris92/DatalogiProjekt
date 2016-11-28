@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class Consumer {
 
 	@Id
-	private int mStudentID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int mConsumerID;
 
 	@Column
 	private String mFirstName;
@@ -16,37 +17,35 @@ public class Consumer {
 	private String mLastName;
 
 	@Column
-	private double mBalance;
+	private int mBalance;
 
 	protected Consumer() {}
 
-	public Consumer(int studentID, String firstName, String lastName) {
-		mStudentID = studentID;
+	public Consumer(String firstName, String lastName) {
 		mFirstName = firstName;
 		mLastName = lastName;
-		mBalance = 0.0;
+		mBalance = 0;
 	}
 
-	public Consumer(int studentID, String firstName, String lastName, double balance) {
-		mStudentID = studentID;
+	public Consumer(String firstName, String lastName, int balance) {
 		mFirstName = firstName;
 		mLastName = lastName;
 		mBalance = balance;
 	}
 
-	public int getStudentID() {
-		return mStudentID;
+	public int getConsumerID() {
+		return mConsumerID;
 	}
 
-	public void setStudentID(int studentID) {
-		mStudentID = studentID;
+	public void setConsumerID(int consumerID) {
+		mConsumerID = consumerID;
 	}
 
-	public double getBalance() {
+	public int getBalance() {
 		return mBalance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(int balance) {
 		mBalance = balance;
 	}
 
@@ -65,17 +64,21 @@ public class Consumer {
 
 	@Override public String toString() {
 		return "Consumer{" +
-				"mStudentID=" + mStudentID +
+				"mConsumerID=" + mConsumerID +
 				", mFirstName='" + mFirstName + '\'' +
 				", mLastName='" + mLastName + '\'' +
 				", mBalance=" + mBalance +
 				'}';
 	}
-	public boolean pay(double total) {
+	public boolean pay(int total) {
 		if((getBalance()-total) >= 0){
 			mBalance -= total;
 			return true;
 		}
 		return false;
+	}
+
+	public void insertToBalance(int money){
+		mBalance += money;
 	}
 }
