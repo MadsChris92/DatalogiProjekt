@@ -14,7 +14,7 @@ public class adminMainMenuController {
 
     public void handleProductManagementBtn(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../Whew/editorView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/editorView.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load editor window!");
@@ -23,7 +23,7 @@ public class adminMainMenuController {
     }
     public void handleEmployeeManagementBtn(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../Whew/userManageMenu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/userManageMenu.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load userManageMenu window!");
@@ -36,7 +36,7 @@ public class adminMainMenuController {
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../Whew/loginView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/loginView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load loginView window!");
