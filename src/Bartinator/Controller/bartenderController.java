@@ -6,6 +6,7 @@ import Bartinator.Model.Cashier;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.View.ButtonProduct;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -52,7 +53,33 @@ public class bartenderController implements Initializable{
         System.out.println("Displaying: " + selectedCat);
 
         mBtnGrid.getChildren().clear();
-        List<Button> buttons = createBtnList();
+        //List<Button> buttons = createBtnList();
+
+		List<ButtonProduct> buttonProducts = new ArrayList<>();
+        List<Button> buttons = new ArrayList<>();
+        if(selectedCat != null) {
+            List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
+            Button backBtn = styleBtn(new Button("<-"));
+            backBtn.setOnAction(handleProductBtn);
+            buttons.add(backBtn);
+            System.out.println(products);
+            for (Product product : products) {
+                System.out.println("Fetched product: " + product.toString());
+				ButtonProduct buttonProduct = new ButtonProduct(product);
+                Button button = styleBtn(buttonProduct.getButton());
+                button.setOnAction(handleProductBtn);
+                //buttons.add(button);
+				buttonProducts.add(buttonProduct);
+            }
+        } else {
+            List<Category> categorys = mProductDAO.getCategories();
+            for (Category c : categorys) {
+                System.out.println("Fetched category: " + c.toString());
+                Button btn = styleBtn(new Button(c.getName()));
+                btn.setOnAction(handleCatBtn);
+                buttons.add(btn);
+            }
+        }
         int rowCount = 0;
         int colomnCount = 0;
         for (Button btn: buttons) {
@@ -63,6 +90,14 @@ public class bartenderController implements Initializable{
                 rowCount++;
             }
         }
+		for (ButtonProduct btn: buttonProducts) {
+			mBtnGrid.add(btn,colomnCount,rowCount);
+			colomnCount++;
+			if (colomnCount >= 6){
+				colomnCount = 0;
+				rowCount++;
+			}
+		}
         mBtnGrid.setAlignment(Pos.CENTER);
         ObservableList<RowConstraints> rowConstraints = mBtnGrid.getRowConstraints();
         for (RowConstraints rc: rowConstraints) {
@@ -136,7 +171,7 @@ public class bartenderController implements Initializable{
 
     public void handleCreateConsumer (ActionEvent actionEvent){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/createConsumerView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/createConsumerView.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load createConsumer window!");
@@ -182,7 +217,7 @@ public class bartenderController implements Initializable{
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/loginView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load loginView window");

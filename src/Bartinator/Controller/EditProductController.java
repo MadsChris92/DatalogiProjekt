@@ -277,11 +277,12 @@ public class EditProductController {
 
     }
 
-    public void handleRemoveProd(ActionEvent actionEvent) {
+    public void moveProd(ActionEvent actionEvent) {
         int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
 
         if(selectedItem >= 0){
-            products.remove(selectedItem);
+            Product product = products.remove(selectedItem);
+            pdao.removeProduct(product);
             updateTable();
             setListViewProd();
         }else{

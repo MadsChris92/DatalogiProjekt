@@ -60,7 +60,7 @@ public class CreateConsumerController {
 
 	private void returnToBartenderview(){
 		try {
-			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/bartenderView2.fxml"));
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/bartenderView2.fxml"));
 			Main.theStage.setScene(new Scene(root, 800, 480));
 		} catch (IOException e) {
 			System.err.println("Failed to load bartender window!");

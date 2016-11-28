@@ -85,6 +85,10 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 		update(product);
 	}
 
+	public void removeProduct(Product product){
+        remove(product);
+    }
+
     public void updateCategory(Category activeCategory) {
         update(activeCategory);
     }
