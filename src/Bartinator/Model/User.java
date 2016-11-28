@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -17,9 +19,10 @@ public class User {
 	private String mUsername;
 	@Column
 	private int mPassword;
-
 	@Column
 	private boolean mAdminAccess;
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Product> mFavorites = new ArrayList<>();
 
 	protected User(){};
 
@@ -79,5 +82,9 @@ public class User {
 				", password=" + mPassword +
 				", isAdmin='" + mAdminAccess +
 				"'}";
+	}
+
+	public List<Product> getFavorites() {
+		return mFavorites;
 	}
 }

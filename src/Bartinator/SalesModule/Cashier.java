@@ -85,8 +85,8 @@ public class Cashier {
         Consumer consumer = new Consumer("Daniel", "Bjørkholm", 12500);
 
         //charge Consumer
-        boolean succes = consumer.pay((int)(getTotal()*100));
-        if(!succes){
+        boolean success = consumer.pay((int)(getTotal()*100));
+        if(!success){
             return false;
         } // TODO: Save consumer ?????
 

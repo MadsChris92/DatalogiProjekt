@@ -19,8 +19,6 @@ public class Product {
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
     private Category cat;
-	@Column
-	private boolean favorite;
 
     public Category getCat() {
         return cat;
@@ -63,14 +61,6 @@ public class Product {
             descriptions.put(key, value);
         }
     }
-
-	public boolean isFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(boolean favorite) {
-		this.favorite = favorite;
-	}
 
 	@Override
     public boolean equals(Object o) {

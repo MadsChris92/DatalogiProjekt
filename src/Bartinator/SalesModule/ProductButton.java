@@ -1,7 +1,9 @@
 package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
+import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Model.Product;
+import Bartinator.Model.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
@@ -10,19 +12,24 @@ import javafx.scene.layout.StackPane;
 /**
  * Created by Martin on 28-11-2016.
  */
-public class ButtonProduct extends StackPane {
+public class ProductButton extends StackPane {
 	private Button mButton;
 	private ToggleButton mFavorite;
 	private Product mProduct;
 
-	ButtonProduct(Product product) {
+	ProductButton(Product product) {
 		mProduct = product;
 		mButton = new Button(String.format("%s%n%f", product.getName(), product.getPrice()));
 		mFavorite = new ToggleButton("*");
-		mFavorite.setSelected(product.isFavorite());
+		User activeUser = UserDataAccessObject.getInstance().getActiveUser();
+		mFavorite.setSelected(activeUser.getFavorites().contains(product));
 		mFavorite.setOnAction(event -> {
-			mProduct.setFavorite(mFavorite.isSelected());
-			ProductDataAccessObject.getInstance().updateProduct(mProduct);
+			if(mFavorite.isSelected()){
+				activeUser.getFavorites().add(mProduct);
+			} else {
+				activeUser.getFavorites().remove(mProduct);
+			}
+			UserDataAccessObject.getInstance().updateUser(activeUser);
 		});
 		setAlignment(Pos.TOP_RIGHT);
 		getChildren().add(mButton);

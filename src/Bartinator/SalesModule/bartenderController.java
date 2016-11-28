@@ -1,9 +1,11 @@
 package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
+import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
+import Bartinator.Model.User;
 import Bartinator.Utility.AlertBoxes;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +39,7 @@ public class bartenderController implements Initializable{
     Cashier mCashier;
     ProductDataAccessObject mProductDAO;
     String selectedCat = null;
+	User activeUser = UserDataAccessObject.getInstance().getActiveUser();
 
     int mBtnRadius = 90;
 
@@ -87,27 +90,27 @@ public class bartenderController implements Initializable{
 			System.out.println(products);
 			for (Product product : products) {
 				System.out.println("Fetched product: " + product.toString());
-				ButtonProduct buttonProduct = new ButtonProduct(product);
-				Button button = styleBtn(buttonProduct.getButton());
+				ProductButton productButton = new ProductButton(product);
+				Button button = styleBtn(productButton.getButton());
 				button.setOnAction(handleProductBtn);
-				buttons.add(buttonProduct);
+				buttons.add(productButton);
 			}
 		} else {
 			List<Category> categorys = mProductDAO.getCategories();
 			for (Category c : categorys) {
 				System.out.println("Fetched category: " + c.toString());
 				Button btn = styleBtn(new Button(c.getName()));
-                btn.setStyle("-fx-base: red;");
+                btn.setStyle("-fx-base: #f5efb9;");
 				btn.setOnAction(handleCatBtn);
 				buttons.add(btn);
 			}
 
-			for (Product product : mProductDAO.getProductsByFavorite()) {
+			for (Product product : activeUser.getFavorites()) {
 				System.out.println("Fetched product: " + product.toString());
-				ButtonProduct buttonProduct = new ButtonProduct(product);
-				Button button = styleBtn(buttonProduct.getButton());
+				ProductButton productButton = new ProductButton(product);
+				Button button = styleBtn(productButton.getButton());
 				button.setOnAction(handleProductBtn);
-				buttons.add(buttonProduct);
+				buttons.add(productButton);
 			}
 		}
 		return buttons;
@@ -127,7 +130,7 @@ public class bartenderController implements Initializable{
                 selectedCat = null;
                 displaySelectedCat();
             } else {
-                Product product = ((ButtonProduct)btn.getParent()).getProduct();
+                Product product = ((ProductButton)btn.getParent()).getProduct();
                 mCashier.addProduct(product, 1);
                 updateCartView();
             }

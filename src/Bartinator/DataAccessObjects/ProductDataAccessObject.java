@@ -3,6 +3,7 @@ package Bartinator.DataAccessObjects;
 
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
+import Bartinator.Model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,16 +52,6 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         }
         return null;
     }
-
-	public List<Product> getProductsByFavorite(){
-		List<Product> products = new ArrayList<>();
-		for (Product product : mProducts) {
-			if(product.isFavorite()){
-				products.add(product);
-			}
-		}
-		return products;
-	}
 
     public void saveProducts(){
         List<Product> currentDBproducts = new ArrayList<Product>();
