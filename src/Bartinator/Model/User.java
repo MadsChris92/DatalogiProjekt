@@ -70,6 +70,7 @@ public class User {
 				", name='" + mName + '\'' +
 				", username='" + mUsername + '\'' +
 				", password=" + mPassword +
+				", isAdmin" + mAdminAccess +
 				'}';
 	}
 }

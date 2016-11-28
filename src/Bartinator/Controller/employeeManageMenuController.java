@@ -56,15 +56,14 @@ public class employeeManageMenuController implements Initializable {
 			AlertBoxes.displayErrorBox("Fetching Users", e.getMessage());
 		}
 
-		IdCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("mId"));
-		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("mName"));
-		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("mUsername"));
-		passwordCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("mPassword"));
-		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("mAdminAccess"));
+		IdCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("id"));
+		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
+		passwordCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("password"));
+		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("adminAccess"));
 
 
-		// nameCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>(User.isA));
-
+		System.out.println(data.toString());
 		employeeTable.setItems(data);
 	}
 
