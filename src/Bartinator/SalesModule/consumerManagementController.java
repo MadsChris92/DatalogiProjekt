@@ -1,4 +1,4 @@
-package Bartinator.Controller;
+package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ConsumerDataAccessObject;
 import Bartinator.Main;

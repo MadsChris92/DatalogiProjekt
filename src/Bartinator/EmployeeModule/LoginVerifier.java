@@ -1,4 +1,4 @@
-package Bartinator.Utility;
+package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Model.User;
