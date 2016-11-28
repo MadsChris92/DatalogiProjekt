@@ -1,9 +1,9 @@
-package Bartinator.Controller;
+package Bartinator.EmployeeModule;
 
 
 import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
-import Bartinator.Utility.LoginVerifier;
+import Bartinator.EmployeeModule.LoginVerifier;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

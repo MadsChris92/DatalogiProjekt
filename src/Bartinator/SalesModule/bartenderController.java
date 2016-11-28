@@ -1,4 +1,4 @@
-package Bartinator.Controller;
+package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
 import Bartinator.Main;
@@ -166,7 +166,7 @@ public class bartenderController implements Initializable{
 
     public void handleCreateConsumer (ActionEvent actionEvent){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../Whew/createConsumerView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/consumerManageMenu.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load createConsumer window!");
@@ -212,7 +212,7 @@ public class bartenderController implements Initializable{
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
             try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../Whew/loginView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("../View/loginView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load loginView window");
