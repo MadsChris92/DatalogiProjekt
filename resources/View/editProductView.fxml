@@ -14,29 +14,38 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.Controller.EditProductController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.Controller.EditProductController">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="productTable" prefHeight="200.0" prefWidth="200.0" />
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
               <tabs>
                 <Tab text="Edit Columns">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <HBox prefHeight="136.0" prefWidth="600.0">
-                                 <children>
-                                    <ListView fx:id="listViewCol" prefHeight="136.0" prefWidth="160.0" />
-                                    <Button fx:id="btnRemoveColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="114.0" text="Remove" />
-                                    <VBox prefHeight="136.0" prefWidth="127.0">
+                              <BorderPane prefHeight="224.0" prefWidth="600.0">
+                                 <left>
+                                    <ListView fx:id="listViewCol" prefHeight="224.0" prefWidth="154.0" BorderPane.alignment="CENTER" />
+                                 </left>
+                                 <center>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <TextField fx:id="txtFieldColumn" prefHeight="39.0" prefWidth="137.0" promptText="Add Column" />
-                                          <Button fx:id="btnAddColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" text="Apply" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="btnAddColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="162.0" text="Apply" />
+                                                <TextField fx:id="txtFieldColumn" prefHeight="39.0" prefWidth="301.0" promptText="Add Column" />
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="btnRemoveColumn" mnemonicParsing="false" prefHeight="39.0" prefWidth="156.0" text="Remove" />
                                        </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
                                     </VBox>
-                                 </children>
-                              </HBox>
+                                 </center>
+                              </BorderPane>
                            </children>
                         </AnchorPane>
                   </content>
@@ -68,24 +77,27 @@
                       <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
-                                  <HBox prefHeight="136.0" prefWidth="600.0">
-                                 <children>
-                                    <ListView fx:id="listViewProd" prefHeight="200.0" prefWidth="200.0">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin></ListView>
-                                    <VBox prefHeight="136.0" prefWidth="197.0">
+                              <BorderPane prefHeight="200.0" prefWidth="600.0">
+                                 <left>
+                                    <ListView fx:id="listViewProd" />
+                                 </left>
+                                 <center>
+                                    <VBox BorderPane.alignment="CENTER">
                                        <children>
-                                          <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="256.0" text="Add Product" />
-                                          <Button mnemonicParsing="false" onAction="#handleRemoveProd" prefHeight="39.0" prefWidth="225.0" text="Remove Product" />
+                                          <HBox prefHeight="75.0" prefWidth="400.0">
+                                             <children>
+                                                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#btnAddProduct" prefHeight="39.0" prefWidth="180.0" text="Add Product" />
+                                                <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="291.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Button mnemonicParsing="false" onAction="#handleRemoveProd" prefHeight="39.0" prefWidth="145.0" text="Remove Product" />
                                        </children>
-                                       <padding>
-                                          <Insets right="10.0" />
-                                       </padding>
                                     </VBox>
-                                    <TextField fx:id="txtProductName" prefHeight="39.0" prefWidth="291.0" />
-                                 </children>
-                                  </HBox>
+                                 </center>
+                              </BorderPane>
                               </children>
                           </AnchorPane>
                       </content>

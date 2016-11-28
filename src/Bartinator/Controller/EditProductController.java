@@ -27,6 +27,8 @@ public class EditProductController {
     public TextField txtProductName;
     public ListView listViewProd;
     public TextField txtCategoryName;
+    public Label catLabel;
+    public TabPane tabPane;
     private Category activeCategory;
     private ArrayList<Product> activeProducts = new ArrayList<>();
     public TableView<Product> productTable;
@@ -69,6 +71,8 @@ public class EditProductController {
         productTable.setEditable(true);
 
         btnAddColumn.setOnAction(event -> addColumn());
+        updateTable();
+
     }
 
     private void addColumn() {
@@ -161,12 +165,14 @@ public class EditProductController {
         productTable.getItems().clear();
         columns.clear();
         data.clear();
-
+        catLabel.setText(activeCategory.getName());
         makeColumns();
         populateCells();
         productTable.getColumns().addAll(columns);
         productTable.setItems(data);
         setListView();
+        setListViewProd();
+
     }
 
     private void makeColumns(){
@@ -277,7 +283,7 @@ public class EditProductController {
 
     }
 
-    public void moveProd(ActionEvent actionEvent) {
+    public void handleRemoveProd(ActionEvent actionEvent) {
         int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
 
         if(selectedItem >= 0){
