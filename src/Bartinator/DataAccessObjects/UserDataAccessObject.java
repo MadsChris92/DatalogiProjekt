@@ -14,7 +14,6 @@ public class UserDataAccessObject extends MainDataAccessObject{
 		return instance;
 	}
 
-    private List<User> mUsers;
     private User mActiveUser;
 
     public User fetchUserFromUsername(String username){
@@ -43,13 +42,7 @@ public class UserDataAccessObject extends MainDataAccessObject{
     public void setActiveUser(User activeUser) {
         mActiveUser = activeUser;
     }
-    @Deprecated
-    public  List<User> getUsers() throws IOException {
-        if(mUsers == null){
-			fetchAllUsers();
-        }
-        return mUsers;
-    }
+
 
     @SuppressWarnings("unchecked")
 	public  List<User> fetchAllUsers() throws IOException {

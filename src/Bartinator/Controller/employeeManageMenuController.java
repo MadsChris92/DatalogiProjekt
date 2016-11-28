@@ -60,10 +60,10 @@ public class employeeManageMenuController implements Initializable {
 	public void handleUpdateUser(ActionEvent actionEvent) {
 		if (mUserDAO.userExists(usernameField.getText())) {
 			User user = mUserDAO.fetchUserFromUsername(usernameField.getText());
-			if(!(passwordField.getText() == "")){
+			if(!(passwordField.getText().equals(""))){
 				user.setPassword(passwordField.getText().hashCode());
 			}
-			if(!(nameField.getText() == "")){
+			if(!(nameField.getText().equals(""))){
 				user.setName(nameField.getText());
 			}
 			user.giveAdminAccess(adminCheckBox.isSelected());
@@ -85,10 +85,10 @@ public class employeeManageMenuController implements Initializable {
 
 	public void handleExit(ActionEvent actionEvent) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/View/bartenderView2.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/View/adminMainMenu.fxml"));
 			Main.theStage.setScene(new Scene(root, 800, 480));
 		} catch (IOException e) {
-			System.err.println("Failed to load bartenderView window!");
+			System.err.println("Failed to load adminMainMenu window!");
 			e.printStackTrace();
 		}
 	}

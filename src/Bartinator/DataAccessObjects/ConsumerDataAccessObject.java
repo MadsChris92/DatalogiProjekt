@@ -3,6 +3,7 @@ package Bartinator.DataAccessObjects;
 
 import Bartinator.Model.Consumer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,45 +15,39 @@ public class ConsumerDataAccessObject extends MainDataAccessObject {
 		return instance;
 	}
 
-	private List<Consumer> mConsumers;
-
-	private ConsumerDataAccessObject() {
-		mConsumers = new ArrayList<>();
-		mConsumers.addAll((List<Consumer>) fetch(Consumer.class));
+	public List<Consumer> fetchConsumers() throws IOException {
+		List<Consumer> consumers = (List<Consumer>) fetch(Consumer.class);
+		if(consumers != null){
+			return consumers;
+		}
+		throw new IOException("Fetching Consumers failed");
 	}
 
-	public List<Consumer> getConsumers() {
-		return mConsumers;
+	public Consumer fetchConsumerById(int id) {
+		List<Consumer> consumers = (List<Consumer>) fetch(Consumer.class, "mConsumerID", id);
+		Consumer consumer;
+		if(consumers.size() > 0){
+			consumer = consumers.get(0);
+		} else {
+			consumer = null;
+		}
+		return consumer;
 	}
 
-	public Consumer getConsumerById(int id) {
-		for (Consumer c : mConsumers) {
-			if (c.getStudentID() == id) {
-				return c;
-			}
-		}
-		return null;
+	public boolean consumerExists(int id){
+		return fetchConsumerById(id) != null;
 	}
 
-	public List<Consumer> searchConsumersByName(String search) {
-		List<Consumer> result = new ArrayList<>();
-		for (Consumer c : mConsumers) {
-			if (c.getLastName().toLowerCase().contains(search.toLowerCase())) {
-				result.add(c);
-			}
-		}
-		return result;
+	public void saveConsumer(Consumer consumer) {
+		save(consumer);
 	}
-	public boolean saveConsumer(Consumer consumer) {
-		boolean success = true;
-		for (Consumer storedConsumer : mConsumers){
-			if (storedConsumer.getStudentID() == consumer.getStudentID()){
-				success = false;
-			}
-		}
-		if(success){
-			save(consumer);
-		}
-		return success;
+
+	public void deleteConsumer(int id) {
+		Consumer consumer = fetchConsumerById(id);
+		remove(consumer);
+	}
+
+	public void updateConsumer(Consumer consumer){
+		update(consumer);
 	}
 }
