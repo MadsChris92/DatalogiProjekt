@@ -1,4 +1,4 @@
-package Bartinator.Controller;
+package Bartinator.ProductModule;
 
 import Bartinator.Model.*;
 import Bartinator.Utility.AlertBoxes;

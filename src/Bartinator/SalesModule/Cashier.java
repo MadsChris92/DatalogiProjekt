@@ -1,8 +1,12 @@
-package Bartinator.Model;
+package Bartinator.SalesModule;
 
 
 import Bartinator.DataAccessObjects.OrderDataAccessObject;
 import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.Model.Consumer;
+import Bartinator.Model.Order;
+import Bartinator.Model.Product;
+import Bartinator.Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

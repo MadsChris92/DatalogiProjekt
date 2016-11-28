@@ -1,7 +1,6 @@
-package Bartinator.Controller;
+package Bartinator.ProductModule;
 
 import Bartinator.Main;
-import Bartinator.Model.editorModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

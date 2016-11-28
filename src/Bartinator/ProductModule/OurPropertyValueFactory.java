@@ -1,5 +1,6 @@
-package Bartinator.Model;
+package Bartinator.ProductModule;
 
+import Bartinator.Model.Product;
 import com.sun.javafx.scene.control.Logging;
 import javafx.beans.NamedArg;
 import javafx.beans.property.ReadOnlyObjectWrapper;
