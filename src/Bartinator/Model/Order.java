@@ -22,11 +22,6 @@ public class Order {
     @Column
     private int mBartenderId;
 
-    @Column
-    private String mConsumerName;
-
-    @Column
-    private Integer mConsumerId;
 
     protected Order() {}
 
@@ -35,15 +30,6 @@ public class Order {
         mReceipt = receipt;
         mBartenderName = bartenderName;
         mBartenderId = bartenderId;
-    }
-
-    public Order(double totalPrice, List<String> receipt, String bartenderName, int bartenderId, String consumerName, Integer consumerId) {
-        mTotalPrice = totalPrice;
-        mReceipt = receipt;
-        mBartenderName = bartenderName;
-        mBartenderId = bartenderId;
-        mConsumerName = consumerName;
-        mConsumerId = consumerId;
     }
 
     public double getTotalPrice() {
@@ -58,12 +44,7 @@ public class Order {
     public int getBartenderId() {
         return mBartenderId;
     }
-    public String getConsumerName() {
-        return mConsumerName;
-    }
-    public Integer getConsumerId() {
-        return mConsumerId;
-    }
+
 
     @Override public String toString() {
         String result = String.format("Order:%n");
@@ -72,8 +53,7 @@ public class Order {
             result += String.format("%n");
         }
         result += String.format("Total price: " + mTotalPrice + " DKK%n"
-                + "Salesman: " + mBartenderName + "-" + mBartenderId + "%n"
-                + "Consumer: " + mConsumerName + "-" + mConsumerId + "%n");
+                + "Salesman: " + mBartenderName + "-" + mBartenderId + "%n");
         return result;
     }
 }

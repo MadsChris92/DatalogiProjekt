@@ -79,16 +79,6 @@ public class Cashier {
         return result;
     }
     public boolean checkOut() {
-        //TODO: Prompt for Consumer info
-
-        //Test
-        Consumer consumer = new Consumer("Daniel", "Bjørkholm", 12500);
-
-        //charge Consumer
-        boolean success = consumer.pay((int)(getTotal()*100));
-        if(!success){
-            return false;
-        } // TODO: Save consumer ?????
 
         //create receipt
         List<String> receipt = new ArrayList<>();

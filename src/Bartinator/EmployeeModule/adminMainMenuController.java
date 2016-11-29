@@ -14,7 +14,7 @@ public class adminMainMenuController {
 
     public void handleProductManagementBtn(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/editorView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/editProductView.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load editor window!");
