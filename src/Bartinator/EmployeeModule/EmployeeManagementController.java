@@ -4,6 +4,11 @@ import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,12 +32,12 @@ public class EmployeeManagementController implements Initializable {
     public TextField nameField;
     public CheckBox adminCheckBox;
 
-    public TableView employeeTable;
-	public TableColumn IdCol;
-	public TableColumn nameCol;
-    public TableColumn usernameCol;
-	public TableColumn passwordCol;
-	public TableColumn adminCol;
+    public TableView<Employee> employeeTable;
+	public TableColumn<Employee, Integer> IdCol;
+	public TableColumn<Employee, String> nameCol;
+    public TableColumn<Employee, String> usernameCol;
+	public TableColumn<Employee, Integer> passwordCol;
+	public TableColumn<Employee, Boolean> adminCol;
 
 	UserDataAccessObject mUserDAO;
     ObservableList<Employee> data;
@@ -68,7 +73,7 @@ public class EmployeeManagementController implements Initializable {
 			if(!(nameField.getText().equals(""))){
 				employee.setName(nameField.getText());
 			}
-			employee.giveAdminAccess(adminCheckBox.isSelected());
+			employee.setAdminAccess(adminCheckBox.isSelected());
 			mUserDAO.updateUser(employee);
 		} else {
 			AlertBoxes.displayErrorBox("Employee doesn't exist", "The user, you are trying to update, doesn't exist in the database. " +
@@ -108,20 +113,19 @@ public class EmployeeManagementController implements Initializable {
 		nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		usernameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("username"));
 		passwordCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("password"));
-
-		adminCol.setCellValueFactory(new PropertyValueFactory<Employee, Boolean>("adminAccess"));
-
-		adminCol.setCellFactory(new Callback<TableColumn<Employee, Boolean>, TableCell<Employee, Boolean>>() {
-
-			public TableCell<Employee, Boolean> call(TableColumn<Employee, Boolean> p) {
-
-				return new CheckBoxTableCell<Employee, Boolean>();
-
-			}
+		//adminCol.setCellValueFactory(new PropertyValueFactory<Employee, Boolean>("adminAccess"));
+		adminCol.setCellValueFactory(param -> {
+			param.getValue().setAdmin(param.getValue().isAdminAccess());
+			return param.getValue().getAdmin();
 		});
-
-		adminCol.setCellValueFactory(new PropertyValueFactory<Employee, Boolean>("adminAccess"));
+		adminCol.setEditable(true);
+		adminCol.setCellFactory(p -> {
+			CheckBoxTableCell<Employee, Boolean> checkBoxTableCell = new CheckBoxTableCell<>();
+			checkBoxTableCell.setEditable(true);
+			return checkBoxTableCell;
+		});
 		System.out.println(data.toString());
 		employeeTable.setItems(data);
+		employeeTable.setEditable(true);
 	}
 }

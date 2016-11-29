@@ -44,7 +44,7 @@ public class LoginVerifier {
         Employee employee = UserDataAccessObject.getInstance().verifyUser(username, password);
 
 
-        if(employee != null && employee.isAdmin()){
+        if(employee != null && employee.isAdminAccess()){
             accessGranted = true;
             mLatestCheckedEmployee = employee;
         }

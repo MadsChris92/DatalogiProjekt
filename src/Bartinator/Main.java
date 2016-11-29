@@ -16,7 +16,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/employeeManagementView.fxml"));
         theStage.setTitle("Bartinator");
         theStage.setScene(new Scene(root, 800, 480));
         primaryStage.show();
