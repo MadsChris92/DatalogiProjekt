@@ -2,10 +2,9 @@ package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.OrderDataAccessObject;
 import Bartinator.DataAccessObjects.UserDataAccessObject;
-import Bartinator.Model.Consumer;
+import Bartinator.Model.Employee;
 import Bartinator.Model.Order;
 import Bartinator.Model.Product;
-import Bartinator.Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -87,8 +86,8 @@ public class Cashier {
         }
 
         //Create order
-        User user = UserDataAccessObject.getInstance().getActiveUser();
-        Order order = new Order(getTotal(), receipt, user.getName(), user.getId());
+        Employee employee = UserDataAccessObject.getInstance().getActiveEmployee();
+        Order order = new Order(getTotal(), receipt, employee.getName(), employee.getId());
 
         //Save and return
         System.out.printf("%s", order.toString());

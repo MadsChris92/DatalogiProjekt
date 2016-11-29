@@ -16,7 +16,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!-- Names the annotated entity classes -->
-        <mapping class="Bartinator.Model.User"/>
+        <mapping class="Bartinator.Model.Employee"/>
         <mapping class="Bartinator.Model.Product"/>
         <mapping class="Bartinator.Model.Order"/>
         <mapping class="Bartinator.Model.Consumer"/>

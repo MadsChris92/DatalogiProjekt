@@ -3,7 +3,6 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
-import Bartinator.EmployeeModule.LoginVerifier;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class loginControllerNew implements Initializable {
+public class LoginController implements Initializable {
 
     private LoginVerifier mVerifier;
 
@@ -43,7 +42,7 @@ public class loginControllerNew implements Initializable {
 
         if(accessGranted && mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/View/adminMainMenu.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/View/adminMenuView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load adminMainMenu window!");
@@ -51,7 +50,7 @@ public class loginControllerNew implements Initializable {
             }
         } else if(accessGranted && !mAdminCheckBox.isSelected()){
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/View/bartenderView2.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/View/salesView.fxml"));
                 Main.theStage.setScene(new Scene(root, 800, 480));
             } catch (IOException e) {
                 System.err.println("Failed to load bartenderView window!");

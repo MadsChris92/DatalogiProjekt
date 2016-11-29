@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-public class User {
+public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int mId;
@@ -25,9 +25,9 @@ public class User {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Product> mFavorites = new ArrayList<>();
 
-	protected User(){};
+	protected Employee(){};
 
-	public User(String name, String username, int password, boolean adminAccess) {
+	public Employee(String name, String username, int password, boolean adminAccess) {
 		mName = name;
 		mUsername = username;
 		mPassword = password;
@@ -76,7 +76,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User{" +
+		return "Employee{" +
 				"userid=" + mId +
 				", name='" + mName + '\'' +
 				", username='" + mUsername + '\'' +

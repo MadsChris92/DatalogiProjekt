@@ -1,13 +1,13 @@
 package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.UserDataAccessObject;
-import Bartinator.Model.User;
+import Bartinator.Model.Employee;
 
 import java.io.IOException;
 
 public class LoginVerifier {
 
-    private User latestCheckedUser;
+    private Employee mLatestCheckedEmployee;
 
     public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
@@ -19,7 +19,7 @@ public class LoginVerifier {
 			accessGranted = verifyBartenderLogin(username, password);
         }
         if(accessGranted) {
-            UserDataAccessObject.getInstance().setActiveUser(latestCheckedUser);
+            UserDataAccessObject.getInstance().setActiveEmployee(mLatestCheckedEmployee);
         }
         return accessGranted;
     }
@@ -28,11 +28,11 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        User user = UserDataAccessObject.getInstance().verifyUser(username, password);
+        Employee employee = UserDataAccessObject.getInstance().verifyUser(username, password);
 
-        if(user != null){
+        if(employee != null){
             accessGranted = true;
-            latestCheckedUser = user;
+            mLatestCheckedEmployee = employee;
         }
         return accessGranted;
     }
@@ -41,12 +41,12 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        User user = UserDataAccessObject.getInstance().verifyUser(username, password);
+        Employee employee = UserDataAccessObject.getInstance().verifyUser(username, password);
 
 
-        if(user != null && user.isAdmin()){
+        if(employee != null && employee.isAdmin()){
             accessGranted = true;
-            latestCheckedUser = user;
+            mLatestCheckedEmployee = employee;
         }
         return accessGranted;
     }

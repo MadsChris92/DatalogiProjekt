@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 
 
-public class adminMainMenuController {
+public class AdminMenuController {
 
     public void handleProductManagementBtn(ActionEvent actionEvent) {
         try {
@@ -23,7 +23,7 @@ public class adminMainMenuController {
     }
     public void handleEmployeeManagementBtn(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/userManageMenu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/employeeManagementView.fxml"));
             Main.theStage.setScene(new Scene(root, 800, 480));
         } catch (IOException e) {
             System.err.println("Failed to load userManageMenu window!");

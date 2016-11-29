@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class editorModel {
+public class EditorModel {
     private Button productEdit, catAdd, catEdit;
     private Button catAccept;
     private HBox container;

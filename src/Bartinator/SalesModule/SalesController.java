@@ -5,7 +5,7 @@ import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
-import Bartinator.Model.User;
+import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class bartenderController implements Initializable{
+public class SalesController implements Initializable{
 
     @FXML public ListView mCartView;
     @FXML public GridPane mBtnGrid;
@@ -39,7 +39,7 @@ public class bartenderController implements Initializable{
     Cashier mCashier;
     ProductDataAccessObject mProductDAO;
     String selectedCat = null;
-	User activeUser = UserDataAccessObject.getInstance().getActiveUser();
+	Employee mActiveEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
 
     int mBtnRadius = 90;
 
@@ -105,7 +105,7 @@ public class bartenderController implements Initializable{
 				buttons.add(btn);
 			}
 
-			for (Product product : activeUser.getFavorites()) {
+			for (Product product : mActiveEmployee.getFavorites()) {
 				System.out.println("Fetched product: " + product.toString());
 				ProductButton productButton = new ProductButton(product);
 				Button button = styleBtn(productButton.getButton());

@@ -3,7 +3,6 @@ package Bartinator.DataAccessObjects;
 
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
-import Bartinator.Model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

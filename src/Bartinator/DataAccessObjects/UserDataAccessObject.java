@@ -1,7 +1,7 @@
 package Bartinator.DataAccessObjects;
 
 
-import Bartinator.Model.User;
+import Bartinator.Model.Employee;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,41 +14,41 @@ public class UserDataAccessObject extends MainDataAccessObject{
 		return instance;
 	}
 
-    private User mActiveUser;
+    private Employee mActiveEmployee;
 
-    public User fetchUserFromUsername(String username){
+    public Employee fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
         // sql udgaven af det functionen gør er:
-        // SELECT * FROM User WHERE User."username"=username;
+        // SELECT * FROM Employee WHERE Employee."username"=username;
         // hvis der er mere end én bruger med samme brugernavn, så vælger den det første resultat
-        List<User> users = (List<User>) fetch(User.class, "mUsername", username);
-        User user;
-        if(users.size() > 0) {
-            if(users.size() > 1) System.out.println("Multiple mUsers with the same username");
-            user = users.get(0);
+        List<Employee> employees = (List<Employee>) fetch(Employee.class, "mUsername", username);
+        Employee employee;
+        if(employees.size() > 0) {
+            if(employees.size() > 1) System.out.println("Multiple mUsers with the same username");
+            employee = employees.get(0);
         }else {
-            user = null; // user not found, or multiple mUsers
+            employee = null; // employee not found, or multiple mUsers
         }
-        return user;
+        return employee;
     }
 
-	public void saveUser(User user){
-		save(user);
+	public void saveUser(Employee employee){
+		save(employee);
 	}
 
-    public User getActiveUser() {
-        return mActiveUser;
+    public Employee getActiveEmployee() {
+        return mActiveEmployee;
     }
-    public void setActiveUser(User activeUser) {
-        mActiveUser = activeUser;
+    public void setActiveEmployee(Employee activeEmployee) {
+        mActiveEmployee = activeEmployee;
     }
 
 
     @SuppressWarnings("unchecked")
-	public  List<User> fetchAllUsers() throws IOException {
-		List<User> users = (List<User>)fetch(User.class);
-		if(users != null){
-			return users;
+	public  List<Employee> fetchAllUsers() throws IOException {
+		List<Employee> employees = (List<Employee>)fetch(Employee.class);
+		if(employees != null){
+			return employees;
 		}
 		throw new IOException("Fetching mUsers failed");
     }
@@ -57,25 +57,25 @@ public class UserDataAccessObject extends MainDataAccessObject{
         return fetchUserFromUsername(username)!=null;
     }
 
-    public User verifyUser(String username, String password) throws IOException {
-        User user = fetchUserFromUsername(username);
-        if(user != null) {
-            if (/* !password.equals("") && */ user.getPassword() == password.hashCode()) {
-                return user;
+    public Employee verifyUser(String username, String password) throws IOException {
+        Employee employee = fetchUserFromUsername(username);
+        if(employee != null) {
+            if (/* !password.equals("") && */ employee.getPassword() == password.hashCode()) {
+                return employee;
             } else {
                 throw new IOException("The Password was incorrect");
             }
         } else {
-			throw new IOException("The user was not found");
+			throw new IOException("The employee was not found");
         }
     }
 
 	public void deleteUser(String username) {
-		User user = fetchUserFromUsername(username);
-		remove(user);
+		Employee employee = fetchUserFromUsername(username);
+		remove(employee);
 	}
 
-	public void updateUser(User user){
-        update(user);
+	public void updateUser(Employee employee){
+        update(employee);
     }
 }

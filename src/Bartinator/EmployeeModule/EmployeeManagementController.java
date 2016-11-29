@@ -2,9 +2,8 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
-import Bartinator.Model.User;
+import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class employeeManageMenuController implements Initializable {
+public class EmployeeManagementController implements Initializable {
     public TextField usernameField;
     public PasswordField passwordField;
     public TextField nameField;
@@ -36,7 +35,7 @@ public class employeeManageMenuController implements Initializable {
 	public TableColumn adminCol;
 
 	UserDataAccessObject mUserDAO;
-    ObservableList<User> data;
+    ObservableList<Employee> data;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
@@ -48,31 +47,31 @@ public class employeeManageMenuController implements Initializable {
 
     public void handleSaveUser(ActionEvent actionEvent) {
 		if (mUserDAO.userExists(usernameField.getText())) {
-			AlertBoxes.displayErrorBox("User Allready exists", "The user, you are trying to create, already exists in the database. " +
+			AlertBoxes.displayErrorBox("Employee Allready exists", "The user, you are trying to create, already exists in the database. " +
 															  "You can choose to update the existing user instead.");
 		} else {
-			User user = new User(nameField.getText(),
+			Employee employee = new Employee(nameField.getText(),
 					usernameField.getText(),
 					passwordField.getText().hashCode(),
 					adminCheckBox.isSelected());
-			mUserDAO.saveUser(user);
+			mUserDAO.saveUser(employee);
 			updateUserTableView();
 		}
     }
 
 	public void handleUpdateUser(ActionEvent actionEvent) {
 		if (mUserDAO.userExists(usernameField.getText())) {
-			User user = mUserDAO.fetchUserFromUsername(usernameField.getText());
+			Employee employee = mUserDAO.fetchUserFromUsername(usernameField.getText());
 			if(!(passwordField.getText().equals(""))){
-				user.setPassword(passwordField.getText().hashCode());
+				employee.setPassword(passwordField.getText().hashCode());
 			}
 			if(!(nameField.getText().equals(""))){
-				user.setName(nameField.getText());
+				employee.setName(nameField.getText());
 			}
-			user.giveAdminAccess(adminCheckBox.isSelected());
-			mUserDAO.updateUser(user);
+			employee.giveAdminAccess(adminCheckBox.isSelected());
+			mUserDAO.updateUser(employee);
 		} else {
-			AlertBoxes.displayErrorBox("User doesn't exist", "The user, you are trying to update, doesn't exist in the database. " +
+			AlertBoxes.displayErrorBox("Employee doesn't exist", "The user, you are trying to update, doesn't exist in the database. " +
 															 "You can choose to create the new user by pressing the save button.");
 		}
 	}
@@ -81,14 +80,14 @@ public class employeeManageMenuController implements Initializable {
 		if(mUserDAO.userExists(usernameField.getText())){
 			mUserDAO.deleteUser(usernameField.getText());
 		} else {
-			AlertBoxes.displayErrorBox("User doesn't exist", "The username entered doesn't match any user in the database!");
+			AlertBoxes.displayErrorBox("Employee doesn't exist", "The username entered doesn't match any user in the database!");
 		}
 	}
 
 
 	public void handleExit(ActionEvent actionEvent) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/View/adminMainMenu.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/View/adminMenuView.fxml"));
 			Main.theStage.setScene(new Scene(root, 800, 480));
 		} catch (IOException e) {
 			System.err.println("Failed to load adminMainMenu window!");
@@ -105,23 +104,23 @@ public class employeeManageMenuController implements Initializable {
 			AlertBoxes.displayErrorBox("Fetching Users", e.getMessage());
 		}
 
-		IdCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("id"));
-		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-		passwordCol.setCellValueFactory(new PropertyValueFactory<User, Integer>("password"));
+		IdCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
+		nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+		usernameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("username"));
+		passwordCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("password"));
 
-		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("adminAccess"));
+		adminCol.setCellValueFactory(new PropertyValueFactory<Employee, Boolean>("adminAccess"));
 
-		adminCol.setCellFactory(new Callback<TableColumn<User, Boolean>, TableCell<User, Boolean>>() {
+		adminCol.setCellFactory(new Callback<TableColumn<Employee, Boolean>, TableCell<Employee, Boolean>>() {
 
-			public TableCell<User, Boolean> call(TableColumn<User, Boolean> p) {
+			public TableCell<Employee, Boolean> call(TableColumn<Employee, Boolean> p) {
 
-				return new CheckBoxTableCell<User, Boolean>();
+				return new CheckBoxTableCell<Employee, Boolean>();
 
 			}
 		});
 
-		adminCol.setCellValueFactory(new PropertyValueFactory<User, Boolean>("adminAccess"));
+		adminCol.setCellValueFactory(new PropertyValueFactory<Employee, Boolean>("adminAccess"));
 		System.out.println(data.toString());
 		employeeTable.setItems(data);
 	}

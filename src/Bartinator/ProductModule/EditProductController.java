@@ -45,7 +45,7 @@ public class EditProductController {
     void initialize(){
         pdao.refresh();
 
-		editorModel.categories = (ArrayList<Category>) pdao.getCategories();
+		EditorModel.categories = (ArrayList<Category>) pdao.getCategories();
 
 		products.clear();
 		products.addAll(pdao.getProducts());
@@ -55,7 +55,7 @@ public class EditProductController {
             System.out.println(product.toString());
         }
 
-        activeCategory = editorModel.categories.get(0);
+        activeCategory = EditorModel.categories.get(0);
 
         //createTestProducts();
         setListViewProd();
@@ -140,14 +140,14 @@ public class EditProductController {
     }
 
     void setCategories(){
-        for (int i = 0; i < editorModel.categories.size(); i++) {
-            catData.add(editorModel.categories.get(i).getName());
+        for (int i = 0; i < EditorModel.categories.size(); i++) {
+            catData.add(EditorModel.categories.get(i).getName());
         }
         categoryMenu.getSelectionModel().selectedIndexProperty().addListener(
                 new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                        activeCategory = editorModel.categories.get(newValue.intValue());
+                        activeCategory = EditorModel.categories.get(newValue.intValue());
                         System.out.println(activeCategory.getName());
                         updateTable();
                     }
@@ -235,8 +235,8 @@ public class EditProductController {
     private void createTestProducts(){
         Category c = new Category();
         Category c1 = new Category();
-        editorModel.categories.add(c1);
-        editorModel.categories.add(c);
+        EditorModel.categories.add(c1);
+        EditorModel.categories.add(c);
         c1.setName("test1");
         c.setName("test2");
         activeCategory = c;
@@ -306,9 +306,9 @@ public class EditProductController {
     public void addCategoryHandler(ActionEvent actionEvent) {
         Category c = new Category();
         c.setName(txtCategoryName.getText());
-        if(editorModel.categories.contains(c)){
+        if(EditorModel.categories.contains(c)){
         }else{
-            editorModel.categories.add(c);
+            EditorModel.categories.add(c);
             pdao.saveCategories();
         }
     }
@@ -319,7 +319,7 @@ public class EditProductController {
                 products.remove(p);
             }
         }
-        editorModel.categories.remove(activeCategory);
+        EditorModel.categories.remove(activeCategory);
         pdao.removeCategory(activeCategory);
         updateTable();
     }

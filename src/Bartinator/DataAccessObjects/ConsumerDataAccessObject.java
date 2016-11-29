@@ -1,10 +1,7 @@
 package Bartinator.DataAccessObjects;
 
 
-import Bartinator.Model.Consumer;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConsumerDataAccessObject extends MainDataAccessObject {

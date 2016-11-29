@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.logging.LogManager;
 
 
 public abstract class MainDataAccessObject {
@@ -157,8 +156,8 @@ public abstract class MainDataAccessObject {
 	}*/
 
    public static void test(){
-	   User user = new User("Daniel", "daniel", "".hashCode(), true);
-	   save(user);
+	   Employee employee = new Employee("Daniel", "daniel", "".hashCode(), true);
+	   save(employee);
    }
 
 	public static void stop(){
