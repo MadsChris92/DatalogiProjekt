@@ -21,6 +21,7 @@ public class User {
 	private int mPassword;
 	@Column
 	private boolean mAdminAccess;
+
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Product> mFavorites = new ArrayList<>();
 
