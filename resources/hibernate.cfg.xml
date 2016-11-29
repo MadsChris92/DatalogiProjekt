@@ -19,9 +19,6 @@
         <mapping class="Bartinator.Model.Employee"/>
         <mapping class="Bartinator.Model.Product"/>
         <mapping class="Bartinator.Model.Order"/>
-        <mapping class="Bartinator.Model.Consumer"/>
-
-        <mapping class="Bartinator.Model.Consumer"/>
         <mapping class="Bartinator.Model.Category"/>
     </session-factory>
 </hibernate-configuration>
