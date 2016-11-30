@@ -1,10 +1,5 @@
 package Bartinator.Model;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +18,10 @@ public class Employee {
 	private int mPassword;
 	@Column
 	private boolean mAdminAccess;
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Product> mFavorites = new ArrayList<>();
 
-	@Transient
-	private BooleanProperty admin = new SimpleBooleanProperty(true);
-
-	protected Employee(){};
+	protected Employee(){}
 
 	public Employee(String name, String username, int password, boolean adminAccess) {
 		mName = name;
@@ -70,24 +62,12 @@ public class Employee {
 		mPassword = password;
 	}
 
-	public boolean isAdminAccess() {
+	public boolean hasAdminAccess() {
 		return mAdminAccess;
 	}
 
 	public void setAdminAccess(boolean adminAccess){
 		mAdminAccess = adminAccess;
-	}
-
-	public boolean isAdmin() {
-		return admin.get();
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin.set(admin);
-	}
-
-	public BooleanProperty getAdmin(){
-		return admin;
 	}
 
 	@Override

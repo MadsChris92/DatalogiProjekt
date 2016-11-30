@@ -24,10 +24,10 @@ public class UserDataAccessObject extends MainDataAccessObject{
         List<Employee> employees = (List<Employee>) fetch(Employee.class, "mUsername", username);
         Employee employee;
         if(employees.size() > 0) {
-            if(employees.size() > 1) System.out.println("Multiple mUsers with the same username");
+            if(employees.size() > 1) System.err.println("WARN: Multiple users with the same username");
             employee = employees.get(0);
         }else {
-            employee = null; // employee not found, or multiple mUsers
+            employee = null; // employee not found
         }
         return employee;
     }
