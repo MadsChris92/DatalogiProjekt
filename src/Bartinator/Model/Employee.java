@@ -18,7 +18,8 @@ public class Employee {
 	private int mPassword;
 	@Column
 	private boolean mAdminAccess;
-	@OneToMany(fetch = FetchType.LAZY)
+
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Product> mFavorites = new ArrayList<>();
 
 	protected Employee(){}
@@ -70,6 +71,14 @@ public class Employee {
 		mAdminAccess = adminAccess;
 	}
 
+	public List<Product> getFavorites() {
+		return mFavorites;
+	}
+
+	public void setFavorites(List<Product> favorites) {
+		mFavorites = favorites;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee{" +
@@ -79,9 +88,5 @@ public class Employee {
 				", password=" + mPassword +
 				", adminAccess='" + mAdminAccess +
 				"'}";
-	}
-
-	public List<Product> getFavorites() {
-		return mFavorites;
 	}
 }

@@ -63,7 +63,7 @@ public class EmployeeManagementController implements Initializable {
 		employeeTable.setOnMouseClicked(event -> {
 			EmployeeAdapter employee = data.get(employeeTable.getSelectionModel().getFocusedIndex());
 			usernameField.setText(employee.getUsername());
-			//passwordField.setText(String.format("%d", employee.getPassword()));
+			passwordField.setText("");
 			nameField.setText(employee.getName());
 			adminCheckBox.setSelected(employee.hasAdminAccess());
 		});

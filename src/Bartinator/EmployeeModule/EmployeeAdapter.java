@@ -1,17 +1,25 @@
 package Bartinator.EmployeeModule;
 
 import Bartinator.Model.Employee;
+import Bartinator.Model.Product;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Martin on 30-11-2016.
  */
+
 public class EmployeeAdapter {
 	private IntegerProperty mId;
 	private StringProperty mName;
 	private StringProperty mUsername;
 	private IntegerProperty mPassword;
 	private BooleanProperty mAdminAccess;
+	private ListProperty<Product> mFavorites;
 
 	public EmployeeAdapter(Employee employee) {
 		mId = new SimpleIntegerProperty(employee.getId());
@@ -19,6 +27,7 @@ public class EmployeeAdapter {
 		mUsername = new SimpleStringProperty(employee.getUsername());
 		mPassword = new SimpleIntegerProperty(employee.getPassword());
 		mAdminAccess = new SimpleBooleanProperty(employee.hasAdminAccess());
+		mFavorites = new SimpleListProperty<>(FXCollections.observableArrayList(employee.getFavorites()));
 	}
 
 	public int getId() {
@@ -81,9 +90,22 @@ public class EmployeeAdapter {
 		this.mAdminAccess.set(adminAccess);
 	}
 
+	public ObservableList<Product> getFavorites() {
+		return mFavorites.get();
+	}
+
+	public ListProperty<Product> favoritesProperty() {
+		return mFavorites;
+	}
+
+	public void setFavorites(ObservableList<Product> favorites) {
+		this.mFavorites.set(favorites);
+	}
+
 	public Employee toEmployee(){
 		Employee employee = new Employee(getName(), getUsername(), getPassword(), hasAdminAccess());
 		employee.setId(getId());
+		employee.setFavorites(getFavorites());
 		return employee;
 	}
 }
