@@ -29,12 +29,12 @@ import java.util.ResourceBundle;
 
 public class SalesController implements Initializable{
 
-    @FXML public ListView<String> mCartView;
+    @FXML public ListView<Product> mCartView;
     @FXML public GridPane mBtnGrid;
 
     private Cashier mCashier;
 	private ProductCatalog mProductCatalog;
-    private Category selectedCat = null;
+    private Category mSelectedCategory = null;
 	private Employee mActiveEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 
     int mBtnRadius = 90;
@@ -49,7 +49,7 @@ public class SalesController implements Initializable{
     }
 
     private void displaySelectedCat() {
-        System.out.println("Displaying: " + selectedCat.getName());
+        System.out.println("Displaying: " + mSelectedCategory.getName());
 
         mBtnGrid.getChildren().clear();
 
@@ -80,8 +80,8 @@ public class SalesController implements Initializable{
 
     private List<Node> createButtons(){
 		List<Node> buttons = new ArrayList<>();
-		if(selectedCat != null) {
-			List<Product> products = mProductCatalog.getProductsByCategory(selectedCat);
+		if(mSelectedCategory != null) {
+			List<Product> products = mProductCatalog.getProductsByCategory(mSelectedCategory);
 			buttons.add(new BackButton(this));
 			System.out.println(products);
 			for (Product product : products) {
@@ -114,15 +114,15 @@ public class SalesController implements Initializable{
 
 	EventHandler<ActionEvent> handleBackBtn = new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent event) {
-			selectedCat = selectedCat.getCategory();
+			mSelectedCategory = mSelectedCategory.getCategory();
 			displaySelectedCat();
 		}
 	};
 
     EventHandler<ActionEvent> handleCatBtn = new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent event) {
-                CategoryButton btn = (CategoryButton) event.getSource();
-                selectedCat = btn.getCategory();
+                CategoryButton button = (CategoryButton) event.getSource();
+                mSelectedCategory = button.getCategory();
                 displaySelectedCat();
             }
         };
@@ -130,18 +130,18 @@ public class SalesController implements Initializable{
 
 	private void updateCartView() {
 		mCartView.getItems().clear();
-		mCartView.getItems().addAll(mCashier.getObservableCart());
+		mCartView.getItems().addAll(mCashier.);
 	}
 
     public void handleCheckOut(ActionEvent actionEvent) {
-        boolean succes = mCashier.checkOut();
-        if(!succes){
-            AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't effort cart content");
+        boolean success = mCashier.checkOut();
+        if(!success){
+            AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't afford cart content");
         } else {
             if(AlertBoxes.displayConfirmationBox("Confirm Sale","Did you mean to checkout?")){
 				mCashier.clearCart();
 				updateCartView();
-				selectedCat = null;
+				mSelectedCategory = null;
 				displaySelectedCat();
 			}
         }
@@ -149,22 +149,18 @@ public class SalesController implements Initializable{
     }
 
     public void handleDelete(ActionEvent actionEvent) {
-        ObservableList<String> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
-        for (String s: selectedStrings) {
-            String[] splittedString = s.split("-");
-            Product p = mProductCatalog.getProductById(Integer.parseInt(splittedString[1]));
-            mCashier.removeProduct(p, 1);
+        ObservableList<Product> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
+        for (Product product: selectedStrings) {
+            mCashier.removeProduct(product, 1);
         }
         updateCartView();
     }
 
     public void handleDeleteAll(ActionEvent actionEvent) {
-        ObservableList<String> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
-        for (String s: selectedStrings) {
-            String[] splittedString = s.split("-");
-            Product p = mProductCatalog.getProductById(Integer.parseInt(splittedString[1]));
-            mCashier.removeProduct(p);
-        }
+		ObservableList<Product> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
+		for (Product product: selectedStrings) {
+			mCashier.removeProduct(product);
+		}
         updateCartView();
     }
 

@@ -10,8 +10,8 @@
            <children>
                <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
                <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleCheckOut" text="Check out" />
-               <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
-               <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleDeleteAll" text="Delete All" />
+               <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleDelete" text="Remove One" />
+               <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleDeleteAll" text="Remove All" />
                <Button minHeight="50.0" minWidth="80.0" mnemonicParsing="false" onAction="#handleClearCart" text="Clear Cart" />
            </children>
         </HBox>

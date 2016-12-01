@@ -20,14 +20,14 @@ public class Cashier {
     public void addProduct(Product product, int quantity) {
 
         if (mCart.containsKey(product)) {
-
+            mCart.replace(product, mCart.get(product) + quantity);
             //TODO: Kan gøres mere simpelt -> Tjek dokumentationen Map
-            for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
+            /*for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
                 if (p.getKey().getId() == product.getId()) {
                     int currValue = mCart.get(product);
                     mCart.replace(product, currValue + quantity);
                 }
-            }
+            }*/
         } else {
             mCart.put(product, quantity);
         }
@@ -69,8 +69,8 @@ public class Cashier {
 
     public ObservableList<String> getObservableCart(){
         List<String> resultAsList = new ArrayList<>();
-        for (Map.Entry<Product, Integer> p : mCart.entrySet()) {
-            resultAsList.add(p.getKey().getPrice() + "DKK   x " + p.getValue() + "  " + p.getKey().getName() + " -" + p.getKey().getId());
+        for (Product product : mCart.keySet()) {
+            resultAsList.add(product.getPrice() + "DKK   x " + mCart.get(product) + "  " + product.getName() + " -" + product.getId());
         }
         resultAsList.add("Total: " + getTotal() + " DKK");
         ObservableList<String> result = FXCollections.observableList(resultAsList);
