@@ -1,6 +1,6 @@
 package Bartinator.SalesModule;
 
-import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
 import Bartinator.Model.Product;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ public class ProductButton extends StackPane {
 		mProduct = product;
 		mButton = new Button(String.format("%s%n%f", product.getName(), product.getPrice()));
 		mFavorite = new ToggleButton("*");
-		Employee activeEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
+		Employee activeEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 		mFavorite.setSelected(activeEmployee.getFavorites().contains(product));
 		mFavorite.setOnAction(event -> {
 			if(mFavorite.isSelected()){
@@ -28,7 +28,7 @@ public class ProductButton extends StackPane {
 			} else {
 				activeEmployee.getFavorites().remove(mProduct);
 			}
-			UserDataAccessObject.getInstance().updateUser(activeEmployee);
+			EmployeeDataAccessObject.getInstance().updateUser(activeEmployee);
 		});
 		setAlignment(Pos.TOP_RIGHT);
 		getChildren().add(mButton);

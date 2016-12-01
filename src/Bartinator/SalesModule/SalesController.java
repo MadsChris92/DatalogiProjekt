@@ -1,7 +1,7 @@
 package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
-import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
@@ -39,7 +39,7 @@ public class SalesController implements Initializable{
     Cashier mCashier;
     ProductDataAccessObject mProductDAO;
     String selectedCat = null;
-	Employee mActiveEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
+	Employee mActiveEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 
     int mBtnRadius = 90;
 

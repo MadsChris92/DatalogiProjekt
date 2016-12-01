@@ -1,7 +1,7 @@
 package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.OrderDataAccessObject;
-import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
 import Bartinator.Model.Order;
 import Bartinator.Model.Product;
@@ -86,7 +86,7 @@ public class Cashier {
         }
 
         //Create order
-        Employee employee = UserDataAccessObject.getInstance().getActiveEmployee();
+        Employee employee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
         Order order = new Order(getTotal(), receipt, employee.getName(), employee.getId());
 
         //Save and return
