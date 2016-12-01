@@ -1,26 +1,21 @@
 package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
-import Bartinator.Main;
 import Bartinator.Model.Employee;
+import Bartinator.Model.EmployeeRoster;
+import Bartinator.Model.ObservableEmployee;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,15 +26,15 @@ public class EmployeeManagementController implements Initializable {
     public TextField nameField;
     public CheckBox adminCheckBox;
 
-    public TableView<EmployeeAdapter> employeeTable;
-	public TableColumn<EmployeeAdapter, Integer> IdCol;
-	public TableColumn<EmployeeAdapter, String> nameCol;
-    public TableColumn<EmployeeAdapter, String> usernameCol;
-	public TableColumn<EmployeeAdapter, String> passwordCol;
-	public TableColumn<EmployeeAdapter, Boolean> adminCol;
+    public TableView<ObservableEmployee> employeeTable;
+	public TableColumn<ObservableEmployee, Integer> IdCol;
+	public TableColumn<ObservableEmployee, String> nameCol;
+    public TableColumn<ObservableEmployee, String> usernameCol;
+	public TableColumn<ObservableEmployee, String> passwordCol;
+	public TableColumn<ObservableEmployee, Boolean> adminCol;
 
 	private EmployeeDataAccessObject mUserDAO;
-    private ObservableList<EmployeeAdapter> data;
+    private ObservableList<ObservableEmployee> data;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +55,7 @@ public class EmployeeManagementController implements Initializable {
 		adminCol.setCellFactory(param -> new CheckBoxTableCell<>());
 		adminCol.setOnEditCommit(event -> event.getRowValue().setAdminAccess(event.getNewValue()));
 		employeeTable.setOnMouseClicked(event -> {
-			EmployeeAdapter employee = data.get(employeeTable.getSelectionModel().getFocusedIndex());
+			ObservableEmployee employee = data.get(employeeTable.getSelectionModel().getFocusedIndex());
 			usernameField.setText(employee.getUsername());
 			passwordField.setText("");
 			nameField.setText(employee.getName());
@@ -88,15 +83,15 @@ public class EmployeeManagementController implements Initializable {
 	public void handleUpdateUser(ActionEvent actionEvent) {
 		if (mUserDAO.userExists(usernameField.getText())) {
 			//Employee employee = mUserDAO.fetchUserFromUsername(usernameField.getText());
-			EmployeeAdapter employeeAdapter = employeeTable.getItems().get(employeeTable.getSelectionModel().getFocusedIndex());
+			ObservableEmployee observableEmployee = employeeTable.getItems().get(employeeTable.getSelectionModel().getFocusedIndex());
 			if(!(passwordField.getText().equals(""))){
-				employeeAdapter.setPassword(passwordField.getText().hashCode());
+				observableEmployee.setPassword(passwordField.getText().hashCode());
 			}
 			if(!(nameField.getText().equals(""))){
-				employeeAdapter.setName(nameField.getText());
+				observableEmployee.setName(nameField.getText());
 			}
-			employeeAdapter.setAdminAccess(adminCheckBox.isSelected());
-			mUserDAO.updateUser(employeeAdapter.toEmployee());
+			observableEmployee.setAdminAccess(adminCheckBox.isSelected());
+			mUserDAO.updateUser(observableEmployee.toEmployee());
 
 			//updateUserTableView();
 		} else {
@@ -120,17 +115,11 @@ public class EmployeeManagementController implements Initializable {
 	}
 
 	private void updateUserTableView() {
-		try {
-			List<EmployeeAdapter> adapters = new ArrayList<>();
-			for(Employee employee : mUserDAO.fetchAllUsers()){
-				adapters.add(new EmployeeAdapter(employee));
-			}
-			data = FXCollections.observableList(adapters);
-		} catch (IOException e) {
-			e.printStackTrace();
-			AlertBoxes.displayErrorBox("Fetching Users", e.getMessage());
-		}
-		System.out.println(data.toString());
+		List<ObservableEmployee> employees = EmployeeRoster.getInstance().getEmployees();
+		data = FXCollections.observableList(employees);
 		employeeTable.setItems(data);
+
+
+		System.out.println(data.toString());
 	}
 }

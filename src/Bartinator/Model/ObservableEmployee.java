@@ -1,4 +1,4 @@
-package Bartinator.EmployeeModule;
+package Bartinator.Model;
 
 import Bartinator.Model.Employee;
 import Bartinator.Model.Product;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Martin on 30-11-2016.
  */
 
-public class EmployeeAdapter {
+public class ObservableEmployee {
 	private IntegerProperty mId;
 	private StringProperty mName;
 	private StringProperty mUsername;
@@ -21,7 +21,7 @@ public class EmployeeAdapter {
 	private BooleanProperty mAdminAccess;
 	private ListProperty<Product> mFavorites;
 
-	public EmployeeAdapter(Employee employee) {
+	public ObservableEmployee(Employee employee) {
 		mId = new SimpleIntegerProperty(employee.getId());
 		mName = new SimpleStringProperty(employee.getName());
 		mUsername = new SimpleStringProperty(employee.getUsername());

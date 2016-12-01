@@ -1,9 +1,6 @@
 package Bartinator.Model;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,8 @@ public class Category {
 	private	String name;
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> columns = new ArrayList<>();
+	@ManyToOne
+	private Category mCategory;
 
 	public Category(){}
 
@@ -54,6 +53,14 @@ public class Category {
 
 	public void removeColumn(String name){
 		columns.remove(name);
+	}
+
+	public Category getCategory() {
+		return mCategory;
+	}
+
+	public void setCategory(Category category) {
+		mCategory = category;
 	}
 
 	public boolean contains(Product product){

@@ -50,7 +50,7 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 		if(employees != null){
 			return employees;
 		}
-		throw new IOException("Fetching mUsers failed");
+		throw new IOException("Fetching users failed");
     }
 
     public boolean userExists(String username){

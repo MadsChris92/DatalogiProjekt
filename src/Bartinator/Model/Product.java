@@ -1,7 +1,5 @@
 package Bartinator.Model;
 
-import javafx.collections.ObservableList;
-
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;

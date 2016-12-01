@@ -16,9 +16,10 @@ public class ProductButton extends StackPane {
 	private ToggleButton mFavorite;
 	private Product mProduct;
 
-	ProductButton(Product product) {
+	ProductButton(SalesController controller, Product product) {
 		mProduct = product;
 		mButton = new Button(String.format("%s%n%f", product.getName(), product.getPrice()));
+		mButton.setOnAction(controller.handleProductBtn);
 		mFavorite = new ToggleButton("*");
 		Employee activeEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 		mFavorite.setSelected(activeEmployee.getFavorites().contains(product));
@@ -33,7 +34,13 @@ public class ProductButton extends StackPane {
 		setAlignment(Pos.TOP_RIGHT);
 		getChildren().add(mButton);
 		getChildren().add(mFavorite);
+
+		mButton.setMinHeight(controller.mBtnRadius);
+		mButton.setMinWidth(controller.mBtnRadius);
+		mButton.setMaxHeight(controller.mBtnRadius);
+		mButton.setMaxWidth(controller.mBtnRadius);
 	}
+
 
 	public Button getButton() {
 		return mButton;

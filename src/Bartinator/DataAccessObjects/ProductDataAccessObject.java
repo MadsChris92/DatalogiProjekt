@@ -103,4 +103,6 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public void saveProduct(Product product){
 		save(product);
 	}
+
+    public void saveCategory(Category category) { save(category); }
 }

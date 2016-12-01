@@ -9,32 +9,34 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Created by martin on 12/1/16.
+ * Navigate between the different views
  */
 public class Navigator {
 	private static final Navigator instance = new Navigator();
+	public static Navigator getInstance(){
+		return instance;
+	}
 	private Stage theStage;
+
+	private Navigator(){}
 
 	public void setTheStage(Stage stage) {
 		theStage = stage;
 	}
 
-	public static Navigator getInstance(){
-		return instance;
-	}
-
 	private void switchToView(String view){
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(view));
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(view));
 			theStage.setScene(new Scene(root, 800, 480));
 		} catch (IOException e) {
 			System.err.printf("Failed to load %s!%n", view);
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
 	public static void switchToAdminView(){
-		instance.switchToView("/View/adminMenuView.fxml");
+		instance.switchToView("View/adminMenuView.fxml");
 	}
 
 	public static void switchToLoginView() {
@@ -44,7 +46,6 @@ public class Navigator {
 	public static void switchToProductManagementView() {
 		instance.switchToView("View/editProductView.fxml");
 	}
-
 
 	public static void switchToEmployeeManagementView() {
 		instance.switchToView("View/employeeManagementView.fxml");

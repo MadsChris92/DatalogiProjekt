@@ -1,32 +1,27 @@
 package Bartinator.SalesModule;
 
-import Bartinator.DataAccessObjects.ProductDataAccessObject;
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
-import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 import Bartinator.Model.Employee;
+import Bartinator.Model.ProductCatalog;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,23 +32,24 @@ public class SalesController implements Initializable{
     @FXML public ListView<String> mCartView;
     @FXML public GridPane mBtnGrid;
 
-    Cashier mCashier;
-    ProductDataAccessObject mProductDAO;
-    String selectedCat = null;
-	Employee mActiveEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
+    private Cashier mCashier;
+	private ProductCatalog mProductCatalog;
+    private Category selectedCat = null;
+	private Employee mActiveEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 
-    private int mBtnRadius = 90;
+    int mBtnRadius = 90;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
-        mProductDAO = ProductDataAccessObject.getInstance();
+        mProductCatalog = ProductCatalog.getInstance();
         mCashier = new Cashier();
 
         displaySelectedCat();
         updateCartView();
     }
+
     private void displaySelectedCat() {
-        System.out.println("Displaying: " + selectedCat);
+        System.out.println("Displaying: " + selectedCat.getName());
 
         mBtnGrid.getChildren().clear();
 
@@ -81,92 +77,82 @@ public class SalesController implements Initializable{
             cc.setHalignment(HPos.CENTER);
         }
     }
+
     private List<Node> createButtons(){
 		List<Node> buttons = new ArrayList<>();
 		if(selectedCat != null) {
-			List<Product> products = mProductDAO.getProductsByCategory(selectedCat);
-			Button backBtn = styleBtn(new Button("<-"));
-			backBtn.setOnAction(handleProductBtn);
-			buttons.add(backBtn);
+			List<Product> products = mProductCatalog.getProductsByCategory(selectedCat);
+			buttons.add(new BackButton(this));
 			System.out.println(products);
 			for (Product product : products) {
 				System.out.println("Fetched product: " + product.toString());
-				ProductButton productButton = new ProductButton(product);
-				Button button = styleBtn(productButton.getButton());
-				button.setOnAction(handleProductBtn);
-				buttons.add(productButton);
+				buttons.add(new ProductButton(this, product));
 			}
 		} else {
-			List<Category> categorys = mProductDAO.getCategories();
-			for (Category c : categorys) {
-				System.out.println("Fetched category: " + c.toString());
-				Button btn = styleBtn(new Button(c.getName()));
-                btn.setStyle("-fx-base: #f5efb9;");
-				btn.setOnAction(handleCatBtn);
-				buttons.add(btn);
+			List<Category> categories = mProductCatalog.getCategories();
+			for (Category category : categories) {
+				System.out.println("Fetched category: " + category.toString());
+				buttons.add(new CategoryButton(this, category));
 			}
 
 			for (Product product : mActiveEmployee.getFavorites()) {
 				System.out.println("Fetched product: " + product.toString());
-				ProductButton productButton = new ProductButton(product);
-				Button button = styleBtn(productButton.getButton());
-				button.setOnAction(handleProductBtn);
-				buttons.add(productButton);
+				buttons.add(new ProductButton(this, product));
 			}
 		}
 		return buttons;
 	}
-    private Button styleBtn(Button button) {
-        button.setMinHeight(mBtnRadius);
-        button.setMinWidth(mBtnRadius);
-        button.setMaxHeight(mBtnRadius);
-        button.setMaxWidth(mBtnRadius);
-        return button;
-    }
 
     EventHandler<ActionEvent> handleProductBtn = new EventHandler<ActionEvent>() {
         @Override public void handle(ActionEvent event) {
             Button btn = (Button) event.getSource();
-            if (btn.getText().equals("<-")) {
-                selectedCat = null;
-                displaySelectedCat();
-            } else {
-                Product product = ((ProductButton)btn.getParent()).getProduct();
-                mCashier.addProduct(product, 1);
-                updateCartView();
-            }
+			Product product = ((ProductButton)btn.getParent()).getProduct();
+			mCashier.addProduct(product, 1);
+			updateCartView();
         }
     };
-    private void updateCartView() {
-        mCartView.getItems().clear();
-        mCartView.getItems().addAll(mCashier.getObservableCart());
-    }
+
+	EventHandler<ActionEvent> handleBackBtn = new EventHandler<ActionEvent>() {
+		@Override public void handle(ActionEvent event) {
+			selectedCat = selectedCat.getCategory();
+			displaySelectedCat();
+		}
+	};
+
     EventHandler<ActionEvent> handleCatBtn = new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent event) {
-                Button btn = (Button) event.getSource();
-                selectedCat = btn.getText();
+                CategoryButton btn = (CategoryButton) event.getSource();
+                selectedCat = btn.getCategory();
                 displaySelectedCat();
             }
         };
+
+
+	private void updateCartView() {
+		mCartView.getItems().clear();
+		mCartView.getItems().addAll(mCashier.getObservableCart());
+	}
 
     public void handleCheckOut(ActionEvent actionEvent) {
         boolean succes = mCashier.checkOut();
         if(!succes){
             AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't effort cart content");
         } else {
-            AlertBoxes.displayInformationBox("Succes!","The sale have been proceeded with succes!");
-            mCashier.clearCart();
-            updateCartView();
-            selectedCat = null;
-            displaySelectedCat();
+            if(AlertBoxes.displayConfirmationBox("Confirm Sale","Did you mean to checkout?")){
+				mCashier.clearCart();
+				updateCartView();
+				selectedCat = null;
+				displaySelectedCat();
+			}
         }
 
     }
+
     public void handleDelete(ActionEvent actionEvent) {
         ObservableList<String> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
         for (String s: selectedStrings) {
             String[] splittedString = s.split("-");
-            Product p = mProductDAO.getProductById(Integer.parseInt(splittedString[1]));
+            Product p = mProductCatalog.getProductById(Integer.parseInt(splittedString[1]));
             mCashier.removeProduct(p, 1);
         }
         updateCartView();
@@ -176,15 +162,17 @@ public class SalesController implements Initializable{
         ObservableList<String> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
         for (String s: selectedStrings) {
             String[] splittedString = s.split("-");
-            Product p = mProductDAO.getProductById(Integer.parseInt(splittedString[1]));
+            Product p = mProductCatalog.getProductById(Integer.parseInt(splittedString[1]));
             mCashier.removeProduct(p);
         }
         updateCartView();
     }
+
     public void handleClearCart(ActionEvent actionEvent) {
         mCashier.clearCart();
         updateCartView();
     }
+
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
 			Navigator.switchToLoginView();
