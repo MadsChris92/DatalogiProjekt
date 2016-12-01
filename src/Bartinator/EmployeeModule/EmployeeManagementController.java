@@ -4,6 +4,7 @@ import Bartinator.DataAccessObjects.UserDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -117,13 +118,7 @@ public class EmployeeManagementController implements Initializable {
 
 
 	public void handleExit(ActionEvent actionEvent) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/View/adminMenuView.fxml"));
-			Main.theStage.setScene(new Scene(root, 800, 480));
-		} catch (IOException e) {
-			System.err.println("Failed to load adminMainMenu window!");
-			e.printStackTrace();
-		}
+		Navigator.switchToAdminView();
 	}
 
 	private void updateUserTableView() {

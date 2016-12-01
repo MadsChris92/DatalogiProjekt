@@ -7,6 +7,7 @@ import Bartinator.Model.Category;
 import Bartinator.Model.Product;
 import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.Utility.Navigator;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,15 +34,15 @@ import java.util.ResourceBundle;
 
 public class SalesController implements Initializable{
 
-    @FXML public ListView mCartView;
+    @FXML public ListView<String> mCartView;
     @FXML public GridPane mBtnGrid;
 
-    Cashier mCashier;
-    ProductDataAccessObject mProductDAO;
-    String selectedCat = null;
-	Employee mActiveEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
+    private Cashier mCashier;
+    private ProductDataAccessObject mProductDAO;
+    private String selectedCat = null;
+	private Employee mActiveEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
 
-    int mBtnRadius = 90;
+    private int mBtnRadius = 90;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
@@ -186,13 +187,7 @@ public class SalesController implements Initializable{
     }
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
-            try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
-                Main.theStage.setScene(new Scene(root, 800, 480));
-            } catch (IOException e) {
-                System.err.println("Failed to load loginView window");
-                e.printStackTrace();
-            }
+			Navigator.switchToLoginView();
         }
     }
 }

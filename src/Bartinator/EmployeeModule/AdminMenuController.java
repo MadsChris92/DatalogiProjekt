@@ -1,47 +1,24 @@
 package Bartinator.EmployeeModule;
 
-import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.Utility.Navigator;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-
-import java.io.IOException;
 
 
 public class AdminMenuController {
 
     public void handleProductManagementBtn(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/editProductView.fxml"));
-            Main.theStage.setScene(new Scene(root, 800, 480));
-        } catch (IOException e) {
-            System.err.println("Failed to load editor window!");
-            e.printStackTrace();
-        }
+        Navigator.switchToProductManagementView();
     }
     public void handleEmployeeManagementBtn(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/employeeManagementView.fxml"));
-            Main.theStage.setScene(new Scene(root, 800, 480));
-        } catch (IOException e) {
-            System.err.println("Failed to load userManageMenu window!");
-            e.printStackTrace();
-        }
+        Navigator.switchToEmployeeManagementView();
     }
     public void handleStockManagementBtn(ActionEvent actionEvent) {
         AlertBoxes.displayErrorBox("Under Construction", "Sorry, this function is not yet available!");
     }
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
-            try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/loginView.fxml"));
-                Main.theStage.setScene(new Scene(root, 800, 480));
-            } catch (IOException e) {
-                System.err.println("Failed to load loginView window!");
-                e.printStackTrace();
-            }
+            Navigator.switchToLoginView();
         }
 
     }

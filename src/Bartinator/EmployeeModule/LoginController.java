@@ -3,6 +3,7 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.Main;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.Utility.Navigator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,21 +42,9 @@ public class LoginController implements Initializable {
         }
 
         if(accessGranted && mAdminCheckBox.isSelected()){
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/View/adminMenuView.fxml"));
-                Main.theStage.setScene(new Scene(root, 800, 480));
-            } catch (IOException e) {
-                System.err.println("Failed to load adminMainMenu window!");
-                e.printStackTrace();
-            }
+            Navigator.switchToAdminView();
         } else if(accessGranted && !mAdminCheckBox.isSelected()){
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/View/salesView.fxml"));
-                Main.theStage.setScene(new Scene(root, 800, 480));
-            } catch (IOException e) {
-                System.err.println("Failed to load bartenderView window!");
-                e.printStackTrace();
-            }
+            Navigator.switchToSalesView();
         } else if(!accessGranted){
             AlertBoxes.displayErrorBox("Login failed!", exceptionMessage);
         }
