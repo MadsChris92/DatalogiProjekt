@@ -6,11 +6,11 @@ import Bartinator.Model.Employee;
 import java.io.IOException;
 import java.util.List;
 
-public class UserDataAccessObject extends MainDataAccessObject{
+public class EmployeeDataAccessObject extends MainDataAccessObject{
 
-	private static final UserDataAccessObject instance = new UserDataAccessObject();
+	private static final EmployeeDataAccessObject instance = new EmployeeDataAccessObject();
 
-	public static UserDataAccessObject getInstance(){
+	public static EmployeeDataAccessObject getInstance(){
 		return instance;
 	}
 

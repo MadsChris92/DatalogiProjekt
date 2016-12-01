@@ -1,7 +1,7 @@
 package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
-import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Category;
 import Bartinator.Model.Product;
@@ -37,10 +37,10 @@ public class SalesController implements Initializable{
     @FXML public ListView<String> mCartView;
     @FXML public GridPane mBtnGrid;
 
-    private Cashier mCashier;
-    private ProductDataAccessObject mProductDAO;
-    private String selectedCat = null;
-	private Employee mActiveEmployee = UserDataAccessObject.getInstance().getActiveEmployee();
+    Cashier mCashier;
+    ProductDataAccessObject mProductDAO;
+    String selectedCat = null;
+	Employee mActiveEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
 
     private int mBtnRadius = 90;
 

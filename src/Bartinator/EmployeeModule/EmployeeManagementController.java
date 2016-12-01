@@ -1,13 +1,12 @@
 package Bartinator.EmployeeModule;
 
-import Bartinator.DataAccessObjects.UserDataAccessObject;
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Main;
 import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,13 +38,13 @@ public class EmployeeManagementController implements Initializable {
 	public TableColumn<EmployeeAdapter, String> passwordCol;
 	public TableColumn<EmployeeAdapter, Boolean> adminCol;
 
-	private UserDataAccessObject mUserDAO;
+	private EmployeeDataAccessObject mUserDAO;
     private ObservableList<EmployeeAdapter> data;
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
 
-        mUserDAO = UserDataAccessObject.getInstance();
+        mUserDAO = EmployeeDataAccessObject.getInstance();
 
 		IdCol.setCellValueFactory(param -> new ReadOnlyObjectWrapper<Integer>(param.getValue().getId()));
 		nameCol.setCellValueFactory(param -> param.getValue().nameProperty());
@@ -123,7 +121,6 @@ public class EmployeeManagementController implements Initializable {
 
 	private void updateUserTableView() {
 		try {
-			//TODO: Fetcher metode returnere null???
 			List<EmployeeAdapter> adapters = new ArrayList<>();
 			for(Employee employee : mUserDAO.fetchAllUsers()){
 				adapters.add(new EmployeeAdapter(employee));
