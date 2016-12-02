@@ -71,7 +71,7 @@
                           AnchorPane.topAnchor="32.0"/>
                 <Button alignment="CENTER" layoutX="71.0" layoutY="278.0" mnemonicParsing="false" prefHeight="40.0"
                         text="Print" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0"/>
+                        AnchorPane.rightAnchor="0.0" onAction="#handlePrintButton"/>
             </children>
         </AnchorPane>
     </right>

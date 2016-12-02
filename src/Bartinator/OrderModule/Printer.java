@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Printer {
 
-	public static List<String> makeReceipt(List<Order> orders, LocalDate date) {
+	public static List<String> makeReceipt(List<Order> orders) {
 		List<String> list = new ArrayList<>();
 		int priceSum = 0;
 		for(Order order : orders){
@@ -25,15 +25,9 @@ public class Printer {
 			priceSum += order.getTotalPrice()*100;
 		}
 
-		//TODO kill it with fire
-		new Printer().htmlIt(orders, date, priceSum/100.0);
-
 		list.add("              -==========-");
 		list.add(String.format("%-34s %5.2f", "Total:", priceSum/100.0));
 		list.add(String.format("%-34s %5.2f", "25% Moms:", priceSum/500.0));
-		for (String string : list) {
-			System.out.println(string);
-		}
 		return list;
 	}
 
@@ -49,6 +43,14 @@ public class Printer {
 		list.add("");
 	}
 
+
+	/**
+	 * Tager en masse ting og kværner dem lidt rundt og spytter en html fil ud.
+	 * @param orders
+	 * @param day
+	 * @param sumTotal
+	 * @return
+	 */
 	public String htmlIt(List<Order> orders, LocalDate day, double sumTotal){
 		Path file = new File(getClass().getClassLoader().getResource("exported.html").getFile()).toPath();
 		String htmlTemplate = "";
@@ -62,7 +64,6 @@ public class Printer {
 					j=line.indexOf("}");
 					if(j!=-1){
 						String key = line.substring(i+1,j);
-						System.out.println(key);
 						if(key.equals("date")){
 							line = String.format("%s%s%s", line.substring(0, i), day.toString(), line.substring(j + 1));
 						} else if(key.equals("sumtotal")) {
@@ -87,7 +88,6 @@ public class Printer {
 				line = reader.readLine();
 			}
 			reader.close();
-			System.out.println(htmlTemplate);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

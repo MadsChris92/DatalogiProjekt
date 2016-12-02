@@ -10,7 +10,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -62,7 +65,7 @@ public class OrderMenuController implements Initializable {
 
 	private ObservableList<String> getStrings(ListChangeListener.Change<? extends Order> change) {
 		ObservableList<? extends Order> orders = change.getList();
-		ObservableList<String> list = FXCollections.observableArrayList(Printer.makeReceipt((List<Order>) orders, mDatePicker.getValue()));
+		ObservableList<String> list = FXCollections.observableArrayList(Printer.makeReceipt((List<Order>) orders));
 		return list;
 	}
 
@@ -105,5 +108,20 @@ public class OrderMenuController implements Initializable {
 	}
 
 	public void handlePrintButton(){
+		//TODO kill it with fire
+		List<Order> orders = mOrderTable.getSelectionModel().getSelectedItems();
+		LocalDate date = mDatePicker.getValue();
+		double sumTotal = 0;
+		for(Order order : orders) sumTotal += order.getTotalPrice();
+		String html = new Printer().htmlIt(orders, date, sumTotal);
+
+		WebView webView = new WebView();
+		webView.getEngine().loadContent(html);
+		Stage stage = new Stage();
+		stage.setTitle("My New Stage Title");
+		stage.setScene(new Scene(webView, 450, 450));
+		stage.show();
+
+		System.out.println(html);
 	}
 }
