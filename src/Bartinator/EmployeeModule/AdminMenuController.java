@@ -16,10 +16,14 @@ public class AdminMenuController {
     public void handleStockManagementBtn(ActionEvent actionEvent) {
         AlertBoxes.displayErrorBox("Under Construction", "Sorry, this function is not yet available!");
     }
+    public void handlePrintManagementBtn(ActionEvent actionEvent) {
+        Navigator.switchToOrderManagementView();
+    }
     public void handleLogOut(ActionEvent actionEvent) {
         if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")){
             Navigator.switchToLoginView();
         }
 
     }
+
 }

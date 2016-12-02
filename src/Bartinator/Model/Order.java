@@ -1,26 +1,42 @@
 package Bartinator.Model;
 
+import Bartinator.DataAccessObjects.OrderDataAccessObject;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@Entity(name = "[Order]")
+@Entity(name = "aOrder")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    @Column
-    private double mTotalPrice;
-
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> mReceipt = new ArrayList<>();
 
-    @Column
+    @Column(name = "bartenderName")
     private String mBartenderName;
 
-    @Column
+    @Column(name = "bartenderId")
     private int mBartenderId;
+
+	@Column(name = "paymentType")
+	private String mPaymentType;
+
+	@Column(name = "change")
+	private String mChange;
+
+	@Column(name = "totalPrice")
+	private double mTotalPrice;
+
+    @Basic
+	@Column(name = "timestamp")
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date mTimestamp;
 
 
     protected Order() {}
@@ -30,9 +46,13 @@ public class Order {
         mReceipt = receipt;
         mBartenderName = bartenderName;
         mBartenderId = bartenderId;
-    }
+        mTimestamp = OrderDataAccessObject.getInstance().getCurrentDate();
+	}
 
-    public double getTotalPrice() {
+	public int getId() {
+		return id;
+	}
+	public double getTotalPrice() {
         return mTotalPrice;
     }
     public List<String> getReceipt() {
@@ -44,16 +64,23 @@ public class Order {
     public int getBartenderId() {
         return mBartenderId;
     }
+    public Date getTimestamp() {
+        return mTimestamp;
+    }
+	public String getPaymentType() {
+		return mPaymentType;
+	}
+	public String getChange() {
+		return mChange;
+	}
 
-
-    @Override public String toString() {
-        String result = String.format("Order:%n");
+	@Override public String toString() {
+        String result = String.format("Order: %s%n", new SimpleDateFormat("dd/MM/yy HH:mm").format(mTimestamp));
         for (String s : mReceipt) {
             result += s;
             result += String.format("%n");
         }
-        result += String.format("Total price: " + mTotalPrice + " DKK%n"
-                + "Salesman: " + mBartenderName + "-" + mBartenderId + "%n");
+        result += String.format("Total price: %.2f DKK%nSalesman: %s-%d%n", mTotalPrice, mBartenderName, mBartenderId);
         return result;
     }
 }

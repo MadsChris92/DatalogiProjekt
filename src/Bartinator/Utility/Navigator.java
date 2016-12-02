@@ -1,5 +1,6 @@
 package Bartinator.Utility;
 
+import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,6 +41,7 @@ public class Navigator {
 	}
 
 	public static void switchToLoginView() {
+		EmployeeDataAccessObject.getInstance().setActiveEmployee(null); // logging out, effectively
 		instance.switchToView("View/loginView.fxml");
 	}
 
@@ -53,5 +55,9 @@ public class Navigator {
 
 	public static void switchToSalesView() {
 		instance.switchToView("View/salesView.fxml");
+	}
+
+	public static void switchToOrderManagementView() {
+		instance.switchToView("View/orderManageView.fxml");
 	}
 }

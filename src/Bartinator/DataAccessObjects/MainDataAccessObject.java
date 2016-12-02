@@ -11,6 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 
 
@@ -66,6 +67,10 @@ public abstract class MainDataAccessObject {
 
 		// Return the list of Objects
 		return objects;
+	}
+
+	Session getSession(){
+		return sessionFactory.openSession();
 	}
 
     public static void save(Object object){

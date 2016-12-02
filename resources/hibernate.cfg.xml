@@ -15,6 +15,7 @@
         <!-- Update the database schema on application startup -->
         <property name="hbm2ddl.auto">update</property>
 
+
         <!-- Names the annotated entity classes -->
         <mapping class="Bartinator.Model.Employee"/>
         <mapping class="Bartinator.Model.Product"/>
