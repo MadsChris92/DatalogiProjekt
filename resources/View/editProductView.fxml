@@ -112,6 +112,12 @@
       </VBox>
    </center>
    <top>
-      <ChoiceBox fx:id="categoryMenu" prefWidth="150.0" BorderPane.alignment="TOP_LEFT" />
+      <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="Category: " />
+            <ChoiceBox fx:id="categoryMenu" prefWidth="150.0" />
+            <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+         </children>
+      </HBox>
    </top>
 </BorderPane>

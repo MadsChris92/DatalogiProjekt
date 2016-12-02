@@ -2,6 +2,7 @@ package Bartinator.ProductModule;
 
 import Bartinator.Model.*;
 import Bartinator.Utility.AlertBoxes;
+import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -294,5 +295,8 @@ public class EditProductController {
         categories.remove(activeCategory);
         pdao.removeCategory(activeCategory);
         updateTable();
+    }
+    public void handleExit(ActionEvent actionEvent) {
+        Navigator.switchToAdminView();
     }
 }
