@@ -16,14 +16,14 @@ public class Product {
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
-    private Category cat;
+    private Category category;
 
-    public Category getCat() {
-        return cat;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCat(Category cat) {
-        this.cat = cat;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product(){};
@@ -72,7 +72,7 @@ public class Product {
         if (!name.equals(product.name)) return false;
         if (descriptions != null ? !descriptions.equals(product.descriptions) : product.descriptions != null)
             return false;
-        return cat != null ? cat.equals(product.cat) : product.cat == null;
+        return category != null ? category.equals(product.category) : product.category == null;
 
     }
 
@@ -85,7 +85,7 @@ public class Product {
         return "Product{" +
                 "ID=" + id +
                 ", name='" + name + '\'' +
-                ", category='" + cat + '\'' +
+                ", category='" + category + '\'' +
                 ", price=" + price +
                 ", descriptions=" + descriptions +
                 '}';

@@ -3,12 +3,9 @@ package Bartinator.ProductModule;
 import Bartinator.Model.*;
 import Bartinator.Utility.AlertBoxes;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -211,7 +208,7 @@ public class EditProductController {
 
     private void populateCells(){
 		for (Product product : products) {
-			if (product.getCat().getName().equals(activeCategory.getName())) {
+			if (product.getCategory().getName().equals(activeCategory.getName())) {
 				data.add(product);
 			}
 		}
@@ -239,7 +236,7 @@ public class EditProductController {
             Product p = new Product();
             p.setName("mads" + i);
             p.setPrice(150);
-            p.setCat(c);
+            p.setCategory(c);
             p.setId(i);
             products.add(p);
         }
@@ -253,7 +250,7 @@ public class EditProductController {
             Product product = new Product();
             product.setName(name);
             products.add(product);
-            product.setCat(activeCategory);
+            product.setCategory(activeCategory);
             updateTable();
             pdao.saveProduct(product);
             setListViewProd();

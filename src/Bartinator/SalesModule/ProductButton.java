@@ -18,7 +18,7 @@ public class ProductButton extends StackPane {
 
 	ProductButton(SalesController controller, Product product) {
 		mProduct = product;
-		mButton = new Button(String.format("%s%n%f", product.getName(), product.getPrice()));
+		mButton = new Button(String.format("%s%n%.2f", product.getName(), product.getPrice()));
 		mButton.setOnAction(controller.handleProductBtn);
 		mFavorite = new ToggleButton("*");
 		Employee activeEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();

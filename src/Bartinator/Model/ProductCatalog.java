@@ -3,7 +3,6 @@ package Bartinator.Model;
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static Bartinator.DataAccessObjects.MainDataAccessObject.fetch;
@@ -42,7 +41,7 @@ public class ProductCatalog {
 	public List<Product> getProductsByCategory(Category category){
 		List<Product> result = new ArrayList<>();
 		for (Product product : mProducts) {
-			if (product.getCat().equals(category)){
+			if (product.getCategory().equals(category)){
 				result.add(product);
 			}
 		}

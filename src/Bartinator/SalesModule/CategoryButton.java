@@ -11,6 +11,7 @@ public class CategoryButton extends Button {
 
 	public CategoryButton(SalesController controller, Category category) {
 		mCategory = category;
+		setText(category.getName());
 		setStyle("-fx-base: #f5efb9;");
 		setOnAction(controller.handleCatBtn);
 		setMinHeight(controller.mBtnRadius);

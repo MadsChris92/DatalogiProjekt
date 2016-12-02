@@ -11,28 +11,12 @@ public class Category {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> columns = new ArrayList<>();
 	@ManyToOne
-	private Category mCategory;
+	private Category category;
 
 	public Category(){}
 
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Category category = (Category) o;
-
-		return name.equals(category.name);
-
-	}
-
-	@Override
-	public int hashCode() {
-		return name.hashCode();
 	}
 
 	public void setName(String name) {
@@ -56,14 +40,30 @@ public class Category {
 	}
 
 	public Category getCategory() {
-		return mCategory;
+		return category;
 	}
 
 	public void setCategory(Category category) {
-		mCategory = category;
+		this.category = category;
 	}
 
 	public boolean contains(Product product){
-		return product.getCat().getName().equals(this.name);
+		return product.getCategory().getName().equals(this.name);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Category category = (Category) o;
+
+		return name.equals(category.name);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 }

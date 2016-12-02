@@ -30,6 +30,9 @@
         </GridPane>
     </center>
     <right>
-        <ListView fx:id="mCartView" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
+        <AnchorPane BorderPane.alignment="CENTER">
+            <ListView fx:id="mCartView" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="30"/>
+            <TextField text="Value" editable="false" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+        </AnchorPane>
     </right>
 </BorderPane>

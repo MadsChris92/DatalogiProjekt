@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 
 public class SalesController implements Initializable{
 
-    @FXML public ListView<Product> mCartView;
+    @FXML public ListView<CartItem> mCartView;
     @FXML public GridPane mBtnGrid;
 
     private Cashier mCashier;
@@ -43,13 +43,15 @@ public class SalesController implements Initializable{
     @Override public void initialize(URL location, ResourceBundle resources) {
         mProductCatalog = ProductCatalog.getInstance();
         mCashier = new Cashier();
+		mCartView.setItems(mCashier.getObservableCart());
 
         displaySelectedCat();
-        updateCartView();
+        //updateCartView();
     }
 
     private void displaySelectedCat() {
-        System.out.println("Displaying: " + mSelectedCategory.getName());
+		if(mSelectedCategory!=null)
+        	System.out.println("Displaying: " + mSelectedCategory.getName());
 
         mBtnGrid.getChildren().clear();
 
@@ -108,7 +110,6 @@ public class SalesController implements Initializable{
             Button btn = (Button) event.getSource();
 			Product product = ((ProductButton)btn.getParent()).getProduct();
 			mCashier.addProduct(product, 1);
-			updateCartView();
         }
     };
 
@@ -127,20 +128,13 @@ public class SalesController implements Initializable{
             }
         };
 
-
-	private void updateCartView() {
-		mCartView.getItems().clear();
-		mCartView.getItems().addAll(mCashier.);
-	}
-
     public void handleCheckOut(ActionEvent actionEvent) {
         boolean success = mCashier.checkOut();
         if(!success){
-            AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't afford cart content");
+            AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't afford cart contents");
         } else {
             if(AlertBoxes.displayConfirmationBox("Confirm Sale","Did you mean to checkout?")){
 				mCashier.clearCart();
-				updateCartView();
 				mSelectedCategory = null;
 				displaySelectedCat();
 			}
@@ -149,24 +143,21 @@ public class SalesController implements Initializable{
     }
 
     public void handleDelete(ActionEvent actionEvent) {
-        ObservableList<Product> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
-        for (Product product: selectedStrings) {
-            mCashier.removeProduct(product, 1);
+        ObservableList<CartItem> selectedItems = mCartView.getSelectionModel().getSelectedItems();
+        for (CartItem item: selectedItems) {
+            mCashier.removeProduct(item.getProduct(), 1);
         }
-        updateCartView();
     }
 
     public void handleDeleteAll(ActionEvent actionEvent) {
-		ObservableList<Product> selectedStrings = mCartView.getSelectionModel().getSelectedItems();
-		for (Product product: selectedStrings) {
-			mCashier.removeProduct(product);
+		ObservableList<CartItem> selectedItems = mCartView.getSelectionModel().getSelectedItems();
+		for (CartItem item: selectedItems) {
+			mCashier.removeProduct(item.getProduct());
 		}
-        updateCartView();
     }
 
     public void handleClearCart(ActionEvent actionEvent) {
         mCashier.clearCart();
-        updateCartView();
     }
 
     public void handleLogOut(ActionEvent actionEvent) {

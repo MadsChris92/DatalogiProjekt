@@ -36,7 +36,7 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     public List<Product> getProductsByCategory(String category){
         List<Product> result = new ArrayList<>();
         for (Product p : mProducts) {
-            if (p.getCat().getName().equals(category)){
+            if (p.getCategory().getName().equals(category)){
                 result.add(p);
             }
         }
@@ -61,6 +61,16 @@ public class ProductDataAccessObject extends MainDataAccessObject {
             }
         }
     }
+
+	public List<Category> getCategoriesByCategory(Category category){
+		List<Category> result = new ArrayList<>();
+		for (Category category1 : mCategories) {
+			if (category1.getCategory().equals(category)){
+				result.add(category1);
+			}
+		}
+		return result;
+	}
 
     public void saveCategories(){
         List<Category> currentDBcategories = new ArrayList<Category>();
@@ -89,8 +99,12 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         remove(product);
     }
 
-    public void updateCategory(Category activeCategory) {
-        update(activeCategory);
+    public void renameCategory(Category category, String newName){
+
+    }
+
+    public void updateCategory(Category category) {
+        update(category);
     }
 
     public void removeCategory(Category category) {

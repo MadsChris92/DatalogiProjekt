@@ -52,6 +52,6 @@ public class Navigator {
 	}
 
 	public static void switchToSalesView() {
-		instance.switchToView("/View/salesView.fxml");
+		instance.switchToView("View/salesView.fxml");
 	}
 }
