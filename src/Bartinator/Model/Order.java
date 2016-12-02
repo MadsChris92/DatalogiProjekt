@@ -27,8 +27,8 @@ public class Order {
 	@Column(name = "paymentType")
 	private String mPaymentType;
 
-	@Column(name = "change")
-	private String mChange;
+	@Column(name = "returnChange")
+	private double mChange;
 
 	@Column(name = "totalPrice")
 	private double mTotalPrice;
@@ -47,6 +47,8 @@ public class Order {
         mBartenderName = bartenderName;
         mBartenderId = bartenderId;
         mTimestamp = OrderDataAccessObject.getInstance().getCurrentDate();
+        mPaymentType = "Cash";
+		mChange = 0;
 	}
 
 	public int getId() {
@@ -70,7 +72,7 @@ public class Order {
 	public String getPaymentType() {
 		return mPaymentType;
 	}
-	public String getChange() {
+	public double getChange() {
 		return mChange;
 	}
 

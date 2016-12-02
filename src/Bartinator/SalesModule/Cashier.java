@@ -70,7 +70,7 @@ public class Cashier {
         //create receipt
 		List<String> receipt = new ArrayList<>();
 		for (CartItem item : mCartItems) {
-			receipt.add(String.format("%.2fDKK   x %d  %s - Product Id%d", item.getProduct().getPrice(), item.getQuantity(), item.getProduct().getName(), item.getProduct().getId()));
+			receipt.add(String.format("%2d x %-29s%6.2f", item.getQuantity(), item.getProduct().getName(), item.getTotal()));
 		}
 
         //Create order

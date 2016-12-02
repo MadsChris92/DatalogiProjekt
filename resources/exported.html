@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>.</title>
+    <link href="end.css" rel="stylesheet">
+</head>
+<body>
+<header><div class="title">Dagsafslutning</div><div class="date">{date}</div></header>
+<section class="content">
+    <table>
+        <tr>
+            <td class="toprow amount">Antal</td><td class="toprow productname">Produkt</td><td class="toprow price">Total</td>
+        </tr>
+        {product<tr><td>%s</td><td>%s</td><td>dkk %s</td></tr>}
+    </table>
+</section>
+<footer>
+    <div class="row">
+        <div>Omsætning</div><div>{sumtotal}</div>
+    </div>
+    <div class="row">
+        <div>Heraf 25% Moms</div><div>{tax}</div>
+    </div>
+</footer>
+</body>
+</html>

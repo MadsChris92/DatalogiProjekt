@@ -1,0 +1,53 @@
+body{
+    width: 210mm;
+    height: 290mm;
+    padding: 30mm 20mm;
+    margin:0;
+    border: dashed lightblue 1mm;
+}
+
+header{
+    display: flex;
+    border: dashed lightblue 1mm;
+    justify-content: space-between;
+    font-size: 20pt;
+    background: lightblue 1mm;
+}
+
+header .title{
+}
+
+header .date{
+}
+
+.toprow{
+    background-color: #c8d9ed;
+    color: #784600;
+    font-weight: bold;
+    padding: 0 2mm;
+}
+
+table{
+    margin: 3mm 0;
+    border: solid darkblue 0.3mm;
+}
+td{
+    border: solid darkblue 0.3mm;
+}
+
+.amount{
+    width: 5%;
+}
+
+.productname{
+    width: 82%;
+}
+.price{
+    width: 20%;
+    text-align: center;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+}

@@ -44,7 +44,7 @@
         <TitledPane animated="false" collapsible="false" prefHeight="423.0" prefWidth="530.0" text="Date"
                     BorderPane.alignment="TOP_LEFT">
             <graphic>
-                <DatePicker onAction="#handleDatePicked"/>
+                <DatePicker fx:id="mDatePicker" onAction="#handleDatePicked"/>
             </graphic>
             <content>
                 <TableView fx:id="mOrderTable">

@@ -5,18 +5,14 @@ import Bartinator.Model.Order;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTreeTableCell;
-import javafx.util.Callback;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -32,6 +28,7 @@ public class OrderMenuController implements Initializable {
 	public TableColumn<Order, Double> mReceiptColumn;
 	public TableColumn<Order, Date> mDateColumn;
 	public ListView<String> mReceiptView;
+	public DatePicker mDatePicker;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -42,21 +39,7 @@ public class OrderMenuController implements Initializable {
 				if(change.getList().isEmpty()){
 					mReceiptView.setItems(null);
 				} else {
-					ObservableList<String> list = FXCollections.observableArrayList();
-					int priceSum = 0;
-					for(Order order : change.getList()){
-						list.addAll(order.getReceipt());
-						list.add("              ------------");
-						list.add(String.format("%-35s %5.2f", "Subtotal:", order.getTotalPrice()));
-						list.add(String.format("%-35s %5.2f", "25% Moms:", order.getTotalPrice()*0.2));
-						priceSum += order.getTotalPrice()*100;
-					}
-					list.add("              -==========-");
-					list.add(String.format("%-35s %5.2f", "Total:", priceSum/100.0));
-					list.add(String.format("%-35s %5.2f", "25% Moms:", priceSum/500.0));
-					for (String string : list) {
-						System.out.println(string);
-					}
+					ObservableList<String> list = getStrings(change);
 					mReceiptView.setItems(list);
 				}
 			}
@@ -76,6 +59,16 @@ public class OrderMenuController implements Initializable {
 				new ReadOnlyObjectWrapper<Date>(param.getValue().getTimestamp())
 		);
 	}
+
+	private ObservableList<String> getStrings(ListChangeListener.Change<? extends Order> change) {
+		ObservableList<? extends Order> orders = change.getList();
+		ObservableList<String> list = FXCollections.observableArrayList(Printer.makeReceipt((List<Order>) orders, mDatePicker.getValue()));
+		return list;
+	}
+
+
+	//TODO: Find et bedre hjem til den her funktionær
+
 
 	public void handleProductManagementBtn(ActionEvent actionEvent) {
 		Navigator.switchToProductManagementView();
@@ -101,12 +94,16 @@ public class OrderMenuController implements Initializable {
 
 	public void handleDatePicked(ActionEvent actionEvent) {
 		LocalDate localDate = ((DatePicker)actionEvent.getSource()).getValue();
-		System.out.println(localDate);
-		System.out.println();
+		//Converts the LocalDate into a date object(Date keeps track of time as well as date, LocalDate just keeps track of day, month and year)
 		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//Fetch the orders from the database, which were made on the given day
 		List<Order> orders = OrderDataAccessObject.getInstance().getOrderOnDay(date);
+		mOrderTable.getItems().clear();
 		for(Order order : orders) {
 			mOrderTable.getItems().add(order);
 		}
+	}
+
+	public void handlePrintButton(){
 	}
 }
