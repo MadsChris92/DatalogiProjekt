@@ -92,7 +92,7 @@ public class EditProductController implements Initializable {
 			productCatalog.updateProduct(product);
         }
 
-        category.getColumns().remove(columnName);
+        category.removeColumn(columnName);
         productCatalog.updateCategory(category);
         updateTable();
     }
@@ -111,8 +111,8 @@ public class EditProductController implements Initializable {
 					productCatalog.updateProduct(product);
 				}
 
-				category.getColumns().remove(oldName);
-				category.getColumns().add(newName);
+				category.removeColumn(oldName);
+				category.addColumn(newName);
 				productCatalog.updateCategory(category);
 				updateTable();
 			}
