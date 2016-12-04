@@ -17,79 +17,23 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         return instance;
     }
 
-    private List<Product> mProducts;
-    private List<Category> mCategories;
-
-    public ProductDataAccessObject(){
-        mProducts = (List<Product>) fetch(Product.class);
-        mCategories = (List<Category>) fetch(Category.class);
-    }
+    public ProductDataAccessObject(){}
 
     public List<Category> getCategories() {
-        return mCategories;
+        return (List<Category>) fetch(Category.class);
     }
 
     public List<Product> getProducts() {
-        return mProducts;
+        return (List<Product>) fetch(Product.class);
     }
 
-    public List<Product> getProductsByCategory(String category){
-        List<Product> result = new ArrayList<>();
-        for (Product p : mProducts) {
-            if (p.getCategory().getName().equals(category)){
-                result.add(p);
-            }
-        }
-        return result;
+    public List<Product> getProductsByCategory(Category category){
+        return (List<Product>) fetch(Product.class, "category", category);
     }
 
-    public Product getProductById (int id){
-        for (Product p : mProducts) {
-            if(p.getId() == id){
-                return p;
-            }
-        }
-        return null;
+    public List<Category> getCategoriesByCategory(Category category){
+        return (List<Category>) fetch(Category.class, "category", category);
     }
-
-    public void saveProducts(){
-        List<Product> currentDBproducts = new ArrayList<Product>();
-        currentDBproducts.addAll((Collection<? extends Product>) fetch(Product.class));
-        for (Product p :mProducts) {
-            if(!currentDBproducts.contains(p)){
-                save(p);
-            }
-        }
-    }
-
-	public List<Category> getCategoriesByCategory(Category category){
-		List<Category> result = new ArrayList<>();
-		for (Category category1 : mCategories) {
-			if (category1.getCategory().equals(category)){
-				result.add(category1);
-			}
-		}
-		return result;
-	}
-
-    public void saveCategories(){
-        List<Category> currentDBcategories = new ArrayList<Category>();
-        currentDBcategories.addAll((List<Category>) fetch(Category.class));
-        for (Category category :mCategories) {
-            if(currentDBcategories.contains(category)){
-                update(category);
-            } else {
-                save(category);
-            }
-        }
-    }
-
-	public void refresh() {
-		mProducts.clear();
-        mProducts.addAll((List<Product>) fetch(Product.class));
-        mCategories.clear();
-		mCategories.addAll((List<Category>) fetch(Category.class));
-	}
 
 	public void updateProduct(Product product) {
 		update(product);
@@ -99,8 +43,27 @@ public class ProductDataAccessObject extends MainDataAccessObject {
         remove(product);
     }
 
+	/**
+	 * Renames an existing category and updates all the products and categories it contained
+	 * @param category the category to rename
+	 * @param newName the new name of the category
+	 */
     public void renameCategory(Category category, String newName){
-
+		// Because the name is the primary key of the category, it cant be readily changed, so the category is remade instead
+	    Category renamedCategory = new Category();
+	    renamedCategory.setName(newName);
+	    renamedCategory.getColumns().addAll(category.getColumns());
+	    renamedCategory.setCategory(category.getCategory());
+        for(Category subCategory : getCategoriesByCategory(category)){
+            subCategory.setCategory(renamedCategory);
+            updateCategory(subCategory);
+        }
+        for(Product product : getProductsByCategory(category)){
+            product.setCategory(renamedCategory);
+            updateProduct(product);
+        }
+        saveCategory(renamedCategory);
+        remove(category);
     }
 
     public void updateCategory(Category category) {
@@ -108,7 +71,10 @@ public class ProductDataAccessObject extends MainDataAccessObject {
     }
 
     public void removeCategory(Category category) {
-		for(Product product : getProductsByCategory(category.getName())){
+        for(Category category1 : getCategoriesByCategory(category)){
+            removeCategory(category1);
+        }
+		for(Product product : getProductsByCategory(category)){
 			remove(product);
 		}
 		remove(category);

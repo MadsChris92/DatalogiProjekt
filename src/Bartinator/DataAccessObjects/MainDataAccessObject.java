@@ -38,7 +38,7 @@ public abstract class MainDataAccessObject {
 		query.select(query.from(clazz));
 
 		// Get a list of objects according to the criteria object
-		List<Object> objects = session.createQuery(query).list();
+		List<?> objects = session.createQuery(query).list();
 
 		// Close the session
 		session.close();
@@ -55,12 +55,12 @@ public abstract class MainDataAccessObject {
 		// Create criteria object
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 		CriteriaQuery query = criteriaBuilder.createQuery(clazz);
-		Root<Class> userRoot = query.from(clazz);
-		query.select(userRoot);
-		query.where(criteriaBuilder.equal(userRoot.get(attribute), value));
+		Root<Class> root = query.from(clazz);
+		query.select(root);
+		query.where(criteriaBuilder.equal(root.get(attribute), value));
 
 		// Get a list of objects according to the criteria object
-		List<Object> objects = session.createQuery(query).list();
+		List<?> objects = session.createQuery(query).list();
 
 		// Close the session
 		session.close();
@@ -74,7 +74,7 @@ public abstract class MainDataAccessObject {
 	}
 
     public static void save(Object object){
-        // Open a seesion
+        // Open a session
         Session session = sessionFactory.openSession();
 
         // Begin a transaction

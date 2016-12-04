@@ -69,10 +69,6 @@ public class OrderMenuController implements Initializable {
 		return list;
 	}
 
-
-	//TODO: Find et bedre hjem til den her funktionær
-
-
 	public void handleProductManagementBtn(ActionEvent actionEvent) {
 		Navigator.switchToProductManagementView();
 	}

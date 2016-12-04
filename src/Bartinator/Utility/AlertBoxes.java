@@ -21,11 +21,10 @@ public class AlertBoxes {
         alert.showAndWait();
     }
     public static boolean displayConfirmationBox(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
         alert.setTitle(title);
-        alert.setContentText(message);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (result.get() == ButtonType.YES) {
             return true;
         } else {
             return false;

@@ -33,71 +33,54 @@ public class ObservableEmployee {
 	public int getId() {
 		return mId.get();
 	}
-
 	public IntegerProperty idProperty() {
 		return mId;
 	}
-
 	public void setId(int id) {
 		this.mId.set(id);
 	}
-
 	public String getName() {
 		return mName.get();
 	}
-
 	public StringProperty nameProperty() {
 		return mName;
 	}
-
 	public void setName(String name) {
 		this.mName.set(name);
 	}
-
 	public String getUsername() {
 		return mUsername.get();
 	}
-
 	public StringProperty usernameProperty() {
 		return mUsername;
 	}
-
 	public void setUsername(String username) {
 		this.mUsername.set(username);
 	}
-
 	public int getPassword() {
 		return mPassword.get();
 	}
-
 	public IntegerProperty passwordProperty() {
 		return mPassword;
 	}
-
 	public void setPassword(int password) {
 		this.mPassword.set(password);
 	}
-
 	public boolean hasAdminAccess() {
 		return mAdminAccess.get();
 	}
-
 	public BooleanProperty adminAccessProperty() {
 		return mAdminAccess;
 	}
-
 	public void setAdminAccess(boolean adminAccess) {
 		this.mAdminAccess.set(adminAccess);
 	}
-
 	public ObservableList<Product> getFavorites() {
 		return mFavorites.get();
 	}
-
 	public ListProperty<Product> favoritesProperty() {
 		return mFavorites;
 	}
-
 	public void setFavorites(ObservableList<Product> favorites) {
 		this.mFavorites.set(favorites);
 	}

@@ -1,302 +1,376 @@
 package Bartinator.ProductModule;
 
-import Bartinator.Model.*;
+import Bartinator.Model.Category;
+import Bartinator.Model.ObservableProduct;
+import Bartinator.Model.Product;
+import Bartinator.Model.ProductCatalog;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
+import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
-import Bartinator.DataAccessObjects.*;
+
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 
-public class EditProductController {
-    public ChoiceBox<String> categoryMenu;
-    public ListView<String> listViewCol;
-    public Button btnRemoveColumn;
-    public TextField txtFieldColumn;
-    public Button btnAddColumn;
-    public TextField txtProductName;
-    public ListView<Product> listViewProd;
-    public TextField txtCategoryName;
-    public Label catLabel;
-    public TabPane tabPane;
-    private Category activeCategory;
-    private ArrayList<Product> activeProducts = new ArrayList<>();
-    public TableView<Product> productTable;
-    private final ObservableList<Product> data = FXCollections.observableArrayList();
-    private final ObservableList<String> catData = FXCollections.observableArrayList();
-    private final ObservableList<String> catColumns = FXCollections.observableArrayList();
-    private ArrayList<TableColumn<Product, ?>> columns = new ArrayList<>();
-    private ArrayList<Product> products = new ArrayList<>();
-    private int activeColumn;
-    private ProductDataAccessObject pdao = ProductDataAccessObject.getInstance();
+public class EditProductController implements Initializable {
+	public TableView<ObservableProduct> productTable;
+	public TextField productTxtField;
+	public TextField categoryTxtField;
+	public Label categoryLabel;
+	public TreeView<Category> categoryView;
+    public TextField columnTxtField;
+	public Label columnLabel;
+	public ListView<String> columnView;
+	public Button columnRemoveButton;
+	public Button categoryRemoveButton;
 
-	private ArrayList<Category> categories = new ArrayList<>();
+	private Property<Category> activeCategory = new SimpleObjectProperty<>();
+	private final ObservableList<String> catColumns = FXCollections.observableArrayList();
+
+    private ArrayList<TableColumn<ObservableProduct, ?>> columns = new ArrayList<>();
+
+    private ProductCatalog productCatalog = ProductCatalog.getInstance();
 
 
-    @FXML
-    void initialize(){
-        pdao.refresh();
+	@FXML
+	@Override
+	public void initialize(URL location, ResourceBundle resources){
+        productCatalog.refresh();
 
-		categories = (ArrayList<Category>) pdao.getCategories();
-
-		products.clear();
-		products.addAll(pdao.getProducts());
-
-        System.out.println(products.size());
-        for(Product product : products){
-            System.out.println(product.toString());
-        }
-
-        activeCategory = categories.get(0);
-
-        //createTestProducts();
-        setListViewProd();
-        setCategories();
-        makeColumns();
-        populateCells();
-        setListView();
-        setListViewProd();
-
-        productTable.getColumns().addAll(columns);
-        productTable.setItems(data);
-        categoryMenu.setItems(catData);
-        productTable.setEditable(true);
-
-        btnAddColumn.setOnAction(event -> addColumn());
-        updateTable();
-
-    }
-
-    private void addColumn() {
-        if(!txtFieldColumn.getText().isEmpty()){
-            activeCategory.addColumn(txtFieldColumn.getText());
-            pdao.updateCategory(activeCategory);
-            updateTable();
-        }else{
-            AlertBoxes.displayInformationBox("ERROR", "Must not be empty");
-        }
-    }
-
-    private void setListView(){
-        catColumns.clear();
-        listViewCol.getItems().clear();
-        catColumns.addAll(activeCategory.getColumns());
-        listViewCol.setItems(catColumns);
-        listViewCol.setEditable(true);
-        listViewCol.setCellFactory(TextFieldListCell.forListView());
-        listViewCol.setOnEditCommit(event -> {
-			activeCategory.getColumns().set(event.getIndex(), event.getNewValue());
-			updateTable();
-		});
-        listViewCol.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-			activeColumn = newValue.intValue();
-			btnRemoveColumn.setOnAction(event -> removeColumn());
-		});
-    }
-
-    private void removeColumn() {
-        String col = catColumns.get(activeColumn);
-
-        for (Product product : products) {
-            if (activeCategory.contains(product)) {
-                product.getDescriptions().remove(col);
-            }
-        }
-        for (Product p : products){
-            pdao.updateProduct(p);
-        }
-
-        activeCategory.getColumns().remove(activeColumn);
-        pdao.updateCategory(activeCategory);
-        updateTable();
-
-    }
-
-    private void setListViewProd(){
-        activeProducts.clear();
-
-        for(Product p: products){
-            if(activeCategory.contains(p)){
-                activeProducts.add(p);
-            }
-        }
-        ObservableList<Product> ps = javafx.collections.FXCollections.observableList(activeProducts);
-        listViewProd.setItems(ps);
-    }
-
-    private void setCategories(){
-		for (Category category : categories) {
-			catData.add(category.getName());
+		ObservableList<Category> categories = productCatalog.getCategories();
+        if(categories.size()>0){
+			activeCategory.setValue(categories.get(0));
+		} else {
+        	activeCategory.setValue(null);
 		}
-        categoryMenu.getSelectionModel().selectedIndexProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					activeCategory = categories.get(newValue.intValue());
-					System.out.println(activeCategory.getName());
-					updateTable();
-				}
-		);
-    }
 
-    private void updateTable(){
-        productTable.getColumns().removeAll(columns);
-        productTable.getItems().clear();
-        columns.clear();
-        data.clear();
-        catLabel.setText(activeCategory.getName());
         makeColumns();
-        populateCells();
-        productTable.getColumns().addAll(columns);
-        productTable.setItems(data);
-        setListView();
-        setListViewProd();
+		setCategoryTreeView();
+        setColumnListView();
+		setPruductTable();
+
+        updateTable();
 
     }
 
-    private void makeColumns(){
-        TableColumn<Product, String> idColumn = new TableColumn<>("ID");
-        columns.add(idColumn);
-        idColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("id"));
+	private void setPruductTable() {
+		productTable.setEditable(true);
+	}
 
-        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
-        columns.add(nameColumn);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameColumn.setOnEditCommit(
-				cell -> {
-					Product product = cell.getRowValue();
-					product.setName(cell.getNewValue());
-					pdao.updateProduct(product);
-				}
-		);
-        TableColumn<Product, Double> priceColumn = new TableColumn<>("Price");
-        columns.add(priceColumn);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-        priceColumn.setCellFactory(TextFieldTableCell.<Product, Double>forTableColumn(new DoubleStringConverter()));
-        priceColumn.setOnEditCommit(
-				cell -> {
-					Product product = cell.getRowValue();
-					product.setPrice(cell.getNewValue());
-					pdao.updateProduct(product);
-				}
-		);
-        for (int i = 0; i < activeCategory.getColumns().size(); i++) {
-                String category = activeCategory.getColumns().get(i);
-                System.out.println(category);
-                TableColumn<Product, String> tableColumn = new TableColumn<>(category);
-                columns.add(tableColumn);
-
-                //tableColumn.setCellValueFactory(new OurPropertyValueFactory(category));
-                tableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getDescriptions().get(category)));
-                tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-                tableColumn.setOnEditCommit(
-						cell -> {
-							Product product = cell.getRowValue();
-							product.setDescription(cell.getTableColumn().getText(), cell.getNewValue());
-							pdao.updateProduct(product);
-						}
-				);
-        }
-    }
-
-    private void populateCells(){
-		for (Product product : products) {
-			if (product.getCategory().getName().equals(activeCategory.getName())) {
-				data.add(product);
+	private boolean addColumn(Category category, String columnName) {
+		if (columnName.isEmpty()) {
+			AlertBoxes.displayErrorBox("No Name Given", "The column needs a name.");
+		} else {
+			if (category.getColumns().contains(columnName)) {
+				AlertBoxes.displayErrorBox("Name Taken", "That name has been used already.");
+			} else {
+				category.addColumn(columnName);
+				productCatalog.updateCategory(category);
+				updateTable();
+				return true;
 			}
 		}
-    }
+		return false;
+	}
 
-    private void createTestProducts(){
-        Category c = new Category();
-        Category c1 = new Category();
-        categories.add(c1);
-        categories.add(c);
-        c1.setName("test1");
-        c.setName("test2");
-        activeCategory = c;
-
-        for (int i = 0; i < 10; i++) {
-            c1.getColumns().add(i + ". test");
+    private void removeColumn(Category category, String columnName) {
+    	for (ObservableProduct product : productCatalog.getProductsByCategory(category)) {
+			product.getDescriptions().remove(columnName);
+			productCatalog.updateProduct(product);
         }
 
-        c.getColumns().add("ID");
-        c.getColumns().add("Name");
-        c.getColumns().add("Price");
-
-
-        for (int i = 0; i < 10; i++) {
-            Product p = new Product();
-            p.setName("mads" + i);
-            p.setPrice(150);
-            p.setCategory(c);
-            p.setId(i);
-            products.add(p);
-        }
+        category.getColumns().remove(columnName);
+        productCatalog.updateCategory(category);
+        updateTable();
     }
 
-    public void btnAddProduct(ActionEvent actionEvent) {
+    private void renameColumn(Category category, String oldName, String newName) {
+		if(newName.isEmpty()) {
+			AlertBoxes.displayErrorBox("No Name Given", "The column needs a name.");
+		} else {
+			if (category.getColumns().contains(newName)) {
+				AlertBoxes.displayErrorBox("Cannot Rename", "A column with that name already exists!");
+			} else {
+				for (ObservableProduct product : productCatalog.getProductsByCategory(category)) {
+					Map<String, String> descriptions = product.getDescriptions();
+					descriptions.put(newName, descriptions.get(oldName));
+					descriptions.remove(oldName);
+					productCatalog.updateProduct(product);
+				}
 
-
-        String name = txtProductName.getText();
-        if(!name.isEmpty()){
-            Product product = new Product();
-            product.setName(name);
-            products.add(product);
-            product.setCategory(activeCategory);
-            updateTable();
-            pdao.saveProduct(product);
-            setListViewProd();
-        }else{
-            AlertBoxes.displayInformationBox("ERROR", "Must not not be null");
-        }
-
-    }
-
-    public void handleRemoveProd(ActionEvent actionEvent) {
-        int selectedItem = listViewProd.getSelectionModel().getSelectedIndex();
-        if(selectedItem >= 0){
-            Product product = activeProducts.get(selectedItem);
-
-            System.out.println(product.getName());
-            products.remove(product);
-            pdao.removeProduct(product);
-            updateTable();
-            setListViewProd();
-        }else{
-            AlertBoxes.displayInformationBox("ERROR", "No product selected");
-        }
-
-    }
-
-    public void addCategoryHandler(ActionEvent actionEvent) {
-        Category category = new Category();
-        category.setName(txtCategoryName.getText());
-		if (!categories.contains(category)) {
-			categories.add(category);
-			pdao.saveCategories();
+				category.getColumns().remove(oldName);
+				category.getColumns().add(newName);
+				productCatalog.updateCategory(category);
+				updateTable();
+			}
 		}
 	}
 
-    public void removeCategoryHandler(ActionEvent actionEvent) {
-        for(Product product : products){
-            if(activeCategory.contains(product)){
-                products.remove(product);
-            }
+	private boolean addCategory(String name) {
+		if(name.isEmpty()){
+			AlertBoxes.displayErrorBox("Cannot add category", "The category needs a name");
+		} else {
+			Category category = new Category();
+			category.setName(name);
+			if (productCatalog.contains(category)) {
+				AlertBoxes.displayErrorBox("Cannot add category", "A category with that name already exists");
+			} else {
+				productCatalog.saveCategory(category);
+				categoryView.setRoot(treeifyCategories(null));
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void removeCategory(Category category) {
+		if(category == null) {
+			AlertBoxes.displayErrorBox("Missing Category", "That category seems to not exist");
+		} else {
+			if (AlertBoxes.displayConfirmationBox("Warning", String.format("You are about to remove the category \"%s\" and all the products and categories it contains.%n%nAre you sure you wish to proceed?", activeCategory.getValue().getName()))) {
+				productCatalog.removeCategory(category);
+				categoryView.setRoot(treeifyCategories(null));
+				updateTable();
+			}
+		}
+	}
+
+	private void renameCategory(Category category, String newName){
+		if(newName.isEmpty()) {
+			AlertBoxes.displayErrorBox("No Name Given", "The category needs a name.");
+		} else {
+			if (productCatalog.getCategoryByName(newName) != null) {
+				AlertBoxes.displayErrorBox("Cannot Rename", "A category with that name already exists!");
+			} else {
+				productCatalog.renameCategory(category, newName);
+			}
+		}
+	}
+
+	private void addProduct(String name, Category category) {
+		if(!name.isEmpty()){
+			ObservableProduct product = new ObservableProduct(new Product());
+			product.setName(name);
+			product.setCategory(category);
+			productCatalog.saveProduct(product);
+		}else{
+			AlertBoxes.displayErrorBox("Missing Name", "Product must have a name!");
+		}
+	}
+
+	private void removeProduct(ObservableProduct product) {
+		if (product == null) {
+			AlertBoxes.displayErrorBox("Cannot Remove", "No product selected");
+		} else {
+			System.out.println(product.getName());
+			productCatalog.removeProduct(product);
+		}
+	}
+
+	private void setColumnListView(){
+		columnView.setItems(catColumns);
+		columnView.setEditable(true);
+		columnView.setCellFactory(TextFieldListCell.forListView());
+		columnView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue == null){
+				columnRemoveButton.setDisable(true);
+			} else {
+				columnRemoveButton.setDisable(false);
+				columnLabel.setText(newValue);
+			}
+		});
+		columnView.setOnEditCommit(event -> {
+			renameColumn(activeCategory.getValue(), event.getSource().getItems().get(event.getIndex()), event.getNewValue());
+			updateTable();
+		});
+	}
+
+    private void setCategoryTreeView(){
+    	categoryView.setShowRoot(false);
+		categoryView.setEditable(true);
+		categoryView.setCellFactory(TextFieldTreeCell.forTreeView(new StringConverter<Category>() {
+			@Override
+			public String toString(Category category) {
+				if(category == null){
+					return "none";
+				} else {
+					return category.getName();
+				}
+			}
+
+			@Override
+			public Category fromString(String string) {
+				Category category = new Category();
+				category.setName(string);
+				return category;
+			}
+		}));
+		categoryView.setOnEditCommit(event -> {
+			System.out.println(event.getOldValue()+" -> "+event.getNewValue());
+			renameCategory(event.getOldValue(), event.getNewValue().getName());
+		});
+    	categoryView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || newValue.getValue() == null) {
+    			categoryRemoveButton.setDisable(true);
+			} else {
+				activeCategory.setValue(newValue.getValue());
+				categoryRemoveButton.setDisable(false);
+				categoryLabel.setText(activeCategory.getValue().getName());
+				updateTable();
+			}
+		});
+		categoryView.setRoot(treeifyCategories(null));
+    }
+
+	private TreeItem<Category> treeifyCategories(Category root){
+		TreeItem<Category> categoryTreeItem = new TreeItem<>(root);
+		for(Category category : productCatalog.getCategoriesByCategory(root)){
+			categoryTreeItem.getChildren().add(treeifyCategories(category));
+		}
+		return categoryTreeItem;
+	}
+
+    private void updateTable(){
+        productTable.getColumns().clear();
+        columns.clear();
+        makeColumns();
+		catColumns.clear();
+		catColumns.addAll(activeCategory.getValue().getColumns());
+        productTable.getColumns().addAll(columns);
+		productTable.setItems(productCatalog.getProductsByCategory(activeCategory.getValue()));
+	}
+
+    private void makeColumns(){
+        TableColumn<ObservableProduct, Integer> idColumn = new TableColumn<>("ID");
+        columns.add(idColumn);
+        //idColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("id"));
+		idColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<Integer>(cell.getValue().getId()));
+
+        TableColumn<ObservableProduct, String> nameColumn = new TableColumn<>("Name");
+        columns.add(nameColumn);
+        //nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+		nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit(
+				cell -> {
+					ObservableProduct product = cell.getRowValue();
+					product.setName(cell.getNewValue());
+					productCatalog.updateProduct(product);
+				}
+		);
+        TableColumn<ObservableProduct, Double> priceColumn = new TableColumn<>("Price");
+        columns.add(priceColumn);
+        //priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+		priceColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<Double>(cell.getValue().getPrice()));
+        priceColumn.setCellFactory(TextFieldTableCell.<ObservableProduct, Double>forTableColumn(new DoubleStringConverter()));
+        priceColumn.setOnEditCommit(
+				cell -> {
+					ObservableProduct product = cell.getRowValue();
+					product.setPrice(cell.getNewValue());
+					productCatalog.updateProduct(product);
+				}
+		);
+
+        // The custom columns
+        for (String columnName : activeCategory.getValue().getColumns()) {
+			TableColumn<ObservableProduct, String> tableColumn = new TableColumn<>(columnName);
+			columns.add(tableColumn);
+
+			//tableColumn.setCellValueFactory(new OurPropertyValueFactory(columnName));
+			tableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getDescriptions().get(columnName)));
+			tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+			tableColumn.setOnEditCommit(
+					cell -> {
+						ObservableProduct product = cell.getRowValue();
+						product.setDescription(cell.getTableColumn().getText(), cell.getNewValue());
+						productCatalog.updateProduct(product);
+					}
+			);
         }
-        categories.remove(activeCategory);
-        pdao.removeCategory(activeCategory);
-        updateTable();
     }
-    public void handleExit(ActionEvent actionEvent) {
-        Navigator.switchToAdminView();
-    }
+
+	//    private void createTestProducts(){
+//        Category c = new Category();
+//        Category c1 = new Category();
+//        categories.add(c1);
+//        categories.add(c);
+//        c1.setName("test1");
+//        c.setName("test2");
+//        activeCategory.setValue(c);
+//
+//        for (int i = 0; i < 10; i++) {
+//            c1.getColumns().add(i + ". test");
+//        }
+//
+//        c.getColumns().add("ID");
+//        c.getColumns().add("Name");
+//        c.getColumns().add("Price");
+//
+//
+//        for (int i = 0; i < 10; i++) {
+//            Product p = new Product();
+//            p.setName("mads" + i);
+//            p.setPrice(150);
+//            p.setCategory(c);
+//            p.setId(i);
+//            //products.add(p);
+//        }
+//    }
+
+	public void handleRefresh(ActionEvent actionEvent){
+    	productCatalog.refresh();
+	}
+
+    public void handleAddProduct(ActionEvent actionEvent) {
+		String name = productTxtField.getText();
+		Category category = activeCategory.getValue();
+		addProduct(name, category);
+	}
+
+	public void handleRemoveProduct(ActionEvent actionEvent) {
+		ObservableProduct product = productTable.getSelectionModel().getSelectedItem();
+		removeProduct(product);
+
+	}
+
+	public void handleAddCategory(ActionEvent actionEvent) {
+    	String name = categoryTxtField.getText();
+		if(addCategory(name)) {
+			categoryTxtField.setText("");
+		}
+	}
+
+	public void handleRemoveCategory(ActionEvent actionEvent) {
+    	Category category = activeCategory.getValue();
+		removeCategory(category);
+	}
+
+	public void handleAddColumn(ActionEvent actionEvent) {
+		if(addColumn(activeCategory.getValue(), columnTxtField.getText())) {
+			columnTxtField.setText("");
+		}
+	}
+
+	public void handleRemoveColumn(ActionEvent actionEvent) {
+		removeColumn(activeCategory.getValue(), columnView.getSelectionModel().getSelectedItem());
+	}
+
+	public void handleExit(ActionEvent actionEvent) {
+		Navigator.switchToAdminView();
+	}
 }

@@ -15,6 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
+    //TODO: Find en måde at gemme recepterne på så det ikke er nødvendigt at hente informationen ud af en tekststreng senere
+	// se Bartinator.OrderModule.Printer linje 80
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> mReceipt = new ArrayList<>();
 
