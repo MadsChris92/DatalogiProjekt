@@ -44,7 +44,7 @@ public class OrderDataAccessObject extends MainDataAccessObject {
 		return objects;
 	}
 
-    public List<Order> getOrderOnDay(Date start){
+    public List<Order> getOrdersOnDay(Date start){
     	Date end;
     	Calendar calendar = Calendar.getInstance();
     	calendar.setTime(start);

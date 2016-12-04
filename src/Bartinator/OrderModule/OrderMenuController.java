@@ -5,21 +5,24 @@ import Bartinator.Model.Order;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.util.Callback;
 
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,22 +36,23 @@ public class OrderMenuController implements Initializable {
 	public TableColumn<Order, Double> mReceiptColumn;
 	public TableColumn<Order, Date> mDateColumn;
 	public ListView<String> mReceiptView;
-	public DatePicker mDatePicker;
+	public DatePicker mDatePickerFrom;
+	public DatePicker mDatePickerTo;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		mOrderTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		mOrderTable.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Order>() {
-			@Override
-			public void onChanged(Change<? extends Order> change) {
-				if(change.getList().isEmpty()){
-					mReceiptView.setItems(null);
-				} else {
-					ObservableList<String> list = getStrings(change);
-					mReceiptView.setItems(list);
+		mDatePickerFrom.valueProperty().addListener((observable, oldValue, newValue) -> showOrderOnDate(newValue));
+		mDatePickerFrom.setValue(LocalDate.now());
+		mOrderTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		mOrderTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+					if (newValue == null) {
+						mReceiptView.setItems(null);
+					} else {
+						ObservableList<String> list = getStrings(newValue);
+						mReceiptView.setItems(list);
+					}
 				}
-			}
-		});
+		);
 		mIdColumn.setCellValueFactory(
 				(TableColumn.CellDataFeatures<Order, Integer> param) ->
 						new ReadOnlyObjectWrapper<Integer>(param.getValue().getId())
@@ -63,12 +67,39 @@ public class OrderMenuController implements Initializable {
 		mDateColumn.setCellValueFactory(param ->
 				new ReadOnlyObjectWrapper<Date>(param.getValue().getTimestamp())
 		);
+
+		Font font = new Font("Rod", 11);
+		mReceiptView.setCellFactory(value -> {
+			ListCell<String> cell = new ListCell<String>(){
+				@Override
+				protected void updateItem(String item, boolean empty){
+					super.updateItem(item, empty);
+					if(item != null)
+						setText(item);
+				}
+			};
+			cell.setFont(font);
+			return cell;
+		});
 	}
 
-	private ObservableList<String> getStrings(ListChangeListener.Change<? extends Order> change) {
-		ObservableList<? extends Order> orders = change.getList();
-		ObservableList<String> list = FXCollections.observableArrayList(Printer.makeReceipt((List<Order>) orders));
-		return list;
+	private void showOrderOnDate(LocalDate localDate) {
+		mOrderTable.getItems().clear();
+		if(localDate == null) return; //no date chosen, stop function here.
+
+		//Converts the LocalDate into a date object(Date keeps track of time as well as date, LocalDate just keeps track of day, month and year)
+		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//Fetch the orders from the database, which were made on the given day
+		List<Order> orders = OrderDataAccessObject.getInstance().getOrdersOnDay(date);
+		for (Order order : orders) {
+			mOrderTable.getItems().add(order);
+		}
+	}
+
+	private ObservableList<String> getStrings(Order order) {
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(order);
+		return FXCollections.observableArrayList(Printer.makeReceipt(orders));
 	}
 
 	public void handleProductManagementBtn(ActionEvent actionEvent) {
@@ -89,48 +120,50 @@ public class OrderMenuController implements Initializable {
 		}
 	}
 
-	public void handleExit(ActionEvent actionEvent){
+	public void handleExit(ActionEvent actionEvent) {
 		Navigator.switchToAdminView();
 	}
 
-	public void handleDatePicked(ActionEvent actionEvent) {
-		LocalDate localDate = ((DatePicker)actionEvent.getSource()).getValue();
-		//Converts the LocalDate into a date object(Date keeps track of time as well as date, LocalDate just keeps track of day, month and year)
-		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		//Fetch the orders from the database, which were made on the given day
-		List<Order> orders = OrderDataAccessObject.getInstance().getOrderOnDay(date);
-		mOrderTable.getItems().clear();
-		for(Order order : orders) {
-			mOrderTable.getItems().add(order);
-		}
-	}
-
-	public void handlePrintButton(){
+	public void handlePrintButton() {
 		//TODO Fix det så det bliver til pdf
-		List<Order> orders = mOrderTable.getSelectionModel().getSelectedItems();
-		LocalDate date = mDatePicker.getValue();
+		List<Order> orders = mOrderTable.getItems();//getSelectionModel().getSelectedItems();
+		LocalDate date = mDatePickerFrom.getValue();
 		double sumTotal = 0;
-		for(Order order : orders) sumTotal += order.getTotalPrice();
+		for (Order order : orders) sumTotal += order.getTotalPrice();
 		String html = new Printer().htmlIt(orders, date, sumTotal);
 
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save report");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Html Files", "*.html"),
+				new FileChooser.ExtensionFilter("Text Files", "*.txt")
+		);
+		fileChooser.setInitialFileName(String.format("report (%s).html", date));
+		saveFile(html, fileChooser.showSaveDialog(null));
+	}
 
-		WebView webView = new WebView();
-		webView.getEngine().loadContent(html);
-
-		HBox hBox = new HBox();
-		Button button = new Button("Close Window");
-		hBox.getChildren().add(button);
-		BorderPane root = new BorderPane();
-		root.setTop(hBox);
-		root.setCenter(webView);
-
-		Stage stage = new Stage();
-		stage.setTitle("My New Stage Title");
-		stage.setScene(new Scene(root, 450, 450));
-		stage.show();
-
-		button.setOnAction(event -> stage.close());
-
-		System.out.println(html);
+	private void saveFile(String html, File file) {
+		System.out.println(file);
+		try {
+			if (file.createNewFile()) {
+				System.out.println("Created file " + file.getName());
+			}
+		} catch (IOException e) {
+			AlertBoxes.displayErrorBox("Couldn't create file", e.getMessage());
+			e.printStackTrace();
+		}
+		if (file.exists() && file.isFile()) {
+			try {
+				PrintWriter writer = new PrintWriter(file, "UTF-8");
+				writer.print(html);
+				writer.close();
+			} catch (FileNotFoundException e) {
+				AlertBoxes.displayErrorBox("Couldn't save file", e.getMessage());
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				AlertBoxes.displayErrorBox("Encoding not Supported", e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 }

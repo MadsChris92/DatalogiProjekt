@@ -3,7 +3,6 @@ package Bartinator.Model;
 import Bartinator.DataAccessObjects.OrderDataAccessObject;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,10 +14,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    //TODO: Find en måde at gemme recepterne på så det ikke er nødvendigt at hente informationen ud af en tekststreng senere
-	// se Bartinator.OrderModule.Printer linje 80
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> mReceipt = new ArrayList<>();
+    private List<ReceiptItem> mReceipt = new ArrayList<>();
 
     @Column(name = "bartenderName")
     private String mBartenderName;
@@ -43,7 +40,7 @@ public class Order {
 
     protected Order() {}
 
-    public Order(double totalPrice, List<String> receipt, String bartenderName, int bartenderId) {
+    public Order(double totalPrice, List<ReceiptItem> receipt, String bartenderName, int bartenderId) {
         mTotalPrice = totalPrice;
         mReceipt = receipt;
         mBartenderName = bartenderName;
@@ -59,7 +56,7 @@ public class Order {
 	public double getTotalPrice() {
         return mTotalPrice;
     }
-    public List<String> getReceipt() {
+    public List<ReceiptItem> getReceipt() {
         return mReceipt;
     }
     public String getBartenderName() {
@@ -80,11 +77,12 @@ public class Order {
 
 	@Override public String toString() {
         String result = String.format("Order: %s%n", new SimpleDateFormat("dd/MM/yy HH:mm").format(mTimestamp));
-        for (String s : mReceipt) {
-            result += s;
-            result += String.format("%n");
+        for (ReceiptItem item : mReceipt) {
+            result += String.format("%2d x %-20s%5.2f%n", item.getAmount(), item.getProductName(), item.getPrice());
         }
-        result += String.format("Total price: %.2f DKK%nSalesman: %s-%d%n", mTotalPrice, mBartenderName, mBartenderId);
+        result += String.format("     --------------------     %n");
+		result += String.format("Total price: %.2f DKK%nSalesman: %s-%d", mTotalPrice, mBartenderName, mBartenderId);
         return result;
     }
+
 }

@@ -5,14 +5,11 @@ import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
 import Bartinator.Model.Order;
 import Bartinator.Model.Product;
+import Bartinator.Model.ReceiptItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class Cashier {
@@ -68,9 +65,9 @@ public class Cashier {
 
     public boolean checkOut() {
         //create receipt
-		List<String> receipt = new ArrayList<>();
+		List<ReceiptItem> receipt = new ArrayList<>();
 		for (CartItem item : mCartItems) {
-			receipt.add(String.format("%2d x %-29s%6.2f", item.getQuantity(), item.getProduct().getName(), item.getTotal()));
+			receipt.add(new ReceiptItem(item.getQuantity(), item.getProduct().getName(), item.getTotal()));
 		}
 
         //Create order

@@ -1,15 +1,16 @@
 package Bartinator.OrderModule;
 
 import Bartinator.Model.Order;
+import Bartinator.Model.ReceiptItem;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,28 +20,16 @@ public class Printer {
 
 	public static List<String> makeReceipt(List<Order> orders) {
 		List<String> list = new ArrayList<>();
-		int priceSum = 0;
-		for(Order order : orders){
-			addOrderToList(list, order);
-			priceSum += order.getTotalPrice()*100;
+		double priceSum = 0;
+		for(Order order : orders) {
+			Collections.addAll(list, order.toString().split(String.format("%n")));
+			priceSum += order.getTotalPrice();
 		}
 
-		list.add("              -==========-");
-		list.add(String.format("%-34s %5.2f", "Total:", priceSum/100.0));
-		list.add(String.format("%-34s %5.2f", "25% Moms:", priceSum/500.0));
+		list.add("     --=-==-======-==-=--");
+		list.add(String.format("%-23s%5.2f", "Total:", priceSum));
+		list.add(String.format("%-23s%5.2f", "25% Moms:", priceSum/5));
 		return list;
-	}
-
-	private static void addOrderToList(List<String> list, Order order) {
-		list.add("Salesperson: "+order.getBartenderName());
-		list.addAll(order.getReceipt());
-		list.add("              ------------");
-		list.add(String.format("%-34s %5.2f", "Subtotal:", order.getTotalPrice()));
-		list.add(String.format("%-34s %5.2f", "25% Moms:", order.getTotalPrice()*0.2));
-		list.add("");
-		list.add(String.format("%-34s %5.2f", order.getPaymentType(), order.getTotalPrice()+order.getChange()));
-		list.add(String.format("%-34s %5.2f", "Change", order.getChange()));
-		list.add("");
 	}
 
 
@@ -76,8 +65,8 @@ public class Printer {
 							String template = key.substring(7);
 							String middle = "";
 							for(Order order : orders){
-								for(String entry : order.getReceipt()) {
-									middle += String.format(template, entry.substring(0, 2), entry.substring(5, entry.length()-5-7), entry.substring(entry.length()-7));
+								for(ReceiptItem item : order.getReceipt()) {
+									middle += String.format(template, item.getAmount(), item.getProductName(), item.getPrice()+item.getAmount());
 								}
 							}
 							line = before+middle+after;
