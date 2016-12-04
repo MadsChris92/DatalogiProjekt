@@ -28,11 +28,7 @@
                         prefHeight="50.0" prefWidth="150.0" text="Employee Management"/>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleStockManagementBtn"
                         prefHeight="50.0" text="Stock Management"/>
-                <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="50.0">
-                    <padding>
-                        <Insets left="240.0"/>
-                    </padding>
-                </Separator>
+                <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="50.0"/>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleExit" prefHeight="50.0"
                         prefWidth="60.0" text="Exit"/>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="50.0"
