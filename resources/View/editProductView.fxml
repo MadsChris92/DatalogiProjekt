@@ -35,7 +35,7 @@
                               </Button>
                            </top>
                            <bottom>
-                              <Button fx:id="categoryRemoveButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRemoveCategory" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
+                              <Button fx:id="categoryRemoveButton" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" onAction="#handleRemoveCategory" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
                                  <graphic>
                                     <Label fx:id="categoryLabel" alignment="CENTER" text="Label" />
                                  </graphic>
@@ -61,7 +61,7 @@
                               </Button>
                            </top>
                            <bottom>
-                              <Button fx:id="columnRemoveButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRemoveColumn" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
+                              <Button fx:id="columnRemoveButton" alignment="CENTER" disable="true" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRemoveColumn" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
                                   <graphic>
                                       <Label fx:id="columnLabel" alignment="CENTER" text="Label" />
                                   </graphic>

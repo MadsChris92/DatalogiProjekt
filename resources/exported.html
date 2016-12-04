@@ -3,72 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>.</title>
-    <link href="end.css" rel="stylesheet">
     <style>
-        body{
-        width: 210mm;
-        height: 290mm;
-        padding: 30mm 20mm;
-        margin:0;
-        border: dashed lightblue 1mm;
-    }
-    header{
-        display: flex;
-        border: dashed lightblue 1mm;
-        justify-content: space-between;
-        font-size: 20pt;
-        background: lightblue 1mm;
-    }
-    header .title{
-    }
-    header .date{
-    }
-    .toprow{
-        background-color: #c8d9ed;
-        color: #784600;
-        font-weight: bold;
-        padding: 0 2mm;
-    }
-    table{
-        margin: 3mm 0;
-        border: solid darkblue 0.3mm;
-    }
-    td{
-        border: solid darkblue 0.3mm;
-    }
-    .amount{
-        width: 5%;
-    }
-    .productname{
-        width: 82%;
-    }
-    .price{
-        width: 20%;
-        text-align: center;
-    }
-    .row{
-        display: flex;
-        justify-content: space-between;
-    }
+        body {
+            width: 210mm;
+            height: 290mm;
+            padding: 30mm 20mm;
+            margin: 0;
+            border: dashed lightblue 1mm;
+        }
+
+        header {
+            font-size: 20pt;
+            background: lightblue 1mm;
+            float: none;
+            height: 10mm;
+        }
+
+        header .title {
+            float: left;
+        }
+
+        header .date {
+            float: right;
+        }
+
+        .toprow {
+            background-color: #c8d9ed;
+            color: #784600;
+            font-weight: bold;
+            padding: 0 2mm;
+        }
+
+        .content {
+            margin: 3mm 0;
+            border: solid darkblue 0.3mm;
+            float: none;
+        }
+
+        .content td {
+            border: solid darkblue 0.3mm;
+        }
+
+        .amount {
+            width: 5%;
+        }
+
+        .productname {
+            width: 75%;
+        }
+
+        .price {
+            width: 20%;
+            text-align: center;
+        }
+
+        .leftFoot{
+            width: 80%;
+            text-align: left;
+        }
+
+        .rightFoot{
+            width: 20%;
+            text-align: left;
+        }
+
+        .bottomrow {
+            width: 100%;
+            background: lightgreen 1mm;
+        }
     </style>
 </head>
 <body>
-<header><div class="title">Dagsafslutning</div><div class="date">{date}</div></header>
+<header>
+    <div class="title">Dagsafslutning</div>
+    <div class="date">{date}</div>
+</header>
 <section class="content">
     <table>
         <tr>
-            <td class="toprow amount">Antal</td><td class="toprow productname">Produkt</td><td class="toprow price">Total</td>
+            <td class="toprow amount">Antal</td>
+            <td class="toprow productname">Produkt</td>
+            <td class="toprow price">Total</td>
         </tr>
         {product<tr><td>%s</td><td>%s</td><td>dkk %s</td></tr>}
     </table>
 </section>
 <footer>
-    <div class="row">
-        <div>Omsætning</div><div>{sumtotal}</div>
-    </div>
-    <div class="row">
-        <div>Heraf 25% Moms</div><div>{tax}</div>
-    </div>
+    <table class="bottomrow">
+        <tr>
+            <td class="leftFoot">Omsætning</td><td class="rightFoot">dkk {sumtotal}</td>
+        </tr>
+        <tr>
+            <td class="leftFoot">Heraf 25% Moms</td><td class="rightFoot">dkk {tax}</td>
+        </tr>
+    </table>
 </footer>
 </body>
 </html>

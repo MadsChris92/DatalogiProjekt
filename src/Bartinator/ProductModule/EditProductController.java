@@ -39,7 +39,7 @@ public class EditProductController implements Initializable {
 	public Button columnRemoveButton;
 	public Button categoryRemoveButton;
 
-	private Property<Category> activeCategory = new SimpleObjectProperty<>();
+	private final Property<Category> activeCategory = new SimpleObjectProperty<>();
 	private final ObservableList<String> catColumns = FXCollections.observableArrayList();
 
     private ArrayList<TableColumn<ObservableProduct, ?>> columns = new ArrayList<>();
@@ -62,16 +62,14 @@ public class EditProductController implements Initializable {
         makeColumns();
 		setCategoryTreeView();
         setColumnListView();
-		setPruductTable();
+		setProductTable();
 
         updateTable();
 
     }
 
-	private void setPruductTable() {
-		productTable.setEditable(true);
-	}
-
+    // udfører operationer på dataen.
+	// TODO Burde måske være i en anden klasse, men de passer måske heller ikke helt i ProductCatalog..?
 	private boolean addColumn(Category category, String columnName) {
 		if (columnName.isEmpty()) {
 			AlertBoxes.displayErrorBox("No Name Given", "The column needs a name.");
@@ -121,12 +119,13 @@ public class EditProductController implements Initializable {
 		}
 	}
 
-	private boolean addCategory(String name) {
+	private boolean addCategory(Category parent, String name) {
 		if(name.isEmpty()){
 			AlertBoxes.displayErrorBox("Cannot add category", "The category needs a name");
 		} else {
 			Category category = new Category();
 			category.setName(name);
+			category.setCategory(parent);
 			if (productCatalog.contains(category)) {
 				AlertBoxes.displayErrorBox("Cannot add category", "A category with that name already exists");
 			} else {
@@ -162,14 +161,16 @@ public class EditProductController implements Initializable {
 		}
 	}
 
-	private void addProduct(String name, Category category) {
+	private boolean addProduct(String name, Category category) {
 		if(!name.isEmpty()){
 			ObservableProduct product = new ObservableProduct(new Product());
 			product.setName(name);
 			product.setCategory(category);
 			productCatalog.saveProduct(product);
+			return true;
 		}else{
 			AlertBoxes.displayErrorBox("Missing Name", "Product must have a name!");
+			return false;
 		}
 	}
 
@@ -182,6 +183,13 @@ public class EditProductController implements Initializable {
 		}
 	}
 
+	// private void renameProduct(...) ?
+
+	// Indstiller ui til at starte med
+	private void setProductTable() {
+		productTable.setEditable(true);
+	}
+
 	private void setColumnListView(){
 		columnView.setItems(catColumns);
 		columnView.setEditable(true);
@@ -189,6 +197,7 @@ public class EditProductController implements Initializable {
 		columnView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if(newValue == null){
 				columnRemoveButton.setDisable(true);
+				columnLabel.setText("");
 			} else {
 				columnRemoveButton.setDisable(false);
 				columnLabel.setText(newValue);
@@ -201,13 +210,13 @@ public class EditProductController implements Initializable {
 	}
 
     private void setCategoryTreeView(){
-    	categoryView.setShowRoot(false);
+    	categoryView.setShowRoot(true);
 		categoryView.setEditable(true);
 		categoryView.setCellFactory(TextFieldTreeCell.forTreeView(new StringConverter<Category>() {
 			@Override
 			public String toString(Category category) {
 				if(category == null){
-					return "none";
+					return "";
 				} else {
 					return category.getName();
 				}
@@ -215,6 +224,7 @@ public class EditProductController implements Initializable {
 
 			@Override
 			public Category fromString(String string) {
+				if(string.isEmpty()) return null;
 				Category category = new Category();
 				category.setName(string);
 				return category;
@@ -227,18 +237,25 @@ public class EditProductController implements Initializable {
     	categoryView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null || newValue.getValue() == null) {
     			categoryRemoveButton.setDisable(true);
+				activeCategory.setValue(null);
+				categoryView.setEditable(false);
+				categoryLabel.setText("");
+				updateTable();
 			} else {
 				activeCategory.setValue(newValue.getValue());
 				categoryRemoveButton.setDisable(false);
 				categoryLabel.setText(activeCategory.getValue().getName());
+				categoryView.setEditable(true);
 				updateTable();
 			}
 		});
 		categoryView.setRoot(treeifyCategories(null));
     }
 
+    // Updaterer de forskellige ui elementer
 	private TreeItem<Category> treeifyCategories(Category root){
 		TreeItem<Category> categoryTreeItem = new TreeItem<>(root);
+		categoryTreeItem.setExpanded(true);
 		for(Category category : productCatalog.getCategoriesByCategory(root)){
 			categoryTreeItem.getChildren().add(treeifyCategories(category));
 		}
@@ -248,11 +265,13 @@ public class EditProductController implements Initializable {
     private void updateTable(){
         productTable.getColumns().clear();
         columns.clear();
-        makeColumns();
 		catColumns.clear();
-		catColumns.addAll(activeCategory.getValue().getColumns());
-        productTable.getColumns().addAll(columns);
-		productTable.setItems(productCatalog.getProductsByCategory(activeCategory.getValue()));
+		if(activeCategory.getValue()!=null) {
+			makeColumns();
+			catColumns.addAll(activeCategory.getValue().getColumns());
+			productTable.getColumns().addAll(columns);
+			productTable.setItems(productCatalog.getProductsByCategory(activeCategory.getValue()));
+		}
 	}
 
     private void makeColumns(){
@@ -332,6 +351,7 @@ public class EditProductController implements Initializable {
 //        }
 //    }
 
+	// Der er kun handlers herfra
 	public void handleRefresh(ActionEvent actionEvent){
     	productCatalog.refresh();
 	}
@@ -350,7 +370,7 @@ public class EditProductController implements Initializable {
 
 	public void handleAddCategory(ActionEvent actionEvent) {
     	String name = categoryTxtField.getText();
-		if(addCategory(name)) {
+		if(addCategory(activeCategory.getValue(), name)) {
 			categoryTxtField.setText("");
 		}
 	}

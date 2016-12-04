@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -104,19 +106,30 @@ public class OrderMenuController implements Initializable {
 	}
 
 	public void handlePrintButton(){
-		//TODO kill it with fire
+		//TODO Fix det så det bliver til pdf
 		List<Order> orders = mOrderTable.getSelectionModel().getSelectedItems();
 		LocalDate date = mDatePicker.getValue();
 		double sumTotal = 0;
 		for(Order order : orders) sumTotal += order.getTotalPrice();
 		String html = new Printer().htmlIt(orders, date, sumTotal);
 
+
 		WebView webView = new WebView();
 		webView.getEngine().loadContent(html);
+
+		HBox hBox = new HBox();
+		Button button = new Button("Close Window");
+		hBox.getChildren().add(button);
+		BorderPane root = new BorderPane();
+		root.setTop(hBox);
+		root.setCenter(webView);
+
 		Stage stage = new Stage();
 		stage.setTitle("My New Stage Title");
-		stage.setScene(new Scene(webView, 450, 450));
+		stage.setScene(new Scene(root, 450, 450));
 		stage.show();
+
+		button.setOnAction(event -> stage.close());
 
 		System.out.println(html);
 	}
