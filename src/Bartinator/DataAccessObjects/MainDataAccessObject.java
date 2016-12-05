@@ -26,7 +26,7 @@ public abstract class MainDataAccessObject {
     private static SessionFactory buildSessionFactory() {
         // create a standardServiceRegistry
         //final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-		final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernateOffline.cfg.xml").build();
+		final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
