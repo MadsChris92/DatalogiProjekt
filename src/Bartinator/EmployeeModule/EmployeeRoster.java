@@ -85,26 +85,6 @@ public class EmployeeRoster {
 		mEmployees.remove(observableEmployee);
 	}
 
-	void changeEmployeeUsername(ObservableEmployee observableEmployee, String newUsername) {
-		observableEmployee.setUsername(newUsername);
-		update(observableEmployee);
-	}
-
-	void changeEmployeePassword(ObservableEmployee observableEmployee, int newPassword) {
-		observableEmployee.setPassword(newPassword);
-		update(observableEmployee);
-	}
-
-	void changeEmployeeName(ObservableEmployee employee, String newName) {
-		employee.setName(newName);
-		update(employee);
-	}
-
-	void changeEmployeeAdminAccess(ObservableEmployee employee, boolean hasAccess) {
-		employee.setAdminAccess(hasAccess);
-		update(employee);
-	}
-
 	class PasswordConverter extends StringConverter<Integer>{
 		@Override
 		public String toString(Integer integer) {
