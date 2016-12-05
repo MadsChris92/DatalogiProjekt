@@ -22,26 +22,26 @@ public class OrderDataAccessObject extends MainDataAccessObject {
     	save(order);
     }
 
-	private List<?> fetchBetween(Date start, Date end){
+	private List<Order> fetchBetween(Date start, Date end){
 
 		// Open a session
 		Session session = getSession();
 
 		// Create criteria object
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		CriteriaQuery query = criteriaBuilder.createQuery(Order.class);
+		CriteriaQuery<Order> query = criteriaBuilder.createQuery(Order.class);
 		Root<Order> root = query.from(Order.class);
 		query.select(root);
 		query.where(criteriaBuilder.between(root.get("mTimestamp"), start, end));
 
 		// Get a list of objects according to the criteria object
-		List<Object> objects = session.createQuery(query).list();
+		List<Order> orders = session.createQuery(query).list();
 
 		// Close the session
 		session.close();
 
 		// Return the list of Objects
-		return objects;
+		return orders;
 	}
 
     public List<Order> getOrdersOnDay(Date start){
@@ -50,7 +50,7 @@ public class OrderDataAccessObject extends MainDataAccessObject {
     	calendar.setTime(start);
     	calendar.add(Calendar.DAY_OF_MONTH, 1);
     	end = calendar.getTime();
-		System.out.println(start + " -> " + end);
+		System.out.println("Getting orders made from " + start + " to " + end);
 		return (List<Order>) fetchBetween(start, end);
     }
 

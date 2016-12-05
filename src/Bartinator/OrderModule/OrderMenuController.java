@@ -155,18 +155,24 @@ public class OrderMenuController implements Initializable {
 			AlertBoxes.displayErrorBox("Couldn't create file", e.getMessage());
 			e.printStackTrace();
 		}
-		if (file.exists() && file.isFile()) {
-			try {
-				PrintWriter writer = new PrintWriter(file, "UTF-8");
-				writer.print(html);
-				writer.close();
-			} catch (FileNotFoundException e) {
-				AlertBoxes.displayErrorBox("Couldn't save file", e.getMessage());
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				AlertBoxes.displayErrorBox("Encoding not Supported", e.getMessage());
-				e.printStackTrace();
+		if (file.exists()) {
+			if (file.isFile()) {
+				try {
+					PrintWriter writer = new PrintWriter(file, "UTF-8");
+					writer.print(html);
+					writer.close();
+				} catch (FileNotFoundException e) {
+					AlertBoxes.displayErrorBox("Couldn't save file", e.getMessage());
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					AlertBoxes.displayErrorBox("Encoding not Supported", e.getMessage());
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("File " + file.getName() + " is apparently not a file.");
 			}
+		} else {
+			System.out.println("File " + file.getName() + " not found. Didn't I just make it tho?");
 		}
 	}
 }
