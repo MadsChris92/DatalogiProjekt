@@ -5,6 +5,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" value="cd6276a9-09a1-4562-b69d-f94efdd8ab49" />
+          <unit-entry name="hibernateOffline.cfg.xml" value="906e350d-fe1f-45bf-9079-3b0a04da9fe3" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/hibernate.cfg.xml" />
@@ -34,5 +35,6 @@
     <orderEntry type="library" name="org.hibernate:hibernate-core:5.2.2.Final" level="project" />
     <orderEntry type="library" name="mysql:mysql-connector-java:5.1.39" level="project" />
     <orderEntry type="library" name="org.jboss.logmanager:jboss-logmanager:2.0.4.Final" level="project" />
+    <orderEntry type="library" name="com.h2database:h2:1.4.193" level="project" />
   </component>
 </module>

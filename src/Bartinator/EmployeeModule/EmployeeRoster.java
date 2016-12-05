@@ -2,10 +2,13 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -19,30 +22,98 @@ public class EmployeeRoster {
 
 	private EmployeeDataAccessObject mEmployeeDataAccessObject = EmployeeDataAccessObject.getInstance();
 
-	private List<Employee> mEmployees;
+	private ObservableList<ObservableEmployee> mEmployees;
 
 	private EmployeeRoster() {
 		try {
-			mEmployees = mEmployeeDataAccessObject.fetchAllUsers();
+			mEmployees = FXCollections.observableArrayList();
+			for(Employee employee : mEmployeeDataAccessObject.fetchAllUsers()){
+				ObservableEmployee observableEmployee = new ObservableEmployee(employee);
+				observableEmployee.usernameProperty().addListener((observable, oldValue, newValue) -> {
+					System.out.printf("%s -> %s%n", oldValue, newValue);
+					EmployeeRoster.this.update(observableEmployee);
+				});
+				observableEmployee.nameProperty().addListener((observable, oldValue, newValue) -> {
+					System.out.printf("%s -> %s%n", oldValue, newValue);
+					EmployeeRoster.this.update(observableEmployee);
+				});
+				observableEmployee.passwordProperty().addListener((observable, oldValue, newValue) -> {
+					System.out.printf("%s -> %s%n", oldValue, newValue);
+					EmployeeRoster.this.update(observableEmployee);
+				});
+				observableEmployee.adminAccessProperty().addListener((observable, oldValue, newValue) -> {
+					System.out.printf("%s -> %s%n", oldValue, newValue);
+					EmployeeRoster.this.update(observableEmployee);
+				});
+				mEmployees.add(observableEmployee);
+			}
 		} catch (IOException exception){
 			exception.printStackTrace();
 		}
 	}
 
-	public ObservableEmployee getEmployeeByUsername(String username) {
-		for(Employee employee : mEmployees){
+	ObservableEmployee getEmployeeByUsername(String username) {
+		for(ObservableEmployee employee : mEmployees){
 			if(employee.getUsername().equals(username)){
-				return new ObservableEmployee(employee);
+				return employee;
 			}
 		}
 		return null;
 	}
 
-	public List<ObservableEmployee> getEmployees(){
-		List<ObservableEmployee> employees = new ArrayList<>();
-		for(Employee employee : mEmployees){
-			employees.add(new ObservableEmployee(employee));
+	ObservableList<ObservableEmployee> getEmployees(){
+		return mEmployees;
+	}
+
+	void update(ObservableEmployee employee) {
+		mEmployeeDataAccessObject.updateUser(employee.toEmployee());
+	}
+
+	boolean employeeExists(String username) {
+		return getEmployeeByUsername(username) != null;
+	}
+
+	void createEmployee(String username, String password, String name, boolean adminAccess) {
+		Employee employee = new Employee(name, username, password.hashCode(), adminAccess);
+		mEmployeeDataAccessObject.saveEmployee(employee);
+		mEmployees.add(new ObservableEmployee(employee));
+	}
+
+	void deleteEmployee(String username) {
+		ObservableEmployee observableEmployee = getEmployeeByUsername(username);
+		mEmployeeDataAccessObject.deleteEmployee(observableEmployee.toEmployee());
+		mEmployees.remove(observableEmployee);
+	}
+
+	void changeEmployeeUsername(ObservableEmployee observableEmployee, String newUsername) {
+		observableEmployee.setUsername(newUsername);
+		update(observableEmployee);
+	}
+
+	void changeEmployeePassword(ObservableEmployee observableEmployee, int newPassword) {
+		observableEmployee.setPassword(newPassword);
+		update(observableEmployee);
+	}
+
+	void changeEmployeeName(ObservableEmployee employee, String newName) {
+		employee.setName(newName);
+		update(employee);
+	}
+
+	void changeEmployeeAdminAccess(ObservableEmployee employee, boolean hasAccess) {
+		employee.setAdminAccess(hasAccess);
+		update(employee);
+	}
+
+	class PasswordConverter extends StringConverter<Integer>{
+		@Override
+		public String toString(Integer integer) {
+			return integer == 0 ? "no" : "yes";
 		}
-		return employees;
+
+		@Override
+		public Integer fromString(String string) {
+			return string.hashCode();
+		}
 	}
 }

@@ -32,7 +32,7 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
         return employee;
     }
 
-	public void saveUser(Employee employee){
+	public void saveEmployee(Employee employee){
 		save(employee);
 	}
 
@@ -70,8 +70,7 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
         }
     }
 
-	public void deleteUser(String username) {
-		Employee employee = fetchUserFromUsername(username);
+	public void deleteEmployee(Employee employee) {
 		remove(employee);
 	}
 

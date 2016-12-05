@@ -1,20 +1,17 @@
 package Bartinator.EmployeeModule;
 
-import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
-import Bartinator.Model.Employee;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -28,80 +25,72 @@ public class EmployeeManagementController implements Initializable {
 	public TableColumn<ObservableEmployee, Integer> IdCol;
 	public TableColumn<ObservableEmployee, String> nameCol;
     public TableColumn<ObservableEmployee, String> usernameCol;
-	public TableColumn<ObservableEmployee, String> passwordCol;
+	public TableColumn<ObservableEmployee, Integer> passwordCol;
 	public TableColumn<ObservableEmployee, Boolean> adminCol;
 
-	private EmployeeDataAccessObject mUserDAO;
-    private ObservableList<ObservableEmployee> data;
+	//private EmployeeDataAccessObject mUserDAO;
+    private EmployeeRoster mEmployeeRoster = EmployeeRoster.getInstance();
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
 
-        mUserDAO = EmployeeDataAccessObject.getInstance();
-
 		IdCol.setCellValueFactory(param -> new ReadOnlyObjectWrapper<Integer>(param.getValue().getId()));
 		nameCol.setCellValueFactory(param -> param.getValue().nameProperty());
 		usernameCol.setCellValueFactory(param -> param.getValue().usernameProperty());
-		//passwordCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("password"));
-		passwordCol.setCellValueFactory(param -> {
-			if(param.getValue().getPassword()==0)
-				return new SimpleStringProperty("no");
-			else
-				return new SimpleStringProperty("yes");
-		});
+		passwordCol.setCellValueFactory(param -> param.getValue().passwordProperty().asObject());
 		adminCol.setCellValueFactory(param -> param.getValue().adminAccessProperty());
+		nameCol.setEditable(true);
+		usernameCol.setEditable(true);
+		passwordCol.setEditable(true);
+		adminCol.setEditable(true);
+		nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		usernameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		passwordCol.setCellFactory(TextFieldTableCell.forTableColumn(mEmployeeRoster.new PasswordConverter()));
 		adminCol.setCellFactory(param -> new CheckBoxTableCell<>());
-		adminCol.setOnEditCommit(event -> event.getRowValue().setAdminAccess(event.getNewValue()));
-		employeeTable.setOnMouseClicked(event -> {
-			ObservableEmployee employee = data.get(employeeTable.getSelectionModel().getFocusedIndex());
-			usernameField.setText(employee.getUsername());
-			passwordField.setText("");
-			nameField.setText(employee.getName());
-			adminCheckBox.setSelected(employee.hasAdminAccess());
+
+		employeeTable.setEditable(true);
+
+		employeeTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue != null){
+				usernameField.setText(newValue.getUsername());
+				passwordField.setText("");
+				nameField.setText(newValue.getName());
+				adminCheckBox.setSelected(newValue.hasAdminAccess());
+			} else {
+				usernameField.setText("");
+				passwordField.setText("");
+				nameField.setText("");
+				adminCheckBox.setSelected(false);
+			}
 		});
 
-		updateUserTableView();
+		employeeTable.setItems(mEmployeeRoster.getEmployees());
     }
 
-    public void handleSaveUser(ActionEvent actionEvent) {
-		if (mUserDAO.userExists(usernameField.getText())) {
-			//AlertBoxes.displayErrorBox("Employee Already exists", "The user, you are trying to create, already exists in the database. " +
-			//												  "You can choose to update the existing user instead.");
-			handleUpdateUser(actionEvent);
-		} else {
-			Employee employee = new Employee(nameField.getText(),
-					usernameField.getText(),
-					passwordField.getText().hashCode(),
-					adminCheckBox.isSelected());
-			mUserDAO.saveUser(employee);
-			updateUserTableView();
-		}
-    }
-
-	public void handleUpdateUser(ActionEvent actionEvent) {
-		if (mUserDAO.userExists(usernameField.getText())) {
-			//Employee employee = mUserDAO.fetchUserFromUsername(usernameField.getText());
-			ObservableEmployee observableEmployee = employeeTable.getItems().get(employeeTable.getSelectionModel().getFocusedIndex());
-			if(!(passwordField.getText().equals(""))){
-				observableEmployee.setPassword(passwordField.getText().hashCode());
-			}
-			if(!(nameField.getText().equals(""))){
+	public void handleSaveUser(ActionEvent actionEvent) {
+		String username = usernameField.getText();
+		if (mEmployeeRoster.employeeExists(username)) {
+			if (AlertBoxes.displayConfirmationBox("Employee Already exists", "The user, you are trying to create, already exists in the database. Do you wish to update the existing user instead?")) {
+				ObservableEmployee observableEmployee = mEmployeeRoster.getEmployeeByUsername(username);
+				if(!(passwordField.getText().equals(""))){
+					observableEmployee.setPassword(passwordField.getText().hashCode());
+				}
 				observableEmployee.setName(nameField.getText());
+				observableEmployee.setAdminAccess(adminCheckBox.isSelected());
+				mEmployeeRoster.update(observableEmployee);
 			}
-			observableEmployee.setAdminAccess(adminCheckBox.isSelected());
-			mUserDAO.updateUser(observableEmployee.toEmployee());
-
-			//updateUserTableView();
 		} else {
-			AlertBoxes.displayErrorBox("Employee doesn't exist", "The user, you are trying to update, doesn't exist in the database. " +
-															 "You can choose to create the new user by pressing the save button.");
+			String password = passwordField.getText();
+			String name = nameField.getText();
+			boolean adminAccess = adminCheckBox.isSelected();
+			mEmployeeRoster.createEmployee(username, password, name, adminAccess);
 		}
-	}
+    }
 
 	public void handleDelete(ActionEvent actionEvent) {
-		if(mUserDAO.userExists(usernameField.getText())){
-			mUserDAO.deleteUser(usernameField.getText());
-			updateUserTableView();
+		String username = usernameField.getText();
+		if(mEmployeeRoster.employeeExists(username)){
+			mEmployeeRoster.deleteEmployee(username);
 		} else {
 			AlertBoxes.displayErrorBox("Employee doesn't exist", "The username entered doesn't match any user in the database!");
 		}
@@ -110,14 +99,5 @@ public class EmployeeManagementController implements Initializable {
 
 	public void handleExit(ActionEvent actionEvent) {
 		Navigator.switchToAdminView();
-	}
-
-	private void updateUserTableView() {
-		List<ObservableEmployee> employees = EmployeeRoster.getInstance().getEmployees();
-		data = FXCollections.observableList(employees);
-		employeeTable.setItems(data);
-
-
-		System.out.println(data.toString());
 	}
 }
