@@ -161,10 +161,7 @@ public class EditProductController implements Initializable {
 
 	private boolean addProduct(String name, Category category) {
 		if(!name.isEmpty()){
-			ObservableProduct product = new ObservableProduct(new Product());
-			product.setName(name);
-			product.setCategory(category);
-			productCatalog.saveProduct(product);
+			productCatalog.createProduct(name, category);
 			return true;
 		}else{
 			AlertBoxes.displayErrorBox("Missing Name", "Product must have a name!");

@@ -77,7 +77,7 @@ public abstract class MainDataAccessObject {
 
     public static void save(Object object){
         // Open a session
-        Session session = sessionFactory.openSession();
+		Session session = sessionFactory.openSession();
 
         // Begin a transaction
         session.beginTransaction();

@@ -68,31 +68,6 @@ public class ProductCatalog {
 		}
 	}
 
-	public void saveProducts(){
-		List<Product> currentDBproducts = new ArrayList<Product>();
-		currentDBproducts.addAll(mProductDataAccessObject.getProducts());
-		for (ObservableProduct observableProduct : mProducts) {
-			Product product = observableProduct.toProduct();
-			if(!currentDBproducts.contains(product)){
-				mProductDataAccessObject.updateProduct(product);
-			} else {
-				mProductDataAccessObject.saveProduct(product);
-			}
-		}
-	}
-
-	public void saveCategories(){
-		List<Category> currentDBcategories = new ArrayList<Category>();
-		currentDBcategories.addAll(getCategories());
-		for (Category category : mCategories) {
-			if(currentDBcategories.contains(category)){
-				mProductDataAccessObject.updateCategory(category);
-			} else {
-				mProductDataAccessObject.saveCategory(category);
-			}
-		}
-	}
-
 	public void updateProduct(ObservableProduct observableProduct) {
 		mProductDataAccessObject.updateProduct(observableProduct.toProduct());
 	}
@@ -134,9 +109,10 @@ public class ProductCatalog {
 		return null;
 	}
 
-	public void saveProduct(ObservableProduct observableProduct){
-		mProducts.add(observableProduct);
-		mProductDataAccessObject.saveProduct(observableProduct.toProduct());
+	void createProduct(String name, Category category){
+		Product product = new Product(name, category);
+		mProductDataAccessObject.saveProduct(product);
+		mProducts.add(new ObservableProduct(product));
 	}
 
 	public ObservableList<Category> getCategories() {
