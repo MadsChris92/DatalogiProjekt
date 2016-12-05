@@ -1,4 +1,4 @@
-package Bartinator.Model;
+package Bartinator.EmployeeModule;
 
 import Bartinator.Model.Employee;
 import Bartinator.Model.Product;

@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
- * Created by Martin on 02-12-2016.
+ * Why did I make this?
  */
 public class OrderCollection {
 	ArrayList<Order> mOrders;

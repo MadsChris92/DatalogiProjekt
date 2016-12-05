@@ -1,6 +1,7 @@
-package Bartinator.Model;
+package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
+import Bartinator.Model.Employee;
 
 import java.io.IOException;
 import java.util.ArrayList;

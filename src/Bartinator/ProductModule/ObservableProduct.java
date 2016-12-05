@@ -1,8 +1,9 @@
-package Bartinator.Model;
+package Bartinator.ProductModule;
 
+import Bartinator.Model.Category;
+import Bartinator.Model.Product;
 import javafx.beans.property.*;
 
-import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 

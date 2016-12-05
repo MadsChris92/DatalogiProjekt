@@ -1,6 +1,8 @@
-package Bartinator.Model;
+package Bartinator.ProductModule;
 
 import Bartinator.DataAccessObjects.ProductDataAccessObject;
+import Bartinator.Model.Category;
+import Bartinator.Model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,7 +10,6 @@ import javafx.collections.transformation.FilteredList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import static Bartinator.DataAccessObjects.MainDataAccessObject.fetch;
 

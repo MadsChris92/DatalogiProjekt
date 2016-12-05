@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,8 +24,9 @@ public abstract class MainDataAccessObject {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        // create a stadardServiceRegistry
+        // create a standardServiceRegistry
         final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+		final ServiceRegistry offlineRegistry = new StandardServiceRegistryBuilder().configure("hibernateOffline.cfg.xml").build();
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 

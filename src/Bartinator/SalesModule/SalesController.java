@@ -2,6 +2,8 @@ package Bartinator.SalesModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.*;
+import Bartinator.ProductModule.ObservableProduct;
+import Bartinator.ProductModule.ProductCatalog;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.collections.ObservableList;

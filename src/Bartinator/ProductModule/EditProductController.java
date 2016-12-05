@@ -1,9 +1,7 @@
 package Bartinator.ProductModule;
 
 import Bartinator.Model.Category;
-import Bartinator.Model.ObservableProduct;
 import Bartinator.Model.Product;
-import Bartinator.Model.ProductCatalog;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.Property;

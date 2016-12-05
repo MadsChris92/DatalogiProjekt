@@ -74,8 +74,11 @@ public class OrderMenuController implements Initializable {
 				@Override
 				protected void updateItem(String item, boolean empty){
 					super.updateItem(item, empty);
-					if(item != null)
+					if(item != null) {
 						setText(item);
+					} else {
+						setText("");
+					}
 				}
 			};
 			cell.setFont(font);

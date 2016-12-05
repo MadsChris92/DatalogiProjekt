@@ -2,8 +2,6 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
-import Bartinator.Model.EmployeeRoster;
-import Bartinator.Model.ObservableEmployee;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
