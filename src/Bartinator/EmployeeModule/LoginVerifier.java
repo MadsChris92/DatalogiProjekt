@@ -9,6 +9,7 @@ public class LoginVerifier {
 
     private Employee mLatestCheckedEmployee;
 
+
     public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
         boolean accessGranted;

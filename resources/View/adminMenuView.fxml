@@ -14,7 +14,7 @@
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleProductManagementBtn" prefHeight="50.0" text="Product Management" />
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleEmployeeManagementBtn" prefHeight="50.0" prefWidth="150.0" text="Employee Management" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handlePrintManagementBtn" prefHeight="50.0" text="Print Stuff" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handlePrintManagementBtn" prefHeight="50.0" text="Sales Overview" />
                   <Button alignment="CENTER" layoutX="412.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleStockManagementBtn" prefHeight="50.0" text="Stock Management" />
                </children>
                <VBox.margin>

@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Martin on 02-12-2016.
- */
+
 public class Printer {
 
 	public static List<String> makeReceipt(List<Order> orders) {
