@@ -129,11 +129,7 @@ public class OrderMenuController implements Initializable {
 
 	public void handlePrintButton() {
 		//TODO Fix det så det bliver til pdf
-		List<Order> orders = mOrderTable.getItems();//getSelectionModel().getSelectedItems();
 		LocalDate date = mDatePickerFrom.getValue();
-		double sumTotal = 0;
-		for (Order order : orders) sumTotal += order.getTotalPrice();
-		String html = new Printer().htmlIt(orders, date, sumTotal);
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save report");
@@ -142,7 +138,16 @@ public class OrderMenuController implements Initializable {
 				new FileChooser.ExtensionFilter("Text Files", "*.txt")
 		);
 		fileChooser.setInitialFileName(String.format("report (%s).html", date));
-		saveFile(html, fileChooser.showSaveDialog(null));
+
+
+		File file = fileChooser.showSaveDialog(Navigator.getInstance().getTheStage());
+		if(file!=null) {
+			List<Order> orders = mOrderTable.getItems();
+			double sumTotal = 0;
+			for (Order order : orders) sumTotal += order.getTotalPrice();
+			String html = new Printer().htmlIt(orders, date, sumTotal);
+			saveFile(html, file);
+		}
 	}
 
 	private void saveFile(String html, File file) {

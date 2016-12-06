@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -14,6 +15,8 @@ import java.io.IOException;
  */
 public class Navigator {
 	private static final Navigator instance = new Navigator();
+	private Window mTheStage;
+
 	public static Navigator getInstance(){
 		return instance;
 	}
@@ -59,5 +62,9 @@ public class Navigator {
 
 	public static void switchToOrderManagementView() {
 		instance.switchToView("View/orderManageView.fxml");
+	}
+
+	public Window getTheStage() {
+		return mTheStage;
 	}
 }

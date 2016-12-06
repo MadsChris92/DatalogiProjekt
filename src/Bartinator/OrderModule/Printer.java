@@ -3,9 +3,7 @@ package Bartinator.OrderModule;
 import Bartinator.Model.Order;
 import Bartinator.Model.ReceiptItem;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -41,10 +39,10 @@ public class Printer {
 	 * @return
 	 */
 	public String htmlIt(List<Order> orders, LocalDate day, double sumTotal){
-		Path file = new File(getClass().getClassLoader().getResource("exported.html").getFile()).toPath();
+		InputStream stream = getClass().getResourceAsStream("/exported.html");
 		String htmlTemplate = "";
 		try {
-			BufferedReader reader = Files.newBufferedReader(file);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 			String line = reader.readLine();
 			while (line != null) {
 				int i, j;
