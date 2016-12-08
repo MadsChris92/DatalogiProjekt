@@ -14,8 +14,6 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 		return instance;
 	}
 
-    private Employee mActiveEmployee;
-
     public Employee fetchUserFromUsername(String username){
         // Henter en bruger baseret på brugernavn, hvis brugeren ikke findes returnes null
         // sql udgaven af det functionen gør er:
@@ -36,13 +34,6 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 		save(employee);
 	}
 
-    public Employee getActiveEmployee() {
-        return mActiveEmployee;
-    }
-    public void setActiveEmployee(Employee activeEmployee) {
-        mActiveEmployee = activeEmployee;
-    }
-
 
     @SuppressWarnings("unchecked")
 	public  List<Employee> fetchAllUsers() throws IOException {
@@ -55,19 +46,6 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 
     public boolean userExists(String username){
         return fetchUserFromUsername(username)!=null;
-    }
-
-    public Employee verifyUser(String username, String password) throws IOException {
-        Employee employee = fetchUserFromUsername(username);
-        if(employee != null) {
-            if (/* !password.equals("") && */ employee.getPassword() == password.hashCode()) {
-                return employee;
-            } else {
-                throw new IOException("The Password was incorrect");
-            }
-        } else {
-			throw new IOException("The employee was not found");
-        }
     }
 
 	public void deleteEmployee(Employee employee) {

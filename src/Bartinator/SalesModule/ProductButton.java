@@ -39,6 +39,7 @@ public class ProductButton extends StackPane {
 		mButton.setMinWidth(controller.mBtnRadius);
 		mButton.setMaxHeight(controller.mBtnRadius);
 		mButton.setMaxWidth(controller.mBtnRadius);
+		mButton.setWrapText(true);
 	}
 
 

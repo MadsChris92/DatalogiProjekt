@@ -17,11 +17,11 @@
     <center>
         <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="IdCol" prefWidth="20.0" text="ID"/>
-                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name"/>
-                <TableColumn fx:id="usernameCol" prefWidth="75.0" text="Username"/>
-                <TableColumn fx:id="passwordCol" prefWidth="75.0" text="Password"/>
-                <TableColumn fx:id="adminCol" prefWidth="75.0" text="Admin"/>
+                <TableColumn fx:id="IdCol" prefWidth="25.0" text="ID"/>
+                <TableColumn fx:id="nameCol" prefWidth="90.0" text="Name"/>
+                <TableColumn fx:id="usernameCol" prefWidth="90.0" text="Username"/>
+                <TableColumn fx:id="passwordCol" prefWidth="90.0" text="Password"/>
+                <TableColumn fx:id="adminCol" prefWidth="50.0" text="Admin"/>
             </columns>
         </TableView>
     </center>

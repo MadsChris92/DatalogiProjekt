@@ -25,9 +25,7 @@ public class LoginController implements Initializable {
     @FXML CheckBox mAdminCheckBox;
 
     @Override public void initialize(URL location, ResourceBundle resources) {
-
         mVerifier = new LoginVerifier();
-        mAdminCheckBox.setSelected(true);
     }
 
     public void handleLogin() {

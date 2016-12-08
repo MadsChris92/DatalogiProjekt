@@ -47,7 +47,7 @@
                         <Insets />
                      </opaqueInsets>
                   </TitledPane>
-                <TitledPane animated="false" text="Columns">
+                <TitledPane animated="false" expanded="false" text="Columns">
                      <content>
                         <BorderPane>
                            <padding>

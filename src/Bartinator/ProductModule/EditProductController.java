@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
+/**
+ *
+ */
 public class EditProductController implements Initializable {
 	public TableView<ObservableProduct> productTable;
 	public TextField productTxtField;
@@ -177,8 +179,6 @@ public class EditProductController implements Initializable {
 			productCatalog.removeProduct(product);
 		}
 	}
-
-	// private void renameProduct(...) ?
 
 	// Indstiller ui til at starte med
 	private void setProductTable() {

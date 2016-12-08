@@ -1,12 +1,12 @@
 package Bartinator.EmployeeModule;
 
-import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
 
 import java.io.IOException;
 
 public class LoginVerifier {
 
+    private final EmployeeRoster mEmployeeRoster = EmployeeRoster.getInstance();
     private Employee mLatestCheckedEmployee;
 
 
@@ -20,7 +20,7 @@ public class LoginVerifier {
 			accessGranted = verifyBartenderLogin(username, password);
         }
         if(accessGranted) {
-            EmployeeDataAccessObject.getInstance().setActiveEmployee(mLatestCheckedEmployee);
+            EmployeeRoster.getInstance().setActiveEmployee(mLatestCheckedEmployee);
         }
         return accessGranted;
     }
@@ -29,7 +29,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        Employee employee = EmployeeDataAccessObject.getInstance().verifyUser(username, password);
+        Employee employee = EmployeeRoster.getInstance().verifyUser(username, password);
 
         if(employee != null){
             accessGranted = true;
@@ -42,7 +42,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        Employee employee = EmployeeDataAccessObject.getInstance().verifyUser(username, password);
+        Employee employee = mEmployeeRoster.verifyUser(username, password);
 
 
         if(employee != null && employee.hasAdminAccess()){

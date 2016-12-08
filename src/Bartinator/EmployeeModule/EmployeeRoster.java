@@ -24,6 +24,8 @@ public class EmployeeRoster {
 
 	private ObservableList<ObservableEmployee> mEmployees;
 
+	private Employee mActiveEmployee;
+
 	private EmployeeRoster() {
 		try {
 			mEmployees = FXCollections.observableArrayList();
@@ -94,6 +96,27 @@ public class EmployeeRoster {
 		@Override
 		public Integer fromString(String string) {
 			return string.hashCode();
+		}
+	}
+
+
+	public Employee getActiveEmployee() {
+		return mActiveEmployee;
+	}
+	public void setActiveEmployee(Employee activeEmployee) {
+		mActiveEmployee = activeEmployee;
+	}
+
+	public Employee verifyUser(String username, String password) throws IOException {
+		Employee employee = mEmployeeDataAccessObject.fetchUserFromUsername(username);
+		if(employee != null) {
+			if (/* !password.equals("") && */ employee.getPassword() == password.hashCode()) {
+				return employee;
+			} else {
+				throw new IOException("The Password was incorrect");
+			}
+		} else {
+			throw new IOException("The employee was not found");
 		}
 	}
 }
