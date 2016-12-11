@@ -7,7 +7,7 @@ import java.io.IOException;
 public class LoginVerifier {
 
     private final EmployeeRoster mEmployeeRoster = EmployeeRoster.getInstance();
-    private Employee mLatestCheckedEmployee;
+    private ObservableEmployee mLatestCheckedEmployee;
 
 
     public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
@@ -29,7 +29,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        Employee employee = EmployeeRoster.getInstance().verifyUser(username, password);
+        ObservableEmployee employee = EmployeeRoster.getInstance().verifyUser(username, password);
 
         if(employee != null){
             accessGranted = true;
@@ -42,7 +42,7 @@ public class LoginVerifier {
 
         boolean accessGranted = false;
 
-        Employee employee = mEmployeeRoster.verifyUser(username, password);
+        ObservableEmployee employee = mEmployeeRoster.verifyUser(username, password);
 
 
         if(employee != null && employee.hasAdminAccess()){

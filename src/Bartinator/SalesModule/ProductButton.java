@@ -1,7 +1,6 @@
 package Bartinator.SalesModule;
 
-import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
-import Bartinator.Model.Employee;
+import Bartinator.EmployeeModule.ObservableEmployee;
 import Bartinator.Model.Product;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,7 +8,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
 
 /**
- * Created by Martin on 28-11-2016.
+ * Custom button, showing the name and price of a product, as well as supporting "favorite" functionality.
  */
 public class ProductButton extends StackPane {
 	private Button mButton;
@@ -20,8 +19,8 @@ public class ProductButton extends StackPane {
 		mProduct = product;
 		mButton = new Button(String.format("%s%n%.2f", product.getName(), product.getPrice()));
 		mButton.setOnAction(controller.handleProductBtn);
-		mFavorite = new ToggleButton("*");
-		Employee activeEmployee = EmployeeDataAccessObject.getInstance().getActiveEmployee();
+		mFavorite = new ToggleButton("\uD83D\uDCCC");
+		ObservableEmployee activeEmployee = controller.mActiveEmployee;
 		mFavorite.setSelected(activeEmployee.getFavorites().contains(product));
 		mFavorite.setOnAction(event -> {
 			if(mFavorite.isSelected()){
@@ -29,7 +28,6 @@ public class ProductButton extends StackPane {
 			} else {
 				activeEmployee.getFavorites().remove(mProduct);
 			}
-			EmployeeDataAccessObject.getInstance().updateUser(activeEmployee);
 		});
 		setAlignment(Pos.TOP_RIGHT);
 		getChildren().add(mButton);

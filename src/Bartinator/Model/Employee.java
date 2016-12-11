@@ -1,9 +1,15 @@
 package Bartinator.Model;
 
+import javafx.scene.shape.Shape;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Employee class provides a definition for what needs to be known about an employee, in the context
+ * of this point-of-sale system.
+ */
 
 @Entity
 public class Employee {

@@ -52,7 +52,7 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 		remove(employee);
 	}
 
-	public void updateUser(Employee employee){
+	public void updateEmployee(Employee employee){
         update(employee);
     }
 }

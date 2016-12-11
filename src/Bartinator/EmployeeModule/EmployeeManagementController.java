@@ -68,14 +68,14 @@ public class EmployeeManagementController implements Initializable {
 	public void handleSaveUser(ActionEvent actionEvent) {
 		String username = usernameField.getText();
 		if (mEmployeeRoster.employeeExists(username)) {
-			if (AlertBoxes.displayConfirmationBox("Employee Already exists", "The user, you are trying to create, already exists in the database. Do you wish to update the existing user instead?")) {
+			if (AlertBoxes.displayConfirmationBox("Employee Already exists", "The user, you are trying to create, already exists in the database. Do you wish to updateEmployee the existing user instead?")) {
 				ObservableEmployee observableEmployee = mEmployeeRoster.getEmployeeByUsername(username);
 				if(!(passwordField.getText().equals(""))){
 					observableEmployee.setPassword(passwordField.getText().hashCode());
 				}
 				observableEmployee.setName(nameField.getText());
 				observableEmployee.setAdminAccess(adminCheckBox.isSelected());
-				mEmployeeRoster.update(observableEmployee);
+				mEmployeeRoster.updateEmployee(observableEmployee);
 			}
 		} else {
 			String password = passwordField.getText();

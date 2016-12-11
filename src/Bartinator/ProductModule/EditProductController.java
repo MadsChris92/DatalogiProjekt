@@ -1,7 +1,6 @@
 package Bartinator.ProductModule;
 
 import Bartinator.Model.Category;
-import Bartinator.Model.Product;
 import Bartinator.Utility.AlertBoxes;
 import Bartinator.Utility.Navigator;
 import javafx.beans.property.Property;
@@ -38,11 +37,12 @@ public class EditProductController implements Initializable {
 	public ListView<String> columnView;
 	public Button columnRemoveButton;
 	public Button categoryRemoveButton;
+	public Label productsCategoryLabel;
 
 	private final Property<Category> activeCategory = new SimpleObjectProperty<>();
 	private final ObservableList<String> catColumns = FXCollections.observableArrayList();
 
-    private ArrayList<TableColumn<ObservableProduct, ?>> columns = new ArrayList<>();
+	private ArrayList<TableColumn<ObservableProduct, ?>> columns = new ArrayList<>();
 
     private ProductCatalog productCatalog = ProductCatalog.getInstance();
 
@@ -52,12 +52,12 @@ public class EditProductController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources){
         productCatalog.refresh();
 
-		ObservableList<Category> categories = productCatalog.getCategories();
+		/*ObservableList<Category> categories = productCatalog.getCategories();
         if(categories.size()>0){
 			activeCategory.setValue(categories.get(0));
 		} else {
         	activeCategory.setValue(null);
-		}
+		}*/
 
         makeColumns();
 		setCategoryTreeView();
@@ -120,7 +120,7 @@ public class EditProductController implements Initializable {
 	}
 
 	private boolean addCategory(Category parent, String name) {
-		if(name.isEmpty()){
+		if(name.isEmpty() || name.equals("[none]")){
 			AlertBoxes.displayErrorBox("Cannot add category", "The category needs a name");
 		} else {
 			Category category = new Category();
@@ -211,7 +211,7 @@ public class EditProductController implements Initializable {
 			@Override
 			public String toString(Category category) {
 				if(category == null){
-					return "";
+					return "[none]";
 				} else {
 					return category.getName();
 				}
@@ -219,7 +219,7 @@ public class EditProductController implements Initializable {
 
 			@Override
 			public Category fromString(String string) {
-				if(string.isEmpty()) return null;
+				if(string.isEmpty()||string.equals("[none]")) return null;
 				Category category = new Category();
 				category.setName(string);
 				return category;
@@ -233,11 +233,13 @@ public class EditProductController implements Initializable {
 			if (newValue == null || newValue.getValue() == null) {
     			categoryRemoveButton.setDisable(true);
 				activeCategory.setValue(null);
+				productsCategoryLabel.setText("no category");
 				categoryView.setEditable(false);
 				categoryLabel.setText("");
 				updateTable();
 			} else {
 				activeCategory.setValue(newValue.getValue());
+				productsCategoryLabel.setText(activeCategory.getValue().getName());
 				categoryRemoveButton.setDisable(false);
 				categoryLabel.setText(activeCategory.getValue().getName());
 				categoryView.setEditable(true);
@@ -273,7 +275,7 @@ public class EditProductController implements Initializable {
         TableColumn<ObservableProduct, Integer> idColumn = new TableColumn<>("ID");
         columns.add(idColumn);
         //idColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("id"));
-		idColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<Integer>(cell.getValue().getId()));
+		idColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getId()));
 
         TableColumn<ObservableProduct, String> nameColumn = new TableColumn<>("Name");
         columns.add(nameColumn);
@@ -290,8 +292,8 @@ public class EditProductController implements Initializable {
         TableColumn<ObservableProduct, Double> priceColumn = new TableColumn<>("Price");
         columns.add(priceColumn);
         //priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-		priceColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<Double>(cell.getValue().getPrice()));
-        priceColumn.setCellFactory(TextFieldTableCell.<ObservableProduct, Double>forTableColumn(new DoubleStringConverter()));
+		priceColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getPrice()));
+        priceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         priceColumn.setOnEditCommit(
 				cell -> {
 					ObservableProduct product = cell.getRowValue();
@@ -301,50 +303,24 @@ public class EditProductController implements Initializable {
 		);
 
         // The custom columns
-        for (String columnName : activeCategory.getValue().getColumns()) {
-			TableColumn<ObservableProduct, String> tableColumn = new TableColumn<>(columnName);
-			columns.add(tableColumn);
+		if(activeCategory.getValue() != null) {
+			for (String columnName : activeCategory.getValue().getColumns()) {
+				TableColumn<ObservableProduct, String> tableColumn = new TableColumn<>(columnName);
+				columns.add(tableColumn);
 
-			//tableColumn.setCellValueFactory(new OurPropertyValueFactory(columnName));
-			tableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getDescriptions().get(columnName)));
-			tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-			tableColumn.setOnEditCommit(
-					cell -> {
-						ObservableProduct product = cell.getRowValue();
-						product.setDescription(cell.getTableColumn().getText(), cell.getNewValue());
-						productCatalog.updateProduct(product);
-					}
-			);
-        }
+				//tableColumn.setCellValueFactory(new OurPropertyValueFactory(columnName));
+				tableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getDescriptions().get(columnName)));
+				tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+				tableColumn.setOnEditCommit(
+						cell -> {
+							ObservableProduct product = cell.getRowValue();
+							product.setDescription(cell.getTableColumn().getText(), cell.getNewValue());
+							productCatalog.updateProduct(product);
+						}
+				);
+			}
+		}
     }
-
-	//    private void createTestProducts(){
-//        Category c = new Category();
-//        Category c1 = new Category();
-//        categories.add(c1);
-//        categories.add(c);
-//        c1.setName("test1");
-//        c.setName("test2");
-//        activeCategory.setValue(c);
-//
-//        for (int i = 0; i < 10; i++) {
-//            c1.getColumns().add(i + ". test");
-//        }
-//
-//        c.getColumns().add("ID");
-//        c.getColumns().add("Name");
-//        c.getColumns().add("Price");
-//
-//
-//        for (int i = 0; i < 10; i++) {
-//            Product p = new Product();
-//            p.setName("mads" + i);
-//            p.setPrice(150);
-//            p.setCategory(c);
-//            p.setId(i);
-//            //products.add(p);
-//        }
-//    }
 
 	// Der er kun handlers herfra
 	public void handleRefresh(ActionEvent actionEvent){
@@ -383,6 +359,24 @@ public class EditProductController implements Initializable {
 
 	public void handleRemoveColumn(ActionEvent actionEvent) {
 		removeColumn(activeCategory.getValue(), columnView.getSelectionModel().getSelectedItem());
+	}
+
+	public void handleProductManagementBtn(ActionEvent actionEvent) {
+		Navigator.switchToProductManagementView();
+	}
+
+	public void handleEmployeeManagementBtn(ActionEvent actionEvent) {
+		Navigator.switchToEmployeeManagementView();
+	}
+
+	public void handleStockManagementBtn(ActionEvent actionEvent) {
+		AlertBoxes.displayErrorBox("Under Construction", "Sorry, this function is not yet available!");
+	}
+
+	public void handleLogOut(ActionEvent actionEvent) {
+		if (AlertBoxes.displayConfirmationBox("Logging out!", "Are you sure, you want to log out?")) {
+			Navigator.switchToLoginView();
+		}
 	}
 
 	public void handleExit(ActionEvent actionEvent) {

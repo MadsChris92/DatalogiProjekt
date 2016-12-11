@@ -4,99 +4,163 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bartinator.ProductModule.EditProductController">
-   <center>
-      <SplitPane dividerPositions="0.25" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <items>
-            <SplitPane dividerPositions="0.5" maxWidth="400.0" minWidth="200.0" orientation="VERTICAL" prefWidth="200.0">
-               <items>
-                <TitledPane animated="false" text="Categories">
-                     <content>
-                        <BorderPane>
-                           <padding>
-                              <Insets bottom="0" left="0" right="0" top="0" />
-                           </padding>
-                           <center>
-                              <TreeView fx:id="categoryView" minHeight="100.0" BorderPane.alignment="CENTER" />
-                           </center>
-                           <top>
-                              <Button graphicTextGap="6.0" mnemonicParsing="false" onAction="#handleAddCategory" prefHeight="40.0" prefWidth="400.0" text="Add" BorderPane.alignment="CENTER_LEFT">
-                                 <graphic>
-                                    <TextField fx:id="categoryTxtField" prefHeight="40.0" promptText="Add Category" />
-                                 </graphic>
-                              </Button>
-                           </top>
-                           <bottom>
-                              <Button fx:id="categoryRemoveButton" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" onAction="#handleRemoveCategory" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
-                                 <graphic>
-                                    <Label fx:id="categoryLabel" alignment="CENTER" text="Label" />
-                                 </graphic>
-                              </Button>
-                           </bottom>
-                        </BorderPane>
-                     </content>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </TitledPane>
-                <TitledPane animated="false" expanded="false" text="Columns">
-                     <content>
-                        <BorderPane>
-                           <padding>
-                              <Insets bottom="0" left="0" right="0" top="0" />
-                           </padding>
-                           <top>
-                              <Button alignment="CENTER" graphicTextGap="6.0" mnemonicParsing="false" onAction="#handleAddColumn" prefHeight="40.0" prefWidth="400.0" text="Add" BorderPane.alignment="CENTER_LEFT">
-                                 <graphic>
-                                    <TextField fx:id="columnTxtField" prefHeight="40.0" promptText="Add Column" />
-                                 </graphic>
-                              </Button>
-                           </top>
-                           <bottom>
-                              <Button fx:id="columnRemoveButton" alignment="CENTER" disable="true" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRemoveColumn" prefHeight="40.0" prefWidth="400.0" text="Remove" BorderPane.alignment="CENTER">
-                                  <graphic>
-                                      <Label fx:id="columnLabel" alignment="CENTER" text="Label" />
-                                  </graphic>
-                              </Button>
-                           </bottom>
-                           <center>
-                              <ListView fx:id="columnView" minHeight="100.0" BorderPane.alignment="CENTER" />
-                           </center>
-                        </BorderPane>
-                     </content>
-                  </TitledPane>
-               </items>
-            </SplitPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <TableView fx:id="productTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </center>
-               <bottom>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Bartinator.ProductModule.EditProductController">
+    <top>
+        <BorderPane BorderPane.alignment="CENTER">
+            <center>
+                <ToolBar>
                     <items>
-                        <Button graphicTextGap="6.0" mnemonicParsing="false" onAction="#handleAddProduct" prefHeight="40.0" text="Add">
-                           <graphic>
-                              <TextField fx:id="productTxtField" prefHeight="40.0" promptText="Product Name" />
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleRemoveProduct" prefHeight="40.0" text="Remove Product" />
-                        <Button layoutX="207.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="40.0" text="Refresh Products" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleEmployeeManagementBtn"
+                                prefHeight="30.0" text="Employee Management"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleProductManagementBtn"
+                                prefHeight="30.0" text="Order Management"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleStockManagementBtn"
+                                prefHeight="30.0" text="Stock Management"/>
                     </items>
-                  </ToolBar>
-               </bottom>
-            </BorderPane>
-         </items>
-      </SplitPane>
-   </center>
-   <top>
-      <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" BorderPane.alignment="CENTER_RIGHT" />
-   </top>
+                </ToolBar>
+            </center>
+            <right>
+                <ToolBar prefHeight="40.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Separator halignment="RIGHT" orientation="VERTICAL"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleExit" prefHeight="30.0"
+                                text="Exit"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="30.0"
+                                text="Log Out"/>
+                    </items>
+                </ToolBar>
+            </right>
+        </BorderPane>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.25" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <SplitPane dividerPositions="0.5" maxWidth="400.0" minWidth="200.0" orientation="VERTICAL"
+                           prefWidth="200.0">
+                    <items>
+                        <TitledPane animated="false" text="Categories">
+                            <content>
+                                <BorderPane>
+                                    <padding>
+                                        <Insets bottom="0" left="0" right="0" top="0"/>
+                                    </padding>
+                                    <center>
+                                        <TreeView fx:id="categoryView" minHeight="100.0" BorderPane.alignment="CENTER"/>
+                                    </center>
+                                    <top>
+                                        <AnchorPane prefHeight="40.0" BorderPane.alignment="CENTER_LEFT">
+                                            <children>
+                                                <Button graphicTextGap="6.0" mnemonicParsing="false"
+                                                        onAction="#handleAddCategory"
+                                                        prefWidth="50.0" text="Add" textAlignment="RIGHT"
+                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                        AnchorPane.topAnchor="0.0"/>
+                                                <TextField fx:id="categoryTxtField" promptText="Add Category"
+                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                           AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </top>
+                                    <bottom>
+                                        <Button fx:id="categoryRemoveButton" contentDisplay="RIGHT" disable="true"
+                                                mnemonicParsing="false" onAction="#handleRemoveCategory"
+                                                prefHeight="40.0" prefWidth="400.0" text="Remove"
+                                                BorderPane.alignment="CENTER">
+                                            <graphic>
+                                                <Label fx:id="categoryLabel" alignment="CENTER" text="Label"/>
+                                            </graphic>
+                                        </Button>
+                                    </bottom>
+                                </BorderPane>
+                            </content>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                        </TitledPane>
+                        <TitledPane animated="false" expanded="false" text="Columns">
+                            <content>
+                                <BorderPane>
+                                    <padding>
+                                        <Insets bottom="0" left="0" right="0" top="0"/>
+                                    </padding>
+                                    <top>
+                                        <AnchorPane prefHeight="40.0" BorderPane.alignment="CENTER_LEFT">
+                                            <children>
+                                                <Button alignment="CENTER" graphicTextGap="6.0" mnemonicParsing="false"
+                                                        onAction="#handleAddColumn" prefWidth="50.0" text="Add"
+                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                        AnchorPane.topAnchor="0.0"/>
+                                                <TextField fx:id="columnTxtField" promptText="Add Column"
+                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                           AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </top>
+                                    <bottom>
+                                        <Button fx:id="columnRemoveButton" alignment="CENTER" contentDisplay="RIGHT"
+                                                disable="true" mnemonicParsing="false" onAction="#handleRemoveColumn"
+                                                prefHeight="40.0" prefWidth="400.0" text="Remove"
+                                                BorderPane.alignment="CENTER">
+                                            <graphic>
+                                                <Label fx:id="columnLabel" alignment="CENTER" text="Label"/>
+                                            </graphic>
+                                        </Button>
+                                    </bottom>
+                                    <center>
+                                        <ListView fx:id="columnView" minHeight="100.0" BorderPane.alignment="CENTER"/>
+                                    </center>
+                                </BorderPane>
+                            </content>
+                        </TitledPane>
+                    </items>
+                </SplitPane>
+                <BorderPane>
+                    <center>
+                        <TitledPane animated="false" collapsible="false" contentDisplay="RIGHT" text="Products in"
+                                    BorderPane.alignment="CENTER">
+                            <content>
+                                <TableView fx:id="productTable"/>
+                            </content>
+                            <graphic>
+                                <Label fx:id="productsCategoryLabel" text="Category"/>
+                            </graphic>
+                        </TitledPane>
+                    </center>
+                    <bottom>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <items>
+                                <AnchorPane prefHeight="40.0">
+                                    <children>
+                                        <Button graphicTextGap="6.0" mnemonicParsing="false"
+                                                onAction="#handleAddProduct" prefWidth="50.0" text="Add"
+                                                AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                AnchorPane.topAnchor="0.0"/>
+                                        <TextField fx:id="productTxtField" promptText="Product Name"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <Button mnemonicParsing="false" onAction="#handleRemoveProduct" prefHeight="40.0"
+                                        text="Remove Product"/>
+                                <Button layoutX="207.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleRefresh"
+                                        prefHeight="40.0" text="Refresh Products"/>
+                            </items>
+                        </ToolBar>
+                    </bottom>
+                </BorderPane>
+            </items>
+        </SplitPane>
+    </center>
 </BorderPane>

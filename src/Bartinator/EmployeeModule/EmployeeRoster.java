@@ -2,6 +2,7 @@ package Bartinator.EmployeeModule;
 
 import Bartinator.DataAccessObjects.EmployeeDataAccessObject;
 import Bartinator.Model.Employee;
+import Bartinator.Model.Product;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,7 +25,7 @@ public class EmployeeRoster {
 
 	private ObservableList<ObservableEmployee> mEmployees;
 
-	private Employee mActiveEmployee;
+	private ObservableEmployee mActiveEmployee;
 
 	private EmployeeRoster() {
 		try {
@@ -33,19 +34,19 @@ public class EmployeeRoster {
 				ObservableEmployee observableEmployee = new ObservableEmployee(employee);
 				observableEmployee.usernameProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
-					EmployeeRoster.this.update(observableEmployee);
+					EmployeeRoster.this.updateEmployee(observableEmployee);
 				});
 				observableEmployee.nameProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
-					EmployeeRoster.this.update(observableEmployee);
+					EmployeeRoster.this.updateEmployee(observableEmployee);
 				});
 				observableEmployee.passwordProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
-					EmployeeRoster.this.update(observableEmployee);
+					EmployeeRoster.this.updateEmployee(observableEmployee);
 				});
 				observableEmployee.adminAccessProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
-					EmployeeRoster.this.update(observableEmployee);
+					EmployeeRoster.this.updateEmployee(observableEmployee);
 				});
 				mEmployees.add(observableEmployee);
 			}
@@ -67,8 +68,8 @@ public class EmployeeRoster {
 		return mEmployees;
 	}
 
-	void update(ObservableEmployee employee) {
-		mEmployeeDataAccessObject.updateUser(employee.toEmployee());
+	void updateEmployee(ObservableEmployee employee) {
+		mEmployeeDataAccessObject.updateEmployee(employee.toEmployee());
 	}
 
 	boolean employeeExists(String username) {
@@ -100,23 +101,37 @@ public class EmployeeRoster {
 	}
 
 
-	public Employee getActiveEmployee() {
+	public ObservableEmployee getActiveEmployee() {
 		return mActiveEmployee;
 	}
-	public void setActiveEmployee(Employee activeEmployee) {
+	public void setActiveEmployee(ObservableEmployee activeEmployee) {
+		if(mActiveEmployee != null) {
+			mActiveEmployee.favoritesProperty().removeListener(obs);
+		}
 		mActiveEmployee = activeEmployee;
+		if(mActiveEmployee != null) {
+			mActiveEmployee.favoritesProperty().addListener(obs);
+		}
 	}
 
-	public Employee verifyUser(String username, String password) throws IOException {
+	public ObservableEmployee verifyUser(String username, String password) throws IOException {
 		Employee employee = mEmployeeDataAccessObject.fetchUserFromUsername(username);
 		if(employee != null) {
 			if (/* !password.equals("") && */ employee.getPassword() == password.hashCode()) {
-				return employee;
+				return new ObservableEmployee(employee);
 			} else {
 				throw new IOException("The Password was incorrect");
 			}
 		} else {
 			throw new IOException("The employee was not found");
+		}
+	}
+
+	ObservableListChangeListener obs = new ObservableListChangeListener();
+	private class ObservableListChangeListener implements ChangeListener<ObservableList<Product>> {
+		@Override
+		public void changed(ObservableValue<? extends ObservableList<Product>> observable, ObservableList<Product> oldValue, ObservableList<Product> newValue) {
+			EmployeeRoster.this.updateEmployee(mActiveEmployee);
 		}
 	}
 }

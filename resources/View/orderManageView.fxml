@@ -67,7 +67,7 @@
                       <ListView fx:id="mReceiptView" />
                </content>
                <font>
-                  <Font name="Rod" size="15.0" />
+                  <Font name="Monospace" size="15.0" />
                </font>
             </TitledPane>
             </children>

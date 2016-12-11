@@ -35,7 +35,7 @@
     <right>
         <AnchorPane BorderPane.alignment="CENTER">
             <ListView fx:id="mCartView" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" AnchorPane.bottomAnchor="30" AnchorPane.topAnchor="0" />
-            <!--TODO: Fix this--><TextField editable="false" text="Value" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
+            <!--TODO: Fix this--><TextField fx:id="sumField" editable="false" text="Value" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
         </AnchorPane>
     </right>
 </BorderPane>

@@ -1,6 +1,7 @@
 package Bartinator.SalesModule;
 
 import Bartinator.EmployeeModule.EmployeeRoster;
+import Bartinator.EmployeeModule.ObservableEmployee;
 import Bartinator.Model.*;
 import Bartinator.ProductModule.ObservableProduct;
 import Bartinator.ProductModule.ProductCatalog;
@@ -17,6 +18,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -32,11 +34,13 @@ public class SalesController implements Initializable {
 	public ListView<CartItem> mCartView;
 	@FXML
 	public GridPane mBtnGrid;
+	@FXML
+	public TextField sumField;
 
 	private Cashier mCashier;
 	private ProductCatalog mProductCatalog;
 	private Category mSelectedCategory = null;
-	private Employee mActiveEmployee = EmployeeRoster.getInstance().getActiveEmployee();
+	ObservableEmployee mActiveEmployee = EmployeeRoster.getInstance().getActiveEmployee();
 
 	int mBtnRadius = 90;
 
@@ -46,7 +50,6 @@ public class SalesController implements Initializable {
 		mProductCatalog = ProductCatalog.getInstance();
 		mCashier = new Cashier();
 		mCartView.setItems(mCashier.getObservableCart());
-
 		displaySelectedCat();
 		//updateCartView();
 	}
@@ -117,6 +120,7 @@ public class SalesController implements Initializable {
 			Button btn = (Button) event.getSource();
 			Product product = ((ProductButton) btn.getParent()).getProduct();
 			mCashier.addProduct(product, 1);
+			sumField.setText("dkk "+mCashier.getTotal());
 		}
 	};
 
@@ -144,6 +148,7 @@ public class SalesController implements Initializable {
 				AlertBoxes.displayErrorBox("Payment Problem", "Consumer can't afford cart contents");
 			} else {
 				mCashier.clearCart();
+				sumField.setText("dkk "+mCashier.getTotal());
 				mSelectedCategory = null;
 				displaySelectedCat();
 			}
@@ -155,6 +160,7 @@ public class SalesController implements Initializable {
 		ObservableList<CartItem> selectedItems = mCartView.getSelectionModel().getSelectedItems();
 		for (CartItem item : selectedItems) {
 			mCashier.removeProduct(item.getProduct(), 1);
+			sumField.setText("dkk "+mCashier.getTotal());
 		}
 	}
 
@@ -162,6 +168,7 @@ public class SalesController implements Initializable {
 		ObservableList<CartItem> selectedItems = mCartView.getSelectionModel().getSelectedItems();
 		for (CartItem item : selectedItems) {
 			mCashier.removeProduct(item.getProduct());
+			sumField.setText("dkk "+mCashier.getTotal());
 		}
 	}
 
