@@ -18,8 +18,6 @@ import java.util.List;
 
 public abstract class MainDataAccessObject {
 
-    private static final String endpoint = "datalogiprojektruc2016-bartinator.chcbu6lph5q9.eu-central-1.rds.amazonaws.com";
-
     // Hold a reusable reference to a SessionFactory (since only one is needed)
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
@@ -93,7 +91,7 @@ public abstract class MainDataAccessObject {
     }
 
 	static void remove(Object object){
-		// Open a seesion
+		// Open a session
 		Session session = sessionFactory.openSession();
 
 		// Begin a transaction
@@ -162,10 +160,10 @@ public abstract class MainDataAccessObject {
 		remove(testProduct);
 	}*/
 
-   public static void test(){
+   /*public static void test(){
 	   Employee employee = new Employee("Daniel", "daniel", "".hashCode(), true);
 	   save(employee);
-   }
+   }*/
 
 	public static void stop(){
 		sessionFactory.close();

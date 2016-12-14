@@ -76,12 +76,25 @@ public class EmployeeRoster {
 		return getEmployeeByUsername(username) != null;
 	}
 
+	/**
+	 * Create an Employee object, save it to the database. Then convert it to an ObservableEmployee which is then added
+	 * to the mEmployees List.
+	 * @param username Username of the employye to create
+	 * @param password The password of the Employee to create
+	 * @param name The name of the Employee to create
+	 * @param adminAccess Whether the newly created employee has admin rights.
+	 */
 	void createEmployee(String username, String password, String name, boolean adminAccess) {
 		Employee employee = new Employee(name, username, password.hashCode(), adminAccess);
 		mEmployeeDataAccessObject.saveEmployee(employee);
 		mEmployees.add(new ObservableEmployee(employee));
 	}
 
+
+	/**
+	 * Select an Employee by username, and delete them by removing them from the database as well as the mEmployees list
+	 * @param username The username of the user to delete.
+	 */
 	void deleteEmployee(String username) {
 		ObservableEmployee observableEmployee = getEmployeeByUsername(username);
 		mEmployeeDataAccessObject.deleteEmployee(observableEmployee.toEmployee());
@@ -106,11 +119,11 @@ public class EmployeeRoster {
 	}
 	public void setActiveEmployee(ObservableEmployee activeEmployee) {
 		if(mActiveEmployee != null) {
-			mActiveEmployee.favoritesProperty().removeListener(obs);
+			mActiveEmployee.favoritesProperty().removeListener(mListChangeListener);
 		}
 		mActiveEmployee = activeEmployee;
 		if(mActiveEmployee != null) {
-			mActiveEmployee.favoritesProperty().addListener(obs);
+			mActiveEmployee.favoritesProperty().addListener(mListChangeListener);
 		}
 	}
 
@@ -127,7 +140,7 @@ public class EmployeeRoster {
 		}
 	}
 
-	ObservableListChangeListener obs = new ObservableListChangeListener();
+	private ObservableListChangeListener mListChangeListener = new ObservableListChangeListener();
 	private class ObservableListChangeListener implements ChangeListener<ObservableList<Product>> {
 		@Override
 		public void changed(ObservableValue<? extends ObservableList<Product>> observable, ObservableList<Product> oldValue, ObservableList<Product> newValue) {

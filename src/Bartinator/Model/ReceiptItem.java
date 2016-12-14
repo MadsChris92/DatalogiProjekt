@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * Created by Martin on 04-12-2016.
+ * Yo
  */
 @Embeddable
 public class ReceiptItem {

@@ -53,7 +53,7 @@
                     <children>
                         <DatePicker fx:id="mDatePickerFrom" promptText="From Date" />
                         <DatePicker fx:id="mDatePickerTo" promptText="To Date" visible="false" />
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handlePrintButton" text="Print" />
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handlePrintButton" text="Save" />
                     </children>
                 </HBox>
             </graphic>

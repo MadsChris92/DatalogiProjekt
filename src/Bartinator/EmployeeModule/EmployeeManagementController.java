@@ -32,6 +32,8 @@ public class EmployeeManagementController implements Initializable {
 
     @Override public void initialize(URL location, ResourceBundle resources) {
 
+		employeeTable.setItems(mEmployeeRoster.getEmployees());
+
 		IdCol.setCellValueFactory(param -> new ReadOnlyObjectWrapper<Integer>(param.getValue().getId()));
 		nameCol.setCellValueFactory(param -> param.getValue().nameProperty());
 		usernameCol.setCellValueFactory(param -> param.getValue().usernameProperty());
@@ -61,8 +63,6 @@ public class EmployeeManagementController implements Initializable {
 				adminCheckBox.setSelected(false);
 			}
 		});
-
-		employeeTable.setItems(mEmployeeRoster.getEmployees());
     }
 
 	public void handleSaveUser(ActionEvent actionEvent) {
@@ -75,7 +75,6 @@ public class EmployeeManagementController implements Initializable {
 				}
 				observableEmployee.setName(nameField.getText());
 				observableEmployee.setAdminAccess(adminCheckBox.isSelected());
-				mEmployeeRoster.updateEmployee(observableEmployee);
 			}
 		} else {
 			String password = passwordField.getText();
