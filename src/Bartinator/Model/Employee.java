@@ -1,7 +1,5 @@
 package Bartinator.Model;
 
-import javafx.scene.shape.Shape;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
