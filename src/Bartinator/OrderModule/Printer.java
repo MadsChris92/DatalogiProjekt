@@ -42,12 +42,15 @@ public class Printer {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 			String line = reader.readLine();
+			//Hvis linien i html dokumentet ikke er tom....
 			while (line != null) {
+				//......så led efter tuborg klammer...
 				int i, j;
 				i=line.indexOf("{");
 				if(i!=-1){
 					j=line.indexOf("}");
 					if(j!=-1){
+						//....og pil indholdet ud og erstat det, afhængig af følgende if-else
 						String key = line.substring(i+1,j);
 						if(key.equals("date")){
 							line = String.format("%s%s%s", line.substring(0, i), day.toString(), line.substring(j + 1));
@@ -69,6 +72,7 @@ public class Printer {
 						}
 					}
 				}
+				//smid den redigerede linie ind i htmltemplate og læs den næste linie ind.
 				htmlTemplate += line;
 				line = reader.readLine();
 			}

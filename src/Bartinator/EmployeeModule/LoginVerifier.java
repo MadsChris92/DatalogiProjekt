@@ -9,7 +9,6 @@ public class LoginVerifier {
 
     private Employee mLatestCheckedEmployee;
 
-
     public boolean verifyLogin(String username, String password, boolean adminSelected) throws IOException{
 
         boolean accessGranted;
@@ -19,7 +18,7 @@ public class LoginVerifier {
         } else {
 			accessGranted = verifyBartenderLogin(username, password);
         }
-        if(accessGranted) {
+        if(accessGranted) { //Gem den aktive bruger i Employee DAO, hvis der er adgang.
             EmployeeDataAccessObject.getInstance().setActiveEmployee(mLatestCheckedEmployee);
         }
         return accessGranted;

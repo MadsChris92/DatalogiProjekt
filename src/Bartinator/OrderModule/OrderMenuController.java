@@ -41,18 +41,24 @@ public class OrderMenuController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		//Add listener til DatePicker
 		mDatePickerFrom.valueProperty().addListener((observable, oldValue, newValue) -> showOrderOnDate(newValue));
 		mDatePickerFrom.setValue(LocalDate.now());
+
 		mOrderTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+		//Listener der fortæller om der er valgt noget i order table.
 		mOrderTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-					if (newValue == null) {
+					if (newValue == null) { //Hvis ingen reciept er valgt
 						mReceiptView.setItems(null);
-					} else {
+					} else { //Hvis en reciept er valgt
 						ObservableList<String> list = getStrings(newValue);
 						mReceiptView.setItems(list);
 					}
 				}
 		);
+
+		//Konfigurer cellerne i tabellen.
 		mIdColumn.setCellValueFactory(
 				(TableColumn.CellDataFeatures<Order, Integer> param) ->
 						new ReadOnlyObjectWrapper<Integer>(param.getValue().getId())
@@ -68,6 +74,7 @@ public class OrderMenuController implements Initializable {
 				new ReadOnlyObjectWrapper<Date>(param.getValue().getTimestamp())
 		);
 
+		//Sætter fonten i alle cellerne på reciept viewet
 		Font font = new Font("Rod", 11);
 		mReceiptView.setCellFactory(value -> {
 			ListCell<String> cell = new ListCell<String>(){
@@ -86,11 +93,13 @@ public class OrderMenuController implements Initializable {
 		});
 	}
 
+	//Viser orders fra den valgte dato
 	private void showOrderOnDate(LocalDate localDate) {
 		mOrderTable.getItems().clear();
 		if(localDate == null) return; //no date chosen, stop function here.
 
-		//Converts the LocalDate into a date object(Date keeps track of time as well as date, LocalDate just keeps track of day, month and year)
+		//Converts the LocalDate into a date object(Date keeps track of time as well as date,
+		// LocalDate just keeps track of day, month and year)
 		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		//Fetch the orders from the database, which were made on the given day
 		List<Order> orders = OrderDataAccessObject.getInstance().getOrdersOnDay(date);
@@ -98,7 +107,7 @@ public class OrderMenuController implements Initializable {
 			mOrderTable.getItems().add(order);
 		}
 	}
-
+	//Laver en viselig reciept til reciept view
 	private ObservableList<String> getStrings(Order order) {
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(order);
@@ -141,10 +150,12 @@ public class OrderMenuController implements Initializable {
 
 
 		File file = fileChooser.showSaveDialog(Navigator.getInstance().getTheStage());
+
 		if(file!=null) {
 			List<Order> orders = mOrderTable.getItems();
 			double sumTotal = 0;
 			for (Order order : orders) sumTotal += order.getTotalPrice();
+
 			String html = new Printer().htmlIt(orders, date, sumTotal);
 			saveFile(html, file);
 		}

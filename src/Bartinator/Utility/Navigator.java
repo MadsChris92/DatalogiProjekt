@@ -14,9 +14,11 @@ import java.io.IOException;
  * Navigate between the different views
  */
 public class Navigator {
+	//Navigator er en singleton - Bruges til at skifte scene
 	private static final Navigator instance = new Navigator();
 	private Window mTheStage;
 
+	//Denne static metode giver
 	public static Navigator getInstance(){
 		return instance;
 	}
@@ -28,6 +30,7 @@ public class Navigator {
 		theStage = stage;
 	}
 
+	//Universel switchToView metode. Bruges af de specifikke
 	private void switchToView(String view){
 		try {
 			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(view));
@@ -39,6 +42,7 @@ public class Navigator {
 		}
 	}
 
+	//Static metoder er overflødigt i singletons, fordi man kender instance.
 	public static void switchToAdminView(){
 		instance.switchToView("View/adminMenuView.fxml");
 	}
