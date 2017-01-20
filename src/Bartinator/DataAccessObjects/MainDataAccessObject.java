@@ -107,8 +107,6 @@ public abstract class MainDataAccessObject {
 		session.close();
 	}
 
-
-
 	static void update(Object object){
 		// Open a session
 		Session session = sessionFactory.openSession();
@@ -126,44 +124,6 @@ public abstract class MainDataAccessObject {
 		session.close();
 	}
 
-   /* public static void test(){
-		Admin admin = new Admin();
-        admin.setLastName("Hans");
-        admin.setUsername("hans");
-        save(admin);
-        fetch(Admin.class).forEach(System.out::println);
-		remove(admin);
-
-		Consumer consumer = new Consumer();
-		consumer.setLastName("Heksen");
-		consumer.setUsername("hex69");
-		consumer.setBalance(420.00);
-		save(consumer);
-		fetch(Consumer.class).forEach(System.out::println);
-		remove(consumer);
-
-		Bartender bartender = new Bartender();
-		bartender.setLastName("Grethe");
-		bartender.setUsername("greathe");
-		save(bartender);
-		fetch(Bartender.class).forEach(System.out::println);
-		remove(bartender);
-
-		Product testProduct = new Product();
-		testProduct.setLastName("Hansens");
-		testProduct.setPrice(15);
-		testProduct.setCategory("Drink");
-		testProduct.setDescription("alco", "15%");
-		testProduct.setDescription("year", "Lav");
-		save(testProduct);
-		fetch(Product.class).forEach(System.out::println);
-		remove(testProduct);
-	}*/
-
-   /*public static void test(){
-	   Employee employee = new Employee("Daniel", "daniel", "".hashCode(), true);
-	   save(employee);
-   }*/
 
 	public static void stop(){
 		sessionFactory.close();

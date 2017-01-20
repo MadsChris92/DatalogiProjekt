@@ -11,10 +11,6 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
-/**
- *
- *
- */
 public class EmployeeRoster {
 	private static EmployeeRoster instance = new EmployeeRoster();
 	public static EmployeeRoster getInstance() {
@@ -29,9 +25,15 @@ public class EmployeeRoster {
 
 	private EmployeeRoster() {
 		try {
+			//Lav en observable Arraylist og hent alle users
 			mEmployees = FXCollections.observableArrayList();
 			for(Employee employee : mEmployeeDataAccessObject.fetchAllUsers()){
+
+				//For hver user i databasen, lav en observable user
 				ObservableEmployee observableEmployee = new ObservableEmployee(employee);
+
+				//For hver af disse 4 properties, add en listener, som opdatere propertien i databasen,
+				// når der sker en ændring.
 				observableEmployee.usernameProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
 					EmployeeRoster.this.updateEmployee(observableEmployee);
@@ -48,8 +50,11 @@ public class EmployeeRoster {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
 					EmployeeRoster.this.updateEmployee(observableEmployee);
 				});
+
+				//Add denne observable user til observableUser Arraylisten og slut for-løkken
 				mEmployees.add(observableEmployee);
 			}
+
 		} catch (IOException exception){
 			exception.printStackTrace();
 		}
@@ -101,10 +106,11 @@ public class EmployeeRoster {
 		mEmployees.remove(observableEmployee);
 	}
 
+	//Inner class, som bruges til at convertere password.
 	class PasswordConverter extends StringConverter<Integer>{
 		@Override
 		public String toString(Integer integer) {
-			return integer == 0 ? "no" : "yes";
+			return integer == 0 ? "no" : "yes";  //EN if-else bandit
 		}
 
 		@Override
