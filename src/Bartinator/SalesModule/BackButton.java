@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
  */
 public class BackButton extends Button{
 	public BackButton(SalesController controller) {
+		//kalder Constructor i Button. Denne kan tage en string,
+		// som fortæller hvad der skal stå på knappen.
 		super("<-");
 		setOnAction(controller.handleBackBtn);
 		setMinHeight(controller.mBtnRadius);
