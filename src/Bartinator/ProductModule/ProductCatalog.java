@@ -36,6 +36,8 @@ public class ProductCatalog {
 		fetchCategories();
 	}
 
+	//Rydder mProducts observable arrayet og henter produkterne ned igen, for at konvertere dem
+	//til observable products og gemme dem i arrayet.
 	private void fetchProducts(){
 		mProducts.clear();
 		List<Product> products = mProductDataAccessObject.getProducts();
@@ -44,13 +46,16 @@ public class ProductCatalog {
 		}
 	}
 
+	//Samme historie som med produkterne over.
 	private void fetchCategories(){
 		mCategories.clear();
 		mCategories.addAll(mProductDataAccessObject.getCategories());
 	}
 
 
-
+	//.filtered sammenligner (med en lambda) resultatet af en af indholdets metoder. Således at man filtrere indholdet
+	//af arrayet ved at spørge om en bestemt metode returnere et bestemt resultat. Her category.
+	//Laves der ændringer i original arrayet, så vil ændringerne også ske i de associerede filtered arrays.
 	public ObservableList<ObservableProduct> getProductsByCategory(Category category){
 		return mProducts.filtered(observableProduct -> Objects.equals(observableProduct.getCategory(), category));
 	}
@@ -59,6 +64,8 @@ public class ProductCatalog {
 		return mCategories.filtered(category1 -> Objects.equals(category1.getCategory(), category));
 	}
 
+	//mProducts.filtered() returnere en FilteredList<>. I ovenstående har vi castet til en observable igen
+	//Nedenfor bruger vi det som en FilteredList.
 	public ObservableProduct getProductById (int id){
 		FilteredList<ObservableProduct> filtered = mProducts.filtered(observableProduct -> observableProduct.getId() == id);
 		if(filtered.isEmpty()){
