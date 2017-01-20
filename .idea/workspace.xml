@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90ba28c7-742e-4e7a-9316-750340300b3f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Bartinator/SalesModule/BackButton.java" afterPath="$PROJECT_DIR$/src/Bartinator/SalesModule/BackButton.java" />
-    </list>
+    <list default="true" id="90ba28c7-742e-4e7a-9316-750340300b3f" name="Default" comment="" />
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1282,7 +1279,7 @@
       <workItem from="1481015114813" duration="1618000" />
       <workItem from="1484210693974" duration="59000" />
       <workItem from="1484741667612" duration="9427000" />
-      <workItem from="1484914433403" duration="6620000" />
+      <workItem from="1484914433403" duration="7088000" />
     </task>
     <task id="LOCAL-00004" summary="Admin Main Menu setup">
       <created>1479812042996</created>
@@ -1368,11 +1365,18 @@
       <option name="project" value="LOCAL" />
       <updated>1484917742852</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Commenting">
+      <created>1484923093226</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1484923093226</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42135000" />
+    <option name="totallyTimeSpent" value="42603000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1600" height="900" extended-state="6" />
