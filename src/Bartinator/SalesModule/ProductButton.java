@@ -14,7 +14,7 @@ public class ProductButton extends StackPane {
 	private Button mButton;
 	private ToggleButton mFavorite;
 	private Product mProduct;
-
+	// Konstruktør som sætter standard layout på produkt knapperne som er i et stackpane
 	ProductButton(SalesController controller, Product product) {
 		mProduct = product;
 		mButton = new Button(String.format("%s%n%.2f", product.getName(), product.getPrice()));

@@ -19,13 +19,13 @@ public class Cashier {
 
 	public void addProduct(Product product, int quantity) {
 		int index = indexOf(product);
-		if(index!=-1)
+		if(index!=-1)// hvis den er der tilføj en ekstra quantity
 			mCartItems.get(index).add(quantity);
-		else {
+		else {//hvis produkt ikke er i kurven
 			mCartItems.add(new CartItem(product, quantity));
 		}
 	}
-
+	//fjerne produkt uanset mængden
     public boolean removeProduct(Product product) {
 		int index = indexOf(product);
 		if(index!=-1) {
@@ -36,6 +36,7 @@ public class Cashier {
 		}
     }
 
+    // fjerner kun en bestemt mængde (1), dog kan den godt fjerne 5 eller et andet magisk tal hvis man havde lyst til det
     public boolean removeProduct(Product product, int quantity) {
 		int index = indexOf(product);
 		if(index!=-1) {
@@ -48,11 +49,11 @@ public class Cashier {
 			return false;
 		}
     }
-
+	// ryder hele kurven
     public void clearCart(){
 		mCartItems.clear();
     }
-
+		//regner total ud
     public double getTotal(){
         double sum = 0;
 		for (CartItem item : mCartItems) {
@@ -60,11 +61,11 @@ public class Cashier {
 		}
         return sum;
     }
-
+	//henter alle cartitems som Obervable
     public ObservableList<CartItem> getObservableCart(){
 		return mCartItems;
     }
-
+		//handle checkout
     public boolean checkOut() {
         //create receipt
 		List<ReceiptItem> receipt = new ArrayList<>();
@@ -82,7 +83,7 @@ public class Cashier {
         OrderDataAccessObject.getInstance().saveOrder(order);
         return true;
     }
-
+	//finder ud af hvor et produkt er på listen hvis den ikke er returner den -1
     private int indexOf(Product product){
 		for (int i = 0; i < mCartItems.size(); i++) {
 			CartItem item = mCartItems.get(i);

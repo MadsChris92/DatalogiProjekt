@@ -31,10 +31,7 @@ public class EmployeeManagementController implements Initializable {
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
-
-
-
-		//Konfigurer cellerne i tabellen
+		//Konfigurer cellerne i tabellen ud fra ObservableEmployee objekter
 		IdCol.setCellValueFactory(param -> new ReadOnlyObjectWrapper<Integer>(param.getValue().getId()));
 		nameCol.setCellValueFactory(param -> param.getValue().nameProperty());
 		usernameCol.setCellValueFactory(param -> param.getValue().usernameProperty());
@@ -62,7 +59,7 @@ public class EmployeeManagementController implements Initializable {
 				passwordField.setText("");
 				nameField.setText(newValue.getName());
 				adminCheckBox.setSelected(newValue.hasAdminAccess());
-			} else {
+			} else { // hvis ingen er valgt viser den ingenting
 				usernameField.setText("");
 				passwordField.setText("");
 				nameField.setText("");
@@ -74,12 +71,14 @@ public class EmployeeManagementController implements Initializable {
 		employeeTable.setItems(mEmployeeRoster.getEmployees());
     }
 
+    //når man trykker på på save i employee vinduet gør den følgende
 	public void handleSaveUser(ActionEvent actionEvent) {
 		String username = usernameField.getText();
 		if (mEmployeeRoster.employeeExists(username)) {
-			//Brugeren eksistere ikke, vil du opdatere den eksisterende?
+			//Brugeren eksistere, vil du opdatere den eksisterende?
 			if (AlertBoxes.displayConfirmationBox("Employee Already exists", "The user, you are trying to create, already exists in the database. Do you wish to update the existing user instead?")) {
 				ObservableEmployee observableEmployee = mEmployeeRoster.getEmployeeByUsername(username);
+				//hvis ikke password feltet er blankt så gør følgende
 				if(!(passwordField.getText().equals(""))){
 					observableEmployee.setPassword(passwordField.getText().hashCode());
 				}

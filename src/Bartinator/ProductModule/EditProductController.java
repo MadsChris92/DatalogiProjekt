@@ -38,7 +38,7 @@ public class EditProductController implements Initializable {
 	public Button columnRemoveButton;
 	public Button categoryRemoveButton;
 	public Label productsCategoryLabel;
-
+		//definer disse 4 variabler og instancere dem sammetidige
 	private final Property<Category> activeCategory = new SimpleObjectProperty<>();
 	private final ObservableList<String> catColumns = FXCollections.observableArrayList();
 
@@ -48,7 +48,7 @@ public class EditProductController implements Initializable {
 
 
 	@FXML
-	@Override
+	@Override// laver hele vinduet
 	public void initialize(URL location, ResourceBundle resources){
         productCatalog.refresh();
 
@@ -68,7 +68,7 @@ public class EditProductController implements Initializable {
 
     }
 
-    // udfører operationer på dataen.
+    //de næste 8 metoder udfører operationer på dataen.
 	// TODO Burde måske være i en anden klasse, men de passer måske heller ikke helt i ProductCatalog..?
 	private boolean addColumn(Category category, String columnName) {
 		if (columnName.isEmpty()) {
@@ -180,7 +180,7 @@ public class EditProductController implements Initializable {
 		}
 	}
 
-	// Indstiller ui til at starte med
+	// De 3 næste metoder: Indstiller ui til at starte med
 	private void setProductTable() {
 		productTable.setEditable(true);
 	}
@@ -249,7 +249,7 @@ public class EditProductController implements Initializable {
 		categoryView.setRoot(treeifyCategories(null));
     }
 
-    // Updaterer de forskellige ui elementer
+    // De 3 næste metoder: Updaterer de forskellige ui elementer
 	private TreeItem<Category> treeifyCategories(Category root){
 		TreeItem<Category> categoryTreeItem = new TreeItem<>(root);
 		categoryTreeItem.setExpanded(true);

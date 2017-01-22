@@ -11,12 +11,14 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
+// Denne klasse er en singleton
 public class EmployeeRoster {
 	private static EmployeeRoster instance = new EmployeeRoster();
 	public static EmployeeRoster getInstance() {
 		return instance;
 	}
 
+	// Henter instans fra employee data access object
 	private EmployeeDataAccessObject mEmployeeDataAccessObject = EmployeeDataAccessObject.getInstance();
 
 	private ObservableList<ObservableEmployee> mEmployees;
@@ -34,6 +36,8 @@ public class EmployeeRoster {
 
 				//For hver af disse 4 properties, add en listener, som opdatere propertien i databasen,
 				// når der sker en ændring.
+
+				//Listeneren bruger en funktion som modtager observable, oldvalue og newvalue.
 				observableEmployee.usernameProperty().addListener((observable, oldValue, newValue) -> {
 					System.out.printf("%s -> %s%n", oldValue, newValue);
 					EmployeeRoster.this.updateEmployee(observableEmployee);
@@ -59,7 +63,7 @@ public class EmployeeRoster {
 			exception.printStackTrace();
 		}
 	}
-
+		//checker om username eksisterer i den instance som man har fra databasen()
 	ObservableEmployee getEmployeeByUsername(String username) {
 		for(ObservableEmployee employee : mEmployees){
 			if(employee.getUsername().equals(username)){
@@ -68,19 +72,23 @@ public class EmployeeRoster {
 		}
 		return null;
 	}
-
+		//returner så den kan vise i f.eks. tableview.
 	ObservableList<ObservableEmployee> getEmployees(){
 		return mEmployees;
 	}
 
+	// conventer den fra observableEmplyee til "strandard" employee som vi har under "model"
 	void updateEmployee(ObservableEmployee employee) {
 		mEmployeeDataAccessObject.updateEmployee(employee.toEmployee());
 	}
 
+	// if not null
 	boolean employeeExists(String username) {
 		return getEmployeeByUsername(username) != null;
 	}
 
+
+	// Javadoc
 	/**
 	 * Create an Employee object, save it to the database. Then convert it to an ObservableEmployee which is then added
 	 * to the mEmployees List.
@@ -107,8 +115,9 @@ public class EmployeeRoster {
 	}
 
 	//Inner class, som bruges til at convertere password.
+	// Den extender klassen StringConverter.
 	class PasswordConverter extends StringConverter<Integer>{
-		@Override
+		@Override // fortæller java at vi overskriver en eksisterende metode
 		public String toString(Integer integer) {
 			return integer == 0 ? "no" : "yes";  //EN if-else bandit
 		}
@@ -123,16 +132,23 @@ public class EmployeeRoster {
 	public ObservableEmployee getActiveEmployee() {
 		return mActiveEmployee;
 	}
+
+	//
 	public void setActiveEmployee(ObservableEmployee activeEmployee) {
+		// Hvis der var en aktive employee i forvejn så fjern listeneren fra den
 		if(mActiveEmployee != null) {
 			mActiveEmployee.favoritesProperty().removeListener(mListChangeListener);
 		}
+
 		mActiveEmployee = activeEmployee;
+		//Hvis den nye aktive employee ikke er null, så tilføj listeneren til den
 		if(mActiveEmployee != null) {
 			mActiveEmployee.favoritesProperty().addListener(mListChangeListener);
 		}
 	}
 
+
+	//
 	public ObservableEmployee verifyUser(String username, String password) throws IOException {
 		Employee employee = mEmployeeDataAccessObject.fetchUserFromUsername(username);
 		if(employee != null) {
@@ -150,6 +166,8 @@ public class EmployeeRoster {
 	private class ObservableListChangeListener implements ChangeListener<ObservableList<Product>> {
 		@Override
 		public void changed(ObservableValue<? extends ObservableList<Product>> observable, ObservableList<Product> oldValue, ObservableList<Product> newValue) {
+			// EmployerRoster.this er i dette tilfælde den pågældende instans af EmployeeRoster klassen som denne metode
+			// bliver kaldt fra.
 			EmployeeRoster.this.updateEmployee(mActiveEmployee);
 		}
 	}

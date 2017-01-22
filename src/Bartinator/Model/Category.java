@@ -13,8 +13,11 @@ public class Category {
 	@ManyToOne
 	private Category category;
 
+	//en tom konstruktør
 	public Category(){}
 
+
+	//getteer's og setter til hele lortet
 	public String getName() {
 		return name;
 	}
@@ -47,11 +50,14 @@ public class Category {
 		this.category = category;
 	}
 
+	//bliver ikke brugt og er ikke en getter eller setters
 	public boolean contains(Product product){
 		return product.getCategory().getName().equals(this.name);
 	}
 
-	@Override
+
+	// Under søger om et object o er magen til den aktuelle kategori objekt
+	@Override //ps. bliver ikke brugt.
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -62,7 +68,7 @@ public class Category {
 
 	}
 
-	@Override
+	@Override// tostring konventer et objekt til en string.
 	public String toString() {
 		return name;
 	}

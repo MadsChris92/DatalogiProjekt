@@ -37,7 +37,7 @@ public class Order {
 	@Temporal(TemporalType.TIMESTAMP)
     private Date mTimestamp;
 
-
+	//  A protected member is accessible within all classes in the same package and within subclasses in other packages.
     protected Order() {}
 
     public Order(double totalPrice, List<ReceiptItem> receipt, String bartenderName, int bartenderId) {
@@ -49,7 +49,7 @@ public class Order {
         mPaymentType = "Cash";
 		mChange = 0;
 	}
-
+	//getters
 	public int getId() {
 		return id;
 	}
@@ -75,6 +75,8 @@ public class Order {
 		return mChange;
 	}
 
+
+	//hvordan bonnen ser ud i højreside af salesview
 	@Override public String toString() {
         String result = String.format("Order: %s%n", new SimpleDateFormat("dd/MM/yy HH:mm").format(mTimestamp));
         for (ReceiptItem item : mReceipt) {

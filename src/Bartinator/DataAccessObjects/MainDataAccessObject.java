@@ -16,17 +16,20 @@ import java.util.Date;
 import java.util.List;
 
 
+// singleton
 public abstract class MainDataAccessObject {
 
     // Hold a reusable reference to a SessionFactory (since only one is needed)
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
+    // Laver en ny session factory ud fra indstillingerne i hibernate.cfg.xml
     private static SessionFactory buildSessionFactory() {
         // create a standardServiceRegistry
         //final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
 		final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
+
 
 	public static List<?> fetch(Class<?> clazz){
 		// Open a session
@@ -47,8 +50,8 @@ public abstract class MainDataAccessObject {
 		return objects;
 	}
 
+	// Det er en metode der bliver kaldt fra de andre DAO klasser for at henter objekter fra databasen
 	public static List<?> fetch(Class<?> clazz, String attribute, Object value){
-
 		// Open a session
 		Session session = sessionFactory.openSession();
 

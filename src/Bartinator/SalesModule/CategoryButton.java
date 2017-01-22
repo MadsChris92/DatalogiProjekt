@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
  */
 public class CategoryButton extends Button {
 	private Category mCategory;
-
+	//konstruktør / standard layout til kategori knapperne
 	public CategoryButton(SalesController controller, Category category) {
 		mCategory = category;
 		setText(category.getName());

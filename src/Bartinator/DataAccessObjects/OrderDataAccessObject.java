@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
+//singleton
 public class OrderDataAccessObject extends MainDataAccessObject {
 
     private static final OrderDataAccessObject instance = new OrderDataAccessObject();
@@ -22,6 +22,7 @@ public class OrderDataAccessObject extends MainDataAccessObject {
     	save(order);
     }
 
+    // bruges kun i forbindelse med getOrdersOnDay, som kan ses længere nede
 	private List<Order> fetchBetween(Date start, Date end){
 
 		// Open a session

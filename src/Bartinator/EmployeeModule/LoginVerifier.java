@@ -18,7 +18,7 @@ public class LoginVerifier {
         } else {
 			accessGranted = verifyBartenderLogin(username, password);
         }
-		if(accessGranted) { //Gem den aktive bruger i Employee DAO, hvis der er adgang.
+		if(accessGranted) { //Gem den aktive bruger i EmployeeRoster, hvis der er adgang.
             EmployeeRoster.getInstance().setActiveEmployee(mLatestCheckedEmployee);
         }
         return accessGranted;

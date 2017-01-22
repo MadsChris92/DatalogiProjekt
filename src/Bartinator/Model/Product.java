@@ -17,15 +17,15 @@ public class Product {
     private Map<String, String> descriptions = new HashMap<>();
     @ManyToOne
     private Category category;
-
+    //Dette er en konstruktør
     public Product(){};
-
+    //OBS prisen kan kun sættes i tabelen
     public Product(String name, Category category) {
         this.name = name;
         this.category = category;
         this.price = 0;
     }
-
+    //getters and setters
     public int getId() {
         return id;
     }
@@ -64,7 +64,7 @@ public class Product {
         this.category = category;
     }
 
-	@Override
+	@Override // er et vilkåreligt objekt det samme som dette produkt
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -75,7 +75,7 @@ public class Product {
 		return name.equals(product.name);
 	}
 
-	@Override
+	@Override // giver en string udgave af dette objekt. dette bruges til debugging
     public String toString() {
         return "Product{" +
                 "ID=" + getId() +

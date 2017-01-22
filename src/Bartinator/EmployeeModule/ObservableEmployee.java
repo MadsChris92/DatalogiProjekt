@@ -30,6 +30,7 @@ public class ObservableEmployee {
 		mFavorites = new SimpleListProperty<>(FXCollections.observableArrayList(employee.getFavorites()));
 	}
 
+	// Det er en masse getter's og setter's
 	public int getId() {
 		return mId.get();
 	}
@@ -85,6 +86,8 @@ public class ObservableEmployee {
 		this.mFavorites.set(favorites);
 	}
 
+
+	// Konveterer denne ObservableEmployee til en Employee
 	public Employee toEmployee(){
 		Employee employee = new Employee(getName(), getUsername(), getPassword(), hasAdminAccess());
 		employee.setId(getId());

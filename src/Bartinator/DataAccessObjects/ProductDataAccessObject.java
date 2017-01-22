@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+//Singleton
 public class ProductDataAccessObject extends MainDataAccessObject {
 
     private static final ProductDataAccessObject instance = new ProductDataAccessObject();
@@ -48,8 +48,10 @@ public class ProductDataAccessObject extends MainDataAccessObject {
 	 * @param category the category to rename
 	 * @param newName the new name of the category
 	 */
+	// Den laver et nyt kategori objekt som den overfører alt det der var i den gamle kategori over til.
     public void renameCategory(Category category, String newName){
-		// Because the name is the primary key of the category, it cant be readily changed, so the category is remade instead
+		// Because the name is the primary key of the category, it cant be readily changed, so the category is remade
+		// instead
 	    Category renamedCategory = new Category();
 	    renamedCategory.setName(newName);
 	    renamedCategory.getColumns().addAll(category.getColumns());

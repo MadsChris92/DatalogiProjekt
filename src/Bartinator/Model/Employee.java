@@ -26,6 +26,7 @@ public class Employee {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Product> mFavorites = new ArrayList<>();
 
+	//  A protected member is accessible within all classes in the same package and within subclasses in other packages.
 	protected Employee(){}
 
 	public Employee(String name, String username, int password, boolean adminAccess) {
@@ -35,6 +36,7 @@ public class Employee {
 		mAdminAccess = adminAccess;
 	}
 
+	//getters and setters
 	public int getId() {
 		return mId;
 	}
@@ -83,8 +85,8 @@ public class Employee {
 		mFavorites = favorites;
 	}
 
-	@Override
-	public String toString() {
+	@Override // bliver ikke brugt
+	public String toString() { // giver en string udgave af dette objekt. dette bruges til debugging
 		return "Employee{" +
 				"userid=" + mId +
 				", name='" + mName + '\'' +

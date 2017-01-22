@@ -6,6 +6,7 @@ import Bartinator.Model.Employee;
 import java.io.IOException;
 import java.util.List;
 
+// Singleton
 public class EmployeeDataAccessObject extends MainDataAccessObject{
 
 	private static final EmployeeDataAccessObject instance = new EmployeeDataAccessObject();
@@ -35,7 +36,8 @@ public class EmployeeDataAccessObject extends MainDataAccessObject{
 	}
 
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // fjerner advarsel om at vi ikke tjekker om det vi får tilbage fra fetch metoden
+	// rent faktisk er Employee objekter
 	public  List<Employee> fetchAllUsers() throws IOException {
 		List<Employee> employees = (List<Employee>)fetch(Employee.class);
 		if(employees != null){

@@ -40,8 +40,9 @@ public class SalesController implements Initializable {
 	private Cashier mCashier;
 	private ProductCatalog mProductCatalog;
 	private Category mSelectedCategory = null;
+	//går direkte ind i EmployeeRoster instance og henter ActiveEmployee.
 	ObservableEmployee mActiveEmployee = EmployeeRoster.getInstance().getActiveEmployee();
-
+	// sætter størrelsen på knapperne
 	int mBtnRadius = 90;
 
 
@@ -53,13 +54,13 @@ public class SalesController implements Initializable {
 		displaySelectedCat();
 		//updateCartView();
 	}
-
+	// når man trykker på en kategori viser den hvad der er i den
 	private void displaySelectedCat() {
 		if (mSelectedCategory != null)
 			System.out.println("Displaying: " + mSelectedCategory.getName());
 
 		mBtnGrid.getChildren().clear();
-
+		//Bruger metoden nedenunder til at lave knapperne
 		List<Node> buttons = createButtons();
 
 		int rowCount = 0;
@@ -89,17 +90,19 @@ public class SalesController implements Initializable {
 		List<Node> buttons = new ArrayList<>();
 		List<Category> categories = mProductCatalog.getCategoriesByCategory(mSelectedCategory);
 		ObservableList<ObservableProduct> products = mProductCatalog.getProductsByCategory(mSelectedCategory);
-
+		// først henter den kategorierne
 		for (Category category : categories) {
 			System.out.println("Fetched category: " + category.toString());
 			buttons.add(new CategoryButton(this, category));
 		}
+		//derefter hetner den produkterne
 		for (ObservableProduct product : products) {
 			System.out.println("Fetched product: " + product.toString());
 			buttons.add(new ProductButton(this, product.toProduct()));
 		}
 
 		// Are we at the root page?
+		// Dansk: hvis kategorien ikke er "null" vis tilbage knappen "<-" så man kan komme tilbage på forsiden
 		if (mSelectedCategory == null) {
 			// Then add the current employees pinned products
 			for (Product product : mActiveEmployee.getFavorites()) {
@@ -113,7 +116,7 @@ public class SalesController implements Initializable {
 
 		return buttons;
 	}
-
+	//hvis man trykker på en produkt knaap gør følgende
 	EventHandler<ActionEvent> handleProductBtn = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent event) {
@@ -123,7 +126,7 @@ public class SalesController implements Initializable {
 			sumField.setText("dkk "+mCashier.getTotal());
 		}
 	};
-
+	//hvis man trykker på tilbage knappen gør følgende
 	EventHandler<ActionEvent> handleBackBtn = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent event) {
@@ -131,7 +134,7 @@ public class SalesController implements Initializable {
 			displaySelectedCat();
 		}
 	};
-
+		//hvis man trykker på KATEGORI KNAP! så gør følgende
 	EventHandler<ActionEvent> handleCatBtn = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent event) {
@@ -140,7 +143,7 @@ public class SalesController implements Initializable {
 			displaySelectedCat();
 		}
 	};
-
+	//hvis man trykker på CHECKOUT knappen så gør følgende
 	public void handleCheckOut(ActionEvent actionEvent) {
 		if (AlertBoxes.displayConfirmationBox("Confirm Sale", "Did you mean to checkout?")) {
 			boolean success = mCashier.checkOut();

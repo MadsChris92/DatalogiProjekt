@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Callback;
 
 /**
- * Created by martin on 12/1/16.
+ * Det er et specifikt vare i indkøbs kurven, der kan være flere eksemplarer af samme vare per CartItem
  */
 public class CartItem {
 	private final Product mProduct;
@@ -56,6 +56,8 @@ public class CartItem {
 		return mProduct.getPrice()* mQuantity.get();
 	}
 
+	//Bliver brugt til at fortælle den ObservableList der er i Cashier hvilket variable den skal holde øje med for
+	// at finde ud af om listen er blevet opdateret(i dette tilfælde er det mQuantity)
 	public static Callback<CartItem, Observable[]> extractor() {
 		return new Callback<CartItem, Observable[]>() {
 			@Override

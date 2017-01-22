@@ -30,7 +30,7 @@ public class OrderMenuController implements Initializable {
 	public TableColumn<Order, String> mBartenderColumn;
 	public TableColumn<Order, Double> mReceiptColumn;
 	public TableColumn<Order, Date> mDateColumn;
-	public ListView<String> mReceiptView;
+	public ListView<String> mReceiptView; // dette er det listview der bliver brugt til at vise Receipt.
 	public DatePicker mDatePickerFrom;
 	public DatePicker mDatePickerTo;
 
@@ -75,7 +75,7 @@ public class OrderMenuController implements Initializable {
 			ListCell<String> cell = new ListCell<String>(){
 				@Override
 				protected void updateItem(String item, boolean empty){
-					super.updateItem(item, empty);
+					super.updateItem(item, empty); //super.updateItem er fra cell klassen i java
 					if(item != null) {
 						setText(item);
 					} else {
@@ -152,10 +152,10 @@ public class OrderMenuController implements Initializable {
 			for (Order order : orders) sumTotal += order.getTotalPrice();
 
 			String html = new Printer().htmlIt(orders, date, sumTotal);
-			saveFile(html, file);
+			saveFile(html, file);//bruger metoden lige nedeunder
 		}
 	}
-
+		// skriver om hvorvidt den har gemt eller ej og den gemmer for den overstående metode
 	private void saveFile(String html, File file) {
 		System.out.println(file);
 		try {

@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 		//Navigator er en singleton - Bruges til at skifte scene
 		Navigator.getInstance().setTheStage(primaryStage);
-		Navigator.switchToLoginView();
+		Navigator.switchToLoginView();// Vores VIEWS er SCENES!!! <-<-<--
 		primaryStage.setTitle("Bartinator");
         primaryStage.show();
 	}

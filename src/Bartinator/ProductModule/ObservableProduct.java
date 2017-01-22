@@ -13,7 +13,7 @@ public class ObservableProduct {
     private DoubleProperty price;
     private Map<String, String> descriptions = new HashMap<>();
     private Category category;
-
+		//dette er en konstruktør
 	public ObservableProduct(Product product) {
 		this.id = new SimpleIntegerProperty(product.getId());
 		this.name = new SimpleStringProperty(product.getName());
@@ -21,7 +21,7 @@ public class ObservableProduct {
 		this.descriptions = product.getDescriptions();
 		this.category = product.getCategory();
 	}
-
+	//getters and setters
 	public int getId() {
 		return id.get();
 	}
@@ -68,7 +68,7 @@ public class ObservableProduct {
             descriptions.put(key, value);
         }
     }
-
+	// Konveterer denne ObservableProduct til et product
     public Product toProduct(){
 		Product product = new Product();
 		product.setId(getId());
@@ -79,7 +79,7 @@ public class ObservableProduct {
 		return product;
 	}
 
-	@Override
+	@Override // giver en string udgave af dette objekt. dette bruges til debugging
 	public String toString() {
 		return "ObservableProduct{" +
 				"id=" + id +
@@ -90,7 +90,7 @@ public class ObservableProduct {
 				'}';
 	}
 
-	@Override
+	@Override // dett e object det samme som det aktulle produkt
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

@@ -17,20 +17,23 @@ import static Bartinator.DataAccessObjects.MainDataAccessObject.fetch;
  * Created by martin on 12/1/16.
  * Contains all the products and methods to get them
  */
+
+//SINGLETON!!! <----
 public class ProductCatalog {
 	private static ProductCatalog instance = new ProductCatalog();
 	public static ProductCatalog getInstance() {
 		return instance;
 	}
 
+	//lokale variabler
 	private ObservableList<ObservableProduct> mProducts = FXCollections.observableArrayList();
 	private ObservableList<Category> mCategories = FXCollections.observableArrayList();
 	private ProductDataAccessObject mProductDataAccessObject = ProductDataAccessObject.getInstance();
-
+	//dette er en konstruktør
 	private ProductCatalog() {
 		refresh();
 	}
-
+	//henter produkterne og kategorierne
 	public void refresh() {
 		fetchProducts();
 		fetchCategories();
@@ -58,11 +61,12 @@ public class ProductCatalog {
 	//Laves der ændringer i original arrayet, så vil ændringerne også ske i de associerede filtered arrays.
 	public ObservableList<ObservableProduct> getProductsByCategory(Category category){
 		return mProducts.filtered(observableProduct -> Objects.equals(observableProduct.getCategory(), category));
-	}
+	} // Der er en liste den søge igennem og den tager alle de produkter som ikke har den kategori man leder efter
+	// og smider væk og beholder kun dem der har den kategori
 
 	public List<Category> getCategoriesByCategory(Category category){
 		return mCategories.filtered(category1 -> Objects.equals(category1.getCategory(), category));
-	}
+	}// det samme som overstående bare med kategoriere
 
 	//mProducts.filtered() returnere en FilteredList<>. I ovenstående har vi castet til en observable igen
 	//Nedenfor bruger vi det som en FilteredList.
@@ -73,7 +77,7 @@ public class ProductCatalog {
 		} else {
 			return filtered.get(0);
 		}
-	}
+	}// filtere efter id (kig 2 metoder længere oppe hvis du er fucked)
 
 	public void updateProduct(ObservableProduct observableProduct) {
 		mProductDataAccessObject.updateProduct(observableProduct.toProduct());
